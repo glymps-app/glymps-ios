@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>709215467543-mjj8utkab6mc5534q281qpga12mpmla6.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.709215467543-mjj8utkab6mc5534q281qpga12mpmla6</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAhuWutui3kGWXiRovS-kYiM9XCAgICrmM</string>
+	<key>GCM_SENDER_ID</key>
+	<string>709215467543</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>JamesBMorris.GlympsApp</string>
+	<key>PROJECT_ID</key>
+	<string>glymps-a02f6</string>
+	<key>STORAGE_BUCKET</key>
+	<string>glymps-a02f6.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:709215467543:ios:d896977a49be012a</string>
+	<key>DATABASE_URL</key>
+	<string>https://glymps-a02f6.firebaseio.com</string>
+</dict>
+</plist>

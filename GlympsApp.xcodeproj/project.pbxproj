@@ -1,0 +1,729 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 51;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C3130FE122C5DC78001DE9A8 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3130FE022C5DC78001DE9A8 /* SettingsVC.swift */; };
+		C3130FE322D2AE35001DE9A8 /* UserDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3130FE222D2AE34001DE9A8 /* UserDetailsVC.swift */; };
+		C3130FE522DA5DF6001DE9A8 /* SwipingPhotosController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3130FE422DA5DF6001DE9A8 /* SwipingPhotosController.swift */; };
+		C3130FE722DB0031001DE9A8 /* ActivatePremiumVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3130FE622DB0031001DE9A8 /* ActivatePremiumVC.swift */; };
+		C3130FE922DB0ADA001DE9A8 /* PremiumVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3130FE822DB0ADA001DE9A8 /* PremiumVC.swift */; };
+		C3130FEC22DC31A0001DE9A8 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3130FEB22DC31A0001DE9A8 /* StoreKit.framework */; };
+		C32FE611229380E700E9BA1D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C32FE610229380E700E9BA1D /* Main.storyboard */; };
+		C32FE6152293810500E9BA1D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C32FE6142293810500E9BA1D /* LaunchScreen.storyboard */; };
+		C32FE6172293812000E9BA1D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C32FE6162293812000E9BA1D /* Assets.xcassets */; };
+		C32FE61A2293817A00E9BA1D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32FE6192293817A00E9BA1D /* User.swift */; };
+		C32FE6202293818500E9BA1D /* WelcomeGlympsGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32FE61C2293818500E9BA1D /* WelcomeGlympsGradientView.swift */; };
+		C32FE6212293818500E9BA1D /* GlympsGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32FE61D2293818500E9BA1D /* GlympsGradientView.swift */; };
+		C32FE6222293818500E9BA1D /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32FE61E2293818500E9BA1D /* CardView.swift */; };
+		C32FE6232293818500E9BA1D /* BottomNavigationStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32FE61F2293818500E9BA1D /* BottomNavigationStackView.swift */; };
+		C32FE634229381B400E9BA1D /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32FE633229381B400E9BA1D /* AuthService.swift */; };
+		C32FE640229381C300E9BA1D /* ProfileImageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32FE636229381C300E9BA1D /* ProfileImageVC.swift */; };
+		C32FE641229381C300E9BA1D /* TermsOfServiceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32FE637229381C300E9BA1D /* TermsOfServiceVC.swift */; };
+		C32FE642229381C300E9BA1D /* OnboardDoneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32FE638229381C300E9BA1D /* OnboardDoneVC.swift */; };
+		C32FE643229381C300E9BA1D /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32FE639229381C300E9BA1D /* LoginVC.swift */; };
+		C32FE644229381C300E9BA1D /* EmailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32FE63A229381C300E9BA1D /* EmailVC.swift */; };
+		C32FE645229381C300E9BA1D /* GenderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32FE63B229381C300E9BA1D /* GenderVC.swift */; };
+		C32FE646229381C300E9BA1D /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32FE63C229381C300E9BA1D /* SignUpVC.swift */; };
+		C32FE647229381C300E9BA1D /* BirthdayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32FE63D229381C300E9BA1D /* BirthdayVC.swift */; };
+		C32FE648229381C300E9BA1D /* NameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32FE63E229381C300E9BA1D /* NameVC.swift */; };
+		C32FE649229381C300E9BA1D /* PasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32FE63F229381C300E9BA1D /* PasswordVC.swift */; };
+		C32FE64E229381CC00E9BA1D /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32FE64B229381CC00E9BA1D /* ProfileVC.swift */; };
+		C32FE650229381CC00E9BA1D /* DeckVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32FE64D229381CC00E9BA1D /* DeckVC.swift */; };
+		C32FE652229382B700E9BA1D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C32FE651229382B700E9BA1D /* GoogleService-Info.plist */; };
+		C32FE6592293872800E9BA1D /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32FE6582293872800E9BA1D /* Config.swift */; };
+		C32FE65B2293873000E9BA1D /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32FE65A2293873000E9BA1D /* API.swift */; };
+		C32FE65D2293873A00E9BA1D /* UserAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32FE65C2293873A00E9BA1D /* UserAPI.swift */; };
+		C32FE660229388BD00E9BA1D /* EmailValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32FE65F229388BD00E9BA1D /* EmailValidator.swift */; };
+		C32FE6622293891500E9BA1D /* ButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32FE6612293891500E9BA1D /* ButtonExtension.swift */; };
+		C32FE66622938A0000E9BA1D /* Welcome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C32FE66522938A0000E9BA1D /* Welcome.storyboard */; };
+		C33170432313438B00280FAD /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33170422313438B00280FAD /* Notifications.swift */; };
+		C3317045231346A400280FAD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3317044231346A400280FAD /* Constants.swift */; };
+		C331704723138F1C00280FAD /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C331704623138F1C00280FAD /* MapVC.swift */; };
+		C33170492321439D00280FAD /* OnboardingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33170482321439D00280FAD /* OnboardingVC.swift */; };
+		C331704B232147FB00280FAD /* OnboardingContentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C331704A232147FB00280FAD /* OnboardingContentVC.swift */; };
+		C3448ABE22B35924000BCB4C /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = C3448ABD22B35924000BCB4C /* iCarousel.m */; };
+		C3448AC422B77914000BCB4C /* EditProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3448AC322B77914000BCB4C /* EditProfileVC.swift */; };
+		C35D469D234142D50019FE35 /* BlockOptionsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35D469C234142D50019FE35 /* BlockOptionsVC.swift */; };
+		C35D469F2341A51A0019FE35 /* ShareGlympsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35D469E2341A51A0019FE35 /* ShareGlympsVC.swift */; };
+		C3829A64230F15EF00659744 /* BlockUserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3829A63230F15EF00659744 /* BlockUserVC.swift */; };
+		C385586722F245CF006DB712 /* MessagesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C385586622F245CF006DB712 /* MessagesVC.swift */; };
+		C385586B22F25027006DB712 /* EmptyUITableViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C385586A22F25027006DB712 /* EmptyUITableViewExt.swift */; };
+		C385586D22F2503C006DB712 /* EmptyUICollectionViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C385586C22F2503C006DB712 /* EmptyUICollectionViewExt.swift */; };
+		C385586F22F25313006DB712 /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C385586E22F25313006DB712 /* ChatVC.swift */; };
+		C385587122F26297006DB712 /* NewMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C385587022F26297006DB712 /* NewMessageCell.swift */; };
+		C385587522F262E2006DB712 /* MatchConversationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C385587422F262E2006DB712 /* MatchConversationCell.swift */; };
+		C385587722F262F7006DB712 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C385587622F262F7006DB712 /* MessageCell.swift */; };
+		C385587922F736FA006DB712 /* UIViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C385587822F736FA006DB712 /* UIViewExt.swift */; };
+		C385587B22F74ABF006DB712 /* MessagesAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C385587A22F74ABF006DB712 /* MessagesAPI.swift */; };
+		C385587D22FB1619006DB712 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = C385587C22FB1619006DB712 /* Message.swift */; };
+		C3A83E6422937FF2000E8BA4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A83E6322937FF2000E8BA4 /* AppDelegate.swift */; };
+		C3C0E92F230AE68B00FA53DD /* DeclineUserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C0E92E230AE68B00FA53DD /* DeclineUserVC.swift */; };
+		C3C3416922DE0CF9000B1F02 /* AdvertiserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C3416822DE0CF9000B1F02 /* AdvertiserView.swift */; };
+		C3C3416D22DE16D0000B1F02 /* GlympsPremiumService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C3416C22DE16D0000B1F02 /* GlympsPremiumService.swift */; };
+		C3C3416F22E02DB0000B1F02 /* BuyCoinsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C3416E22E02DB0000B1F02 /* BuyCoinsVC.swift */; };
+		C3C3417122E16FF1000B1F02 /* IAPProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C3417022E16FF1000B1F02 /* IAPProduct.swift */; };
+		C3C3418422E6CC49000B1F02 /* CoinNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C3418322E6CC49000B1F02 /* CoinNotification.swift */; };
+		C3D512D72300AA9400B25BDC /* MatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D512D62300AA9400B25BDC /* MatchView.swift */; };
+		C3D512D92300C23700B25BDC /* GlympsGradientButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D512D82300C23700B25BDC /* GlympsGradientButton.swift */; };
+		C3D512DB2301A6E500B25BDC /* GlympsGradientBorderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D512DA2301A6E500B25BDC /* GlympsGradientBorderButton.swift */; };
+		C3D512E12305F84000B25BDC /* InboxAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D512E02305F84000B25BDC /* InboxAPI.swift */; };
+		CB4F1203C24CE17CCEE45B6D /* Pods_GlympsApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1011C405943C4F414502F0AA /* Pods_GlympsApp.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1011C405943C4F414502F0AA /* Pods_GlympsApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GlympsApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		55E0ED9DB1E0F761F03BAB1C /* Pods-GlympsApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GlympsApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GlympsApp/Pods-GlympsApp.debug.xcconfig"; sourceTree = "<group>"; };
+		9985B9CBD42E1BEA1AD6D096 /* Pods-GlympsApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GlympsApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-GlympsApp/Pods-GlympsApp.release.xcconfig"; sourceTree = "<group>"; };
+		C3130FE022C5DC78001DE9A8 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
+		C3130FE222D2AE34001DE9A8 /* UserDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsVC.swift; sourceTree = "<group>"; };
+		C3130FE422DA5DF6001DE9A8 /* SwipingPhotosController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipingPhotosController.swift; sourceTree = "<group>"; };
+		C3130FE622DB0031001DE9A8 /* ActivatePremiumVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivatePremiumVC.swift; sourceTree = "<group>"; };
+		C3130FE822DB0ADA001DE9A8 /* PremiumVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumVC.swift; sourceTree = "<group>"; };
+		C3130FEA22DC3151001DE9A8 /* GlympsApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GlympsApp.entitlements; sourceTree = "<group>"; };
+		C3130FEB22DC31A0001DE9A8 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		C32FE610229380E700E9BA1D /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		C32FE6142293810500E9BA1D /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		C32FE6162293812000E9BA1D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C32FE6192293817A00E9BA1D /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		C32FE61C2293818500E9BA1D /* WelcomeGlympsGradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeGlympsGradientView.swift; sourceTree = "<group>"; };
+		C32FE61D2293818500E9BA1D /* GlympsGradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlympsGradientView.swift; sourceTree = "<group>"; };
+		C32FE61E2293818500E9BA1D /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		C32FE61F2293818500E9BA1D /* BottomNavigationStackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomNavigationStackView.swift; sourceTree = "<group>"; };
+		C32FE633229381B400E9BA1D /* AuthService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		C32FE636229381C300E9BA1D /* ProfileImageVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileImageVC.swift; sourceTree = "<group>"; };
+		C32FE637229381C300E9BA1D /* TermsOfServiceVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsOfServiceVC.swift; sourceTree = "<group>"; };
+		C32FE638229381C300E9BA1D /* OnboardDoneVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardDoneVC.swift; sourceTree = "<group>"; };
+		C32FE639229381C300E9BA1D /* LoginVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
+		C32FE63A229381C300E9BA1D /* EmailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailVC.swift; sourceTree = "<group>"; };
+		C32FE63B229381C300E9BA1D /* GenderVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenderVC.swift; sourceTree = "<group>"; };
+		C32FE63C229381C300E9BA1D /* SignUpVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
+		C32FE63D229381C300E9BA1D /* BirthdayVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BirthdayVC.swift; sourceTree = "<group>"; };
+		C32FE63E229381C300E9BA1D /* NameVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NameVC.swift; sourceTree = "<group>"; };
+		C32FE63F229381C300E9BA1D /* PasswordVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordVC.swift; sourceTree = "<group>"; };
+		C32FE64B229381CC00E9BA1D /* ProfileVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
+		C32FE64D229381CC00E9BA1D /* DeckVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckVC.swift; sourceTree = "<group>"; };
+		C32FE651229382B700E9BA1D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C32FE6582293872800E9BA1D /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		C32FE65A2293873000E9BA1D /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		C32FE65C2293873A00E9BA1D /* UserAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAPI.swift; sourceTree = "<group>"; };
+		C32FE65F229388BD00E9BA1D /* EmailValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailValidator.swift; sourceTree = "<group>"; };
+		C32FE6612293891500E9BA1D /* ButtonExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonExtension.swift; sourceTree = "<group>"; };
+		C32FE66522938A0000E9BA1D /* Welcome.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Welcome.storyboard; sourceTree = "<group>"; };
+		C33170422313438B00280FAD /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
+		C3317044231346A400280FAD /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		C331704623138F1C00280FAD /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
+		C33170482321439D00280FAD /* OnboardingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingVC.swift; sourceTree = "<group>"; };
+		C331704A232147FB00280FAD /* OnboardingContentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContentVC.swift; sourceTree = "<group>"; };
+		C3448ABB22B35920000BCB4C /* GlympsApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GlympsApp-Bridging-Header.h"; sourceTree = "<group>"; };
+		C3448ABC22B35923000BCB4C /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
+		C3448ABD22B35924000BCB4C /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
+		C3448AC322B77914000BCB4C /* EditProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileVC.swift; sourceTree = "<group>"; };
+		C35D469C234142D50019FE35 /* BlockOptionsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockOptionsVC.swift; sourceTree = "<group>"; };
+		C35D469E2341A51A0019FE35 /* ShareGlympsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareGlympsVC.swift; sourceTree = "<group>"; };
+		C3829A63230F15EF00659744 /* BlockUserVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockUserVC.swift; sourceTree = "<group>"; };
+		C385586622F245CF006DB712 /* MessagesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesVC.swift; sourceTree = "<group>"; };
+		C385586A22F25027006DB712 /* EmptyUITableViewExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyUITableViewExt.swift; sourceTree = "<group>"; };
+		C385586C22F2503C006DB712 /* EmptyUICollectionViewExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyUICollectionViewExt.swift; sourceTree = "<group>"; };
+		C385586E22F25313006DB712 /* ChatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
+		C385587022F26297006DB712 /* NewMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageCell.swift; sourceTree = "<group>"; };
+		C385587422F262E2006DB712 /* MatchConversationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchConversationCell.swift; sourceTree = "<group>"; };
+		C385587622F262F7006DB712 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
+		C385587822F736FA006DB712 /* UIViewExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExt.swift; sourceTree = "<group>"; };
+		C385587A22F74ABF006DB712 /* MessagesAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesAPI.swift; sourceTree = "<group>"; };
+		C385587C22FB1619006DB712 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		C3A83E6022937FF2000E8BA4 /* GlympsApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GlympsApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C3A83E6322937FF2000E8BA4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C3A83E6F22937FF4000E8BA4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C3C0E92E230AE68B00FA53DD /* DeclineUserVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeclineUserVC.swift; sourceTree = "<group>"; };
+		C3C3416822DE0CF9000B1F02 /* AdvertiserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertiserView.swift; sourceTree = "<group>"; };
+		C3C3416C22DE16D0000B1F02 /* GlympsPremiumService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlympsPremiumService.swift; sourceTree = "<group>"; };
+		C3C3416E22E02DB0000B1F02 /* BuyCoinsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyCoinsVC.swift; sourceTree = "<group>"; };
+		C3C3417022E16FF1000B1F02 /* IAPProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPProduct.swift; sourceTree = "<group>"; };
+		C3C3418322E6CC49000B1F02 /* CoinNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinNotification.swift; sourceTree = "<group>"; };
+		C3D512D62300AA9400B25BDC /* MatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchView.swift; sourceTree = "<group>"; };
+		C3D512D82300C23700B25BDC /* GlympsGradientButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlympsGradientButton.swift; sourceTree = "<group>"; };
+		C3D512DA2301A6E500B25BDC /* GlympsGradientBorderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlympsGradientBorderButton.swift; sourceTree = "<group>"; };
+		C3D512E02305F84000B25BDC /* InboxAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxAPI.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C3A83E5D22937FF2000E8BA4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CB4F1203C24CE17CCEE45B6D /* Pods_GlympsApp.framework in Frameworks */,
+				C3130FEC22DC31A0001DE9A8 /* StoreKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1D9E11FE53343819E92AA97F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C3130FEB22DC31A0001DE9A8 /* StoreKit.framework */,
+				1011C405943C4F414502F0AA /* Pods_GlympsApp.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2235B4BFDF6FFA16F5E79EFF /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				55E0ED9DB1E0F761F03BAB1C /* Pods-GlympsApp.debug.xcconfig */,
+				9985B9CBD42E1BEA1AD6D096 /* Pods-GlympsApp.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		C32FE6182293817A00E9BA1D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C32FE6192293817A00E9BA1D /* User.swift */,
+				C385587C22FB1619006DB712 /* Message.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		C32FE61B2293818500E9BA1D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C32FE61C2293818500E9BA1D /* WelcomeGlympsGradientView.swift */,
+				C32FE61D2293818500E9BA1D /* GlympsGradientView.swift */,
+				C3D512D82300C23700B25BDC /* GlympsGradientButton.swift */,
+				C3D512DA2301A6E500B25BDC /* GlympsGradientBorderButton.swift */,
+				C32FE61E2293818500E9BA1D /* CardView.swift */,
+				C3C3416822DE0CF9000B1F02 /* AdvertiserView.swift */,
+				C32FE61F2293818500E9BA1D /* BottomNavigationStackView.swift */,
+				C3D512D62300AA9400B25BDC /* MatchView.swift */,
+				C385587022F26297006DB712 /* NewMessageCell.swift */,
+				C385587422F262E2006DB712 /* MatchConversationCell.swift */,
+				C385587622F262F7006DB712 /* MessageCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		C32FE632229381B400E9BA1D /* Auth Service */ = {
+			isa = PBXGroup;
+			children = (
+				C32FE633229381B400E9BA1D /* AuthService.swift */,
+			);
+			path = "Auth Service";
+			sourceTree = "<group>";
+		};
+		C32FE635229381C300E9BA1D /* Auth and Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				C32FE636229381C300E9BA1D /* ProfileImageVC.swift */,
+				C32FE637229381C300E9BA1D /* TermsOfServiceVC.swift */,
+				C32FE638229381C300E9BA1D /* OnboardDoneVC.swift */,
+				C32FE639229381C300E9BA1D /* LoginVC.swift */,
+				C32FE63A229381C300E9BA1D /* EmailVC.swift */,
+				C32FE63B229381C300E9BA1D /* GenderVC.swift */,
+				C32FE63C229381C300E9BA1D /* SignUpVC.swift */,
+				C32FE63D229381C300E9BA1D /* BirthdayVC.swift */,
+				C32FE63E229381C300E9BA1D /* NameVC.swift */,
+				C32FE63F229381C300E9BA1D /* PasswordVC.swift */,
+			);
+			path = "Auth and Onboarding";
+			sourceTree = "<group>";
+		};
+		C32FE64A229381CC00E9BA1D /* Glymps Main Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C32FE64B229381CC00E9BA1D /* ProfileVC.swift */,
+				C35D469E2341A51A0019FE35 /* ShareGlympsVC.swift */,
+				C3448AC322B77914000BCB4C /* EditProfileVC.swift */,
+				C3130FE022C5DC78001DE9A8 /* SettingsVC.swift */,
+				C3130FE622DB0031001DE9A8 /* ActivatePremiumVC.swift */,
+				C3C3416E22E02DB0000B1F02 /* BuyCoinsVC.swift */,
+				C3130FE822DB0ADA001DE9A8 /* PremiumVC.swift */,
+				C32FE64D229381CC00E9BA1D /* DeckVC.swift */,
+				C331704623138F1C00280FAD /* MapVC.swift */,
+				C385586622F245CF006DB712 /* MessagesVC.swift */,
+				C385586E22F25313006DB712 /* ChatVC.swift */,
+				C3C0E92E230AE68B00FA53DD /* DeclineUserVC.swift */,
+				C3829A63230F15EF00659744 /* BlockUserVC.swift */,
+				C35D469C234142D50019FE35 /* BlockOptionsVC.swift */,
+				C3130FE222D2AE34001DE9A8 /* UserDetailsVC.swift */,
+				C3130FE422DA5DF6001DE9A8 /* SwipingPhotosController.swift */,
+				C33170482321439D00280FAD /* OnboardingVC.swift */,
+				C331704A232147FB00280FAD /* OnboardingContentVC.swift */,
+			);
+			path = "Glymps Main Controllers";
+			sourceTree = "<group>";
+		};
+		C32FE6572293871600E9BA1D /* Data Service */ = {
+			isa = PBXGroup;
+			children = (
+				C32FE6582293872800E9BA1D /* Config.swift */,
+				C32FE65A2293873000E9BA1D /* API.swift */,
+				C32FE65C2293873A00E9BA1D /* UserAPI.swift */,
+				C385587A22F74ABF006DB712 /* MessagesAPI.swift */,
+				C3D512E02305F84000B25BDC /* InboxAPI.swift */,
+			);
+			path = "Data Service";
+			sourceTree = "<group>";
+		};
+		C32FE65E2293885900E9BA1D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C32FE65F229388BD00E9BA1D /* EmailValidator.swift */,
+				C32FE6612293891500E9BA1D /* ButtonExtension.swift */,
+				C3C3418322E6CC49000B1F02 /* CoinNotification.swift */,
+				C385586A22F25027006DB712 /* EmptyUITableViewExt.swift */,
+				C385586C22F2503C006DB712 /* EmptyUICollectionViewExt.swift */,
+				C385587822F736FA006DB712 /* UIViewExt.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		C33170412313436A00280FAD /* NotificationService */ = {
+			isa = PBXGroup;
+			children = (
+				C3317044231346A400280FAD /* Constants.swift */,
+				C33170422313438B00280FAD /* Notifications.swift */,
+			);
+			path = NotificationService;
+			sourceTree = "<group>";
+		};
+		C3A83E5722937FF2000E8BA4 = {
+			isa = PBXGroup;
+			children = (
+				C3A83E6222937FF2000E8BA4 /* GlympsApp */,
+				C3A83E6122937FF2000E8BA4 /* Products */,
+				2235B4BFDF6FFA16F5E79EFF /* Pods */,
+				1D9E11FE53343819E92AA97F /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		C3A83E6122937FF2000E8BA4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C3A83E6022937FF2000E8BA4 /* GlympsApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C3A83E6222937FF2000E8BA4 /* GlympsApp */ = {
+			isa = PBXGroup;
+			children = (
+				C3130FEA22DC3151001DE9A8 /* GlympsApp.entitlements */,
+				C32FE6182293817A00E9BA1D /* Model */,
+				C32FE61B2293818500E9BA1D /* Views */,
+				C33170412313436A00280FAD /* NotificationService */,
+				C32FE6572293871600E9BA1D /* Data Service */,
+				C3C3416B22DE16AF000B1F02 /* Glymps Premium Manager */,
+				C32FE632229381B400E9BA1D /* Auth Service */,
+				C32FE65E2293885900E9BA1D /* Extensions */,
+				C32FE635229381C300E9BA1D /* Auth and Onboarding */,
+				C32FE64A229381CC00E9BA1D /* Glymps Main Controllers */,
+				C3A83E6322937FF2000E8BA4 /* AppDelegate.swift */,
+				C32FE6142293810500E9BA1D /* LaunchScreen.storyboard */,
+				C32FE66522938A0000E9BA1D /* Welcome.storyboard */,
+				C32FE610229380E700E9BA1D /* Main.storyboard */,
+				C3448ABC22B35923000BCB4C /* iCarousel.h */,
+				C3448ABD22B35924000BCB4C /* iCarousel.m */,
+				C32FE6162293812000E9BA1D /* Assets.xcassets */,
+				C3A83E6F22937FF4000E8BA4 /* Info.plist */,
+				C32FE651229382B700E9BA1D /* GoogleService-Info.plist */,
+				C3448ABB22B35920000BCB4C /* GlympsApp-Bridging-Header.h */,
+			);
+			path = GlympsApp;
+			sourceTree = "<group>";
+		};
+		C3C3416B22DE16AF000B1F02 /* Glymps Premium Manager */ = {
+			isa = PBXGroup;
+			children = (
+				C3C3416C22DE16D0000B1F02 /* GlympsPremiumService.swift */,
+				C3C3417022E16FF1000B1F02 /* IAPProduct.swift */,
+			);
+			path = "Glymps Premium Manager";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C3A83E5F22937FF2000E8BA4 /* GlympsApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C3A83E7222937FF4000E8BA4 /* Build configuration list for PBXNativeTarget "GlympsApp" */;
+			buildPhases = (
+				98F836E07EFEC8D31509F4A6 /* [CP] Check Pods Manifest.lock */,
+				C3A83E5C22937FF2000E8BA4 /* Sources */,
+				C3A83E5D22937FF2000E8BA4 /* Frameworks */,
+				C3A83E5E22937FF2000E8BA4 /* Resources */,
+				7C1F7CFCDD96AC709D084B12 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GlympsApp;
+			productName = GlympsApp;
+			productReference = C3A83E6022937FF2000E8BA4 /* GlympsApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C3A83E5822937FF2000E8BA4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1020;
+				LastUpgradeCheck = 1020;
+				ORGANIZATIONNAME = "James B Morris";
+				TargetAttributes = {
+					C3A83E5F22937FF2000E8BA4 = {
+						CreatedOnToolsVersion = 10.2.1;
+						LastSwiftMigration = 1020;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
+					};
+				};
+			};
+			buildConfigurationList = C3A83E5B22937FF2000E8BA4 /* Build configuration list for PBXProject "GlympsApp" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C3A83E5722937FF2000E8BA4;
+			productRefGroup = C3A83E6122937FF2000E8BA4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C3A83E5F22937FF2000E8BA4 /* GlympsApp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C3A83E5E22937FF2000E8BA4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C32FE66622938A0000E9BA1D /* Welcome.storyboard in Resources */,
+				C32FE6152293810500E9BA1D /* LaunchScreen.storyboard in Resources */,
+				C32FE611229380E700E9BA1D /* Main.storyboard in Resources */,
+				C32FE652229382B700E9BA1D /* GoogleService-Info.plist in Resources */,
+				C32FE6172293812000E9BA1D /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7C1F7CFCDD96AC709D084B12 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GlympsApp/Pods-GlympsApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GlympsApp/Pods-GlympsApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GlympsApp/Pods-GlympsApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		98F836E07EFEC8D31509F4A6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-GlympsApp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C3A83E5C22937FF2000E8BA4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C3130FE322D2AE35001DE9A8 /* UserDetailsVC.swift in Sources */,
+				C32FE6212293818500E9BA1D /* GlympsGradientView.swift in Sources */,
+				C385587722F262F7006DB712 /* MessageCell.swift in Sources */,
+				C3448AC422B77914000BCB4C /* EditProfileVC.swift in Sources */,
+				C385586B22F25027006DB712 /* EmptyUITableViewExt.swift in Sources */,
+				C331704723138F1C00280FAD /* MapVC.swift in Sources */,
+				C3D512E12305F84000B25BDC /* InboxAPI.swift in Sources */,
+				C32FE648229381C300E9BA1D /* NameVC.swift in Sources */,
+				C32FE6592293872800E9BA1D /* Config.swift in Sources */,
+				C3C3418422E6CC49000B1F02 /* CoinNotification.swift in Sources */,
+				C3448ABE22B35924000BCB4C /* iCarousel.m in Sources */,
+				C331704B232147FB00280FAD /* OnboardingContentVC.swift in Sources */,
+				C3C3416D22DE16D0000B1F02 /* GlympsPremiumService.swift in Sources */,
+				C3829A64230F15EF00659744 /* BlockUserVC.swift in Sources */,
+				C32FE65D2293873A00E9BA1D /* UserAPI.swift in Sources */,
+				C32FE649229381C300E9BA1D /* PasswordVC.swift in Sources */,
+				C32FE645229381C300E9BA1D /* GenderVC.swift in Sources */,
+				C32FE65B2293873000E9BA1D /* API.swift in Sources */,
+				C32FE647229381C300E9BA1D /* BirthdayVC.swift in Sources */,
+				C3130FE522DA5DF6001DE9A8 /* SwipingPhotosController.swift in Sources */,
+				C385587922F736FA006DB712 /* UIViewExt.swift in Sources */,
+				C385587D22FB1619006DB712 /* Message.swift in Sources */,
+				C32FE642229381C300E9BA1D /* OnboardDoneVC.swift in Sources */,
+				C32FE644229381C300E9BA1D /* EmailVC.swift in Sources */,
+				C3D512D72300AA9400B25BDC /* MatchView.swift in Sources */,
+				C3C3417122E16FF1000B1F02 /* IAPProduct.swift in Sources */,
+				C385587522F262E2006DB712 /* MatchConversationCell.swift in Sources */,
+				C35D469D234142D50019FE35 /* BlockOptionsVC.swift in Sources */,
+				C32FE660229388BD00E9BA1D /* EmailValidator.swift in Sources */,
+				C3C3416F22E02DB0000B1F02 /* BuyCoinsVC.swift in Sources */,
+				C385586722F245CF006DB712 /* MessagesVC.swift in Sources */,
+				C32FE643229381C300E9BA1D /* LoginVC.swift in Sources */,
+				C385587B22F74ABF006DB712 /* MessagesAPI.swift in Sources */,
+				C3130FE922DB0ADA001DE9A8 /* PremiumVC.swift in Sources */,
+				C32FE646229381C300E9BA1D /* SignUpVC.swift in Sources */,
+				C385586F22F25313006DB712 /* ChatVC.swift in Sources */,
+				C32FE64E229381CC00E9BA1D /* ProfileVC.swift in Sources */,
+				C385587122F26297006DB712 /* NewMessageCell.swift in Sources */,
+				C32FE641229381C300E9BA1D /* TermsOfServiceVC.swift in Sources */,
+				C32FE650229381CC00E9BA1D /* DeckVC.swift in Sources */,
+				C32FE6622293891500E9BA1D /* ButtonExtension.swift in Sources */,
+				C385586D22F2503C006DB712 /* EmptyUICollectionViewExt.swift in Sources */,
+				C32FE634229381B400E9BA1D /* AuthService.swift in Sources */,
+				C33170492321439D00280FAD /* OnboardingVC.swift in Sources */,
+				C3C0E92F230AE68B00FA53DD /* DeclineUserVC.swift in Sources */,
+				C32FE61A2293817A00E9BA1D /* User.swift in Sources */,
+				C3A83E6422937FF2000E8BA4 /* AppDelegate.swift in Sources */,
+				C33170432313438B00280FAD /* Notifications.swift in Sources */,
+				C32FE6202293818500E9BA1D /* WelcomeGlympsGradientView.swift in Sources */,
+				C3130FE722DB0031001DE9A8 /* ActivatePremiumVC.swift in Sources */,
+				C32FE6232293818500E9BA1D /* BottomNavigationStackView.swift in Sources */,
+				C3D512DB2301A6E500B25BDC /* GlympsGradientBorderButton.swift in Sources */,
+				C3D512D92300C23700B25BDC /* GlympsGradientButton.swift in Sources */,
+				C3130FE122C5DC78001DE9A8 /* SettingsVC.swift in Sources */,
+				C32FE640229381C300E9BA1D /* ProfileImageVC.swift in Sources */,
+				C32FE6222293818500E9BA1D /* CardView.swift in Sources */,
+				C35D469F2341A51A0019FE35 /* ShareGlympsVC.swift in Sources */,
+				C3C3416922DE0CF9000B1F02 /* AdvertiserView.swift in Sources */,
+				C3317045231346A400280FAD /* Constants.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		C3A83E7022937FF4000E8BA4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		C3A83E7122937FF4000E8BA4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C3A83E7322937FF4000E8BA4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 55E0ED9DB1E0F761F03BAB1C /* Pods-GlympsApp.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = GlympsApp/GlympsApp.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = H76D944ZRK;
+				INFOPLIST_FILE = GlympsApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = JamesBMorris.GlympsApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "GlympsApp/GlympsApp-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C3A83E7422937FF4000E8BA4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9985B9CBD42E1BEA1AD6D096 /* Pods-GlympsApp.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = GlympsApp/GlympsApp.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = H76D944ZRK;
+				INFOPLIST_FILE = GlympsApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = JamesBMorris.GlympsApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "GlympsApp/GlympsApp-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C3A83E5B22937FF2000E8BA4 /* Build configuration list for PBXProject "GlympsApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C3A83E7022937FF4000E8BA4 /* Debug */,
+				C3A83E7122937FF4000E8BA4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C3A83E7222937FF4000E8BA4 /* Build configuration list for PBXNativeTarget "GlympsApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C3A83E7322937FF4000E8BA4 /* Debug */,
+				C3A83E7422937FF4000E8BA4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C3A83E5822937FF2000E8BA4 /* Project object */;
+}
