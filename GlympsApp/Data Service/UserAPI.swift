@@ -19,7 +19,17 @@ class UserAPI {
     var REF_USERS = Database.database().reference().child("users") // database address
     
     var CURRENT_USER = Auth.auth().currentUser // classification of app's current user
-    
+
+    func getUser(withId uid: String, completion: @escaping (Result<User, Error>) -> Void) {
+
+        REF_USERS.child(uid).observeSingleEvent(of: .value, with: { snapshot in
+            let user = User.transformUser(dict: snapshot.value as? [String : Any] ?? [:], key: snapshot.key)
+            completion(.success(user))
+        }, withCancel: { error in
+            completion(.failure(error))
+        })
+    }
+
     func observeCurrentUser(completion: @escaping (User) -> Void) { // observe and identify who app's current User is, and get userId + User object (model)
         guard let currentUser = Auth.auth().currentUser else {
             assert(false, "current user is nil")

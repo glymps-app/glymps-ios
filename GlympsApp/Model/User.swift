@@ -27,6 +27,34 @@ class User {
     var preferedGender: String?
 }
 
+enum Gender: String {
+    case male = "Male"
+    case female = "Female"
+}
+
+struct GenderPreference {
+
+    let genders: [Gender]
+
+    init(rawValue: String) {
+        switch rawValue {
+        case "Male":
+            genders = [.male]
+        case "Female":
+            genders = [.female]
+        case "Both":
+            genders = [.male, .female]
+        default:
+            genders = []
+        }
+    }
+
+    func matches(_ gender: Gender) -> Bool {
+        return genders.contains(where: { $0 == gender })
+    }
+}
+
+
 extension User {
 
     // A function for transforming the dictionary formats of a Glymps user's attributes from Firebase into a single, simplified User object

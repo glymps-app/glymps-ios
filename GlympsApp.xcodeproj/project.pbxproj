@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		15DA3E06234E9D7100A0FB8E /* APIType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DA3E05234E9D7100A0FB8E /* APIType.swift */; };
+		15DA3E09234E9D7B00A0FB8E /* DeckService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DA3E07234E9D7B00A0FB8E /* DeckService.swift */; };
+		15DA3E0A234E9D7B00A0FB8E /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DA3E08234E9D7B00A0FB8E /* Connection.swift */; };
+		15DA3E0C234EAE0200A0FB8E /* FeedAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DA3E0B234EAE0200A0FB8E /* FeedAPI.swift */; };
+		15DA3E0E234EB12500A0FB8E /* LocationAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DA3E0D234EB12500A0FB8E /* LocationAPI.swift */; };
 		C3130FE122C5DC78001DE9A8 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3130FE022C5DC78001DE9A8 /* SettingsVC.swift */; };
 		C3130FE322D2AE35001DE9A8 /* UserDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3130FE222D2AE34001DE9A8 /* UserDetailsVC.swift */; };
 		C3130FE522DA5DF6001DE9A8 /* SwipingPhotosController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3130FE422DA5DF6001DE9A8 /* SwipingPhotosController.swift */; };
@@ -77,6 +82,11 @@
 
 /* Begin PBXFileReference section */
 		1011C405943C4F414502F0AA /* Pods_GlympsApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GlympsApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		15DA3E05234E9D7100A0FB8E /* APIType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIType.swift; sourceTree = "<group>"; };
+		15DA3E07234E9D7B00A0FB8E /* DeckService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckService.swift; sourceTree = "<group>"; };
+		15DA3E08234E9D7B00A0FB8E /* Connection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
+		15DA3E0B234EAE0200A0FB8E /* FeedAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedAPI.swift; sourceTree = "<group>"; };
+		15DA3E0D234EB12500A0FB8E /* LocationAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAPI.swift; sourceTree = "<group>"; };
 		55E0ED9DB1E0F761F03BAB1C /* Pods-GlympsApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GlympsApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GlympsApp/Pods-GlympsApp.debug.xcconfig"; sourceTree = "<group>"; };
 		9985B9CBD42E1BEA1AD6D096 /* Pods-GlympsApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GlympsApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-GlympsApp/Pods-GlympsApp.release.xcconfig"; sourceTree = "<group>"; };
 		C3130FE022C5DC78001DE9A8 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
@@ -264,6 +274,11 @@
 			children = (
 				C32FE6582293872800E9BA1D /* Config.swift */,
 				C32FE65A2293873000E9BA1D /* API.swift */,
+				15DA3E05234E9D7100A0FB8E /* APIType.swift */,
+				15DA3E08234E9D7B00A0FB8E /* Connection.swift */,
+				15DA3E07234E9D7B00A0FB8E /* DeckService.swift */,
+				15DA3E0B234EAE0200A0FB8E /* FeedAPI.swift */,
+				15DA3E0D234EB12500A0FB8E /* LocationAPI.swift */,
 				C32FE65C2293873A00E9BA1D /* UserAPI.swift */,
 				C385587A22F74ABF006DB712 /* MessagesAPI.swift */,
 				C3D512E02305F84000B25BDC /* InboxAPI.swift */,
@@ -480,6 +495,7 @@
 				C32FE6212293818500E9BA1D /* GlympsGradientView.swift in Sources */,
 				C385587722F262F7006DB712 /* MessageCell.swift in Sources */,
 				C3448AC422B77914000BCB4C /* EditProfileVC.swift in Sources */,
+				15DA3E06234E9D7100A0FB8E /* APIType.swift in Sources */,
 				C385586B22F25027006DB712 /* EmptyUITableViewExt.swift in Sources */,
 				C331704723138F1C00280FAD /* MapVC.swift in Sources */,
 				C3D512E12305F84000B25BDC /* InboxAPI.swift in Sources */,
@@ -487,6 +503,7 @@
 				C32FE6592293872800E9BA1D /* Config.swift in Sources */,
 				C3C3418422E6CC49000B1F02 /* CoinNotification.swift in Sources */,
 				C3448ABE22B35924000BCB4C /* iCarousel.m in Sources */,
+				15DA3E09234E9D7B00A0FB8E /* DeckService.swift in Sources */,
 				C331704B232147FB00280FAD /* OnboardingContentVC.swift in Sources */,
 				C3C3416D22DE16D0000B1F02 /* GlympsPremiumService.swift in Sources */,
 				C3829A64230F15EF00659744 /* BlockUserVC.swift in Sources */,
@@ -509,6 +526,7 @@
 				C385586722F245CF006DB712 /* MessagesVC.swift in Sources */,
 				C32FE643229381C300E9BA1D /* LoginVC.swift in Sources */,
 				C385587B22F74ABF006DB712 /* MessagesAPI.swift in Sources */,
+				15DA3E0A234E9D7B00A0FB8E /* Connection.swift in Sources */,
 				C3130FE922DB0ADA001DE9A8 /* PremiumVC.swift in Sources */,
 				C32FE646229381C300E9BA1D /* SignUpVC.swift in Sources */,
 				C385586F22F25313006DB712 /* ChatVC.swift in Sources */,
@@ -533,8 +551,10 @@
 				C32FE640229381C300E9BA1D /* ProfileImageVC.swift in Sources */,
 				C32FE6222293818500E9BA1D /* CardView.swift in Sources */,
 				C35D469F2341A51A0019FE35 /* ShareGlympsVC.swift in Sources */,
+				15DA3E0C234EAE0200A0FB8E /* FeedAPI.swift in Sources */,
 				C3C3416922DE0CF9000B1F02 /* AdvertiserView.swift in Sources */,
 				C3317045231346A400280FAD /* Constants.swift in Sources */,
+				15DA3E0E234EB12500A0FB8E /* LocationAPI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

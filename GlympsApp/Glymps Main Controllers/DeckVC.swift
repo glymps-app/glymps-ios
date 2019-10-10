@@ -74,6 +74,9 @@ class DeckVC: UIViewController {
     let manager = CLLocationManager()
     var myQuery: GFQuery!
     var queryHandle: DatabaseHandle?
+    let authAPI = AuthAPI(user: Auth.auth().currentUser!)
+    lazy var deckService = DeckService(authAPI: authAPI)
+    let connectionGroup = ConnectionGroup()
 
     // setup UI and backend systems (Geolocation – GeoFire, Premium, Firebase)
     override func viewDidLoad() {
@@ -230,7 +233,37 @@ class DeckVC: UIViewController {
         }
         setupBannerAdCards()
     }
-    
+
+    func observeDeck() {
+        deckService.observeDeck { [weak self] deck in
+            API.User.observeCurrentUser { currentUser in
+                guard let strongSelf = self else { return }
+
+                strongSelf.users = []
+
+                for card in deck {
+                    let user = card.user
+                    if (user.id != API.User.CURRENT_USER?.uid) && (currentUser.preferedGender == user.gender) && (currentUser.minAge!...currentUser.maxAge! ~= user.age!) && !strongSelf.requests.contains(user.id!) && !strongSelf.matches.contains(user.id!) && !strongSelf.blockedUsers.contains(user.id!) {
+                        print(user.name!)
+                        strongSelf.users.append(user)
+                        strongSelf.noUsersView.isHidden = true
+                    } else if (user.id != API.User.CURRENT_USER?.uid) && (currentUser.preferedGender == "Both") && (currentUser.minAge!...currentUser.maxAge! ~= user.age!) {
+                        print(user.name!)
+                        strongSelf.users.append(user)
+                        strongSelf.noUsersView.isHidden = true
+                    } else if strongSelf.bannerAds != [] {
+                        strongSelf.noUsersView.isHidden = true
+                    } else {
+                        strongSelf.hud.dismiss()
+                        strongSelf.noUsersView.isHidden = false
+                    }
+                }
+
+                strongSelf.setupCards()
+            }
+        }.add(to: connectionGroup)
+    }
+
     // find nearby users in 400 foot radius of current user
     func findUsers(completion: @escaping (User) -> Void) {
 
@@ -496,7 +529,6 @@ extension DeckVC: CLLocationManagerDelegate {
     
     // update current location of current user whenever changed, on Firebase via GeoFire
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        manager.stopUpdatingLocation()
         manager.delegate = nil
         let updatedLocation: CLLocation = locations.first!
         let newCoordinate: CLLocationCoordinate2D = updatedLocation.coordinate
@@ -509,35 +541,9 @@ extension DeckVC: CLLocationManagerDelegate {
             
             let location: CLLocation = CLLocation(latitude: CLLocationDegrees(Double(userLat)!), longitude: CLLocationDegrees(Double(userLong)!))
             
-            self.geoFire.setLocation(location, forKey: API.User.CURRENT_USER!.uid)
-            self.geoFire.setLocation(location, forKey: API.User.CURRENT_USER!.uid) { (error) in
-                if error == nil {
-                    // Query nearby users
-                    self.findUsers { (user) in
-                        API.User.observeCurrentUser(completion: { (currentUser) in
-                            if (user.id != API.User.CURRENT_USER?.uid) && (currentUser.preferedGender == user.gender) && (currentUser.minAge!...currentUser.maxAge! ~= user.age!) && !self.requests.contains(user.id!) && !self.matches.contains(user.id!) && !self.blockedUsers.contains(user.id!) {
-                                print(user.name!)
-                                self.users.append(user)
-                                self.noUsersView.isHidden = true
-                                DispatchQueue.main.async {
-                                    self.setupCards()
-                                }
-                            } else if (user.id != API.User.CURRENT_USER?.uid) && (currentUser.preferedGender == "Both") && (currentUser.minAge!...currentUser.maxAge! ~= user.age!) {
-                                print(user.name!)
-                                self.users.append(user)
-                                self.noUsersView.isHidden = true
-                                DispatchQueue.main.async {
-                                    self.setupCards()
-                                }
-                            } else if self.bannerAds != [] {
-                                self.noUsersView.isHidden = true
-                            } else {
-                                self.hud.dismiss()
-                                self.noUsersView.isHidden = false
-                            }
-                        })
-                    }
-                }
+            geoFire.setLocation(location, forKey: API.User.CURRENT_USER!.uid) { [weak self] error in
+                if error != nil { return }
+                self?.authAPI.location.addTimestamp()
             }
         }
     }
