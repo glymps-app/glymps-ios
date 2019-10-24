@@ -24,6 +24,10 @@ import SmaatoSDKInterstitial
 
 class DeckVC: UIViewController {
     
+    @IBOutlet weak var refreshUsersBtn: UIButton!
+    
+    @IBOutlet weak var refreshUsersImage: UIImageView!
+    
     @IBOutlet weak var noUsersView: UIView! // image if no nearby users found
     
     var bannerView: SMABannerView? // Smaato medium-sized rectangle banner advertisement
@@ -36,6 +40,8 @@ class DeckVC: UIViewController {
     let menuView = BottomNavigationStackView() // bottom navigation bar
     
     var users: [User] = []
+    
+    var cachedUsers: [User] = []
     
     var requests: [String] = []
     
@@ -82,7 +88,18 @@ class DeckVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        refreshUsersBtn.layer.zPosition = 10
+        
+        refreshUsersImage.layer.zPosition = 11
+        
+        refreshUsersBtn.isEnabled = false
+        
+        refreshUsersImage.isHidden = true
+        
+        refreshUsersBtn.isHidden = true
+        
         configureLocationManager()
+        observeDeck()
         
         mapBtn.layer.zPosition = 30
         headerView.addSubview(mapBtn)
@@ -239,17 +256,17 @@ class DeckVC: UIViewController {
             API.User.observeCurrentUser { currentUser in
                 guard let strongSelf = self else { return }
 
-                strongSelf.users = []
+                strongSelf.cachedUsers = []
 
                 for card in deck {
                     let user = card.user
                     if (user.id != API.User.CURRENT_USER?.uid) && (currentUser.preferedGender == user.gender) && (currentUser.minAge!...currentUser.maxAge! ~= user.age!) && !strongSelf.requests.contains(user.id!) && !strongSelf.matches.contains(user.id!) && !strongSelf.blockedUsers.contains(user.id!) {
                         print(user.name!)
-                        strongSelf.users.append(user)
+                        strongSelf.cachedUsers.append(user)
                         strongSelf.noUsersView.isHidden = true
                     } else if (user.id != API.User.CURRENT_USER?.uid) && (currentUser.preferedGender == "Both") && (currentUser.minAge!...currentUser.maxAge! ~= user.age!) {
                         print(user.name!)
-                        strongSelf.users.append(user)
+                        strongSelf.cachedUsers.append(user)
                         strongSelf.noUsersView.isHidden = true
                     } else if strongSelf.bannerAds != [] {
                         strongSelf.noUsersView.isHidden = true
@@ -259,10 +276,32 @@ class DeckVC: UIViewController {
                     }
                 }
 
-                strongSelf.setupCards()
+                if strongSelf.users.isEmpty {
+                    strongSelf.users = strongSelf.cachedUsers
+                    strongSelf.setupCards()
+                } else {
+                   // Show refresh button
+                    
+                    strongSelf.refreshUsersImage.isHidden = false
+                    
+                    strongSelf.refreshUsersBtn.isHidden = false
+                    
+                    strongSelf.refreshUsersBtn.isEnabled = true
+                }
             }
         }.add(to: connectionGroup)
     }
+    
+    @IBAction func refreshUsersBtnWasPressed(_ sender: Any) {
+        
+        self.users = self.cachedUsers
+        self.setupCards()
+        
+        self.refreshUsersImage.isHidden = true
+        self.refreshUsersBtn.isHidden = true
+        self.refreshUsersBtn.isEnabled = false
+    }
+    
 
     // find nearby users in 400 foot radius of current user
     func findUsers(completion: @escaping (User) -> Void) {
@@ -541,9 +580,10 @@ extension DeckVC: CLLocationManagerDelegate {
             
             let location: CLLocation = CLLocation(latitude: CLLocationDegrees(Double(userLat)!), longitude: CLLocationDegrees(Double(userLong)!))
             
-            geoFire.setLocation(location, forKey: API.User.CURRENT_USER!.uid) { [weak self] error in
-                if error != nil { return }
-                self?.authAPI.location.addTimestamp()
+            geoFire.setLocation(location, forKey: API.User.CURRENT_USER!.uid) { error in //[weak self] error in
+                print("[RESULT]: " + String(describing: error))
+//                if error != nil { return }
+//                self?.authAPI.location.addTimestamp()
             }
         }
     }

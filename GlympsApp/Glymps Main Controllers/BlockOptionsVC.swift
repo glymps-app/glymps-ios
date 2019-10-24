@@ -16,6 +16,8 @@ class BlockOptionsVC: UIViewController {
     
     @IBOutlet weak var blockTemporarilyBtn: UIButton!
     
+    @IBOutlet weak var closeBtn: UIButton!
+    
     var userId: String?
     
     var userDetailsVC: UserDetailsVC?
@@ -93,7 +95,10 @@ class BlockOptionsVC: UIViewController {
         } else { return }
     }
     
-
+    @IBAction func closeBtnWasPressed(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
 
 
 }

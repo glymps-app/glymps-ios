@@ -240,6 +240,8 @@
 				C32FE63D229381C300E9BA1D /* BirthdayVC.swift */,
 				C32FE63E229381C300E9BA1D /* NameVC.swift */,
 				C32FE63F229381C300E9BA1D /* PasswordVC.swift */,
+				C33170482321439D00280FAD /* OnboardingVC.swift */,
+				C331704A232147FB00280FAD /* OnboardingContentVC.swift */,
 			);
 			path = "Auth and Onboarding";
 			sourceTree = "<group>";
@@ -263,8 +265,6 @@
 				C35D469C234142D50019FE35 /* BlockOptionsVC.swift */,
 				C3130FE222D2AE34001DE9A8 /* UserDetailsVC.swift */,
 				C3130FE422DA5DF6001DE9A8 /* SwipingPhotosController.swift */,
-				C33170482321439D00280FAD /* OnboardingVC.swift */,
-				C331704A232147FB00280FAD /* OnboardingContentVC.swift */,
 			);
 			path = "Glymps Main Controllers";
 			sourceTree = "<group>";

@@ -65,8 +65,4 @@ class DeckService {
             completion()
         }
     }
-
-    private func userMatchesPreferences(_ user: User) {
-        let currentUser
-    }
 }
