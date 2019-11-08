@@ -51,7 +51,6 @@
 		C331704723138F1C00280FAD /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C331704623138F1C00280FAD /* MapVC.swift */; };
 		C33170492321439D00280FAD /* OnboardingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33170482321439D00280FAD /* OnboardingVC.swift */; };
 		C331704B232147FB00280FAD /* OnboardingContentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C331704A232147FB00280FAD /* OnboardingContentVC.swift */; };
-		C3448ABE22B35924000BCB4C /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = C3448ABD22B35924000BCB4C /* iCarousel.m */; };
 		C3448AC422B77914000BCB4C /* EditProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3448AC322B77914000BCB4C /* EditProfileVC.swift */; };
 		C35D469D234142D50019FE35 /* BlockOptionsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35D469C234142D50019FE35 /* BlockOptionsVC.swift */; };
 		C35D469F2341A51A0019FE35 /* ShareGlympsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35D469E2341A51A0019FE35 /* ShareGlympsVC.swift */; };
@@ -130,8 +129,6 @@
 		C33170482321439D00280FAD /* OnboardingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingVC.swift; sourceTree = "<group>"; };
 		C331704A232147FB00280FAD /* OnboardingContentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContentVC.swift; sourceTree = "<group>"; };
 		C3448ABB22B35920000BCB4C /* GlympsApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GlympsApp-Bridging-Header.h"; sourceTree = "<group>"; };
-		C3448ABC22B35923000BCB4C /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
-		C3448ABD22B35924000BCB4C /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
 		C3448AC322B77914000BCB4C /* EditProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileVC.swift; sourceTree = "<group>"; };
 		C35D469C234142D50019FE35 /* BlockOptionsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockOptionsVC.swift; sourceTree = "<group>"; };
 		C35D469E2341A51A0019FE35 /* ShareGlympsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareGlympsVC.swift; sourceTree = "<group>"; };
@@ -343,8 +340,6 @@
 				C32FE6142293810500E9BA1D /* LaunchScreen.storyboard */,
 				C32FE66522938A0000E9BA1D /* Welcome.storyboard */,
 				C32FE610229380E700E9BA1D /* Main.storyboard */,
-				C3448ABC22B35923000BCB4C /* iCarousel.h */,
-				C3448ABD22B35924000BCB4C /* iCarousel.m */,
 				C32FE6162293812000E9BA1D /* Assets.xcassets */,
 				C3A83E6F22937FF4000E8BA4 /* Info.plist */,
 				C32FE651229382B700E9BA1D /* GoogleService-Info.plist */,
@@ -502,7 +497,6 @@
 				C32FE648229381C300E9BA1D /* NameVC.swift in Sources */,
 				C32FE6592293872800E9BA1D /* Config.swift in Sources */,
 				C3C3418422E6CC49000B1F02 /* CoinNotification.swift in Sources */,
-				C3448ABE22B35924000BCB4C /* iCarousel.m in Sources */,
 				15DA3E09234E9D7B00A0FB8E /* DeckService.swift in Sources */,
 				C331704B232147FB00280FAD /* OnboardingContentVC.swift in Sources */,
 				C3C3416D22DE16D0000B1F02 /* GlympsPremiumService.swift in Sources */,

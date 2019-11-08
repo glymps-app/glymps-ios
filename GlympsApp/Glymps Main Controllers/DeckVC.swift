@@ -14,6 +14,7 @@ import FirebaseStorage
 import FirebaseAnalytics
 import SDWebImage
 import SLCarouselView
+import iCarousel
 import JGProgressHUD
 import Purchases
 import CoreLocation
@@ -22,7 +23,7 @@ import SmaatoSDKCore
 import SmaatoSDKBanner
 import SmaatoSDKInterstitial
 
-class DeckVC: UIViewController {
+class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate {
     
     @IBOutlet weak var refreshUsersBtn: UIButton!
     
@@ -36,7 +37,9 @@ class DeckVC: UIViewController {
     
     let headerView = UIView() // top view (Glymps + heatmap)
     // TODO: change this cardsDeckView below from a third-party SLCarouselView to UICollectionView for expanded UI capabilities
-    let cardsDeckView = SLCarouselView(coder: NSCoder.empty()) // "card deck" carousels
+    
+    @IBOutlet weak var cardsDeckView: iCarousel!
+    
     let menuView = BottomNavigationStackView() // bottom navigation bar
     
     var users: [User] = []
@@ -83,14 +86,18 @@ class DeckVC: UIViewController {
     let authAPI = AuthAPI(user: Auth.auth().currentUser!)
     lazy var deckService = DeckService(authAPI: authAPI)
     let connectionGroup = ConnectionGroup()
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        observeDeck()
+    }
 
     // setup UI and backend systems (Geolocation – GeoFire, Premium, Firebase)
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        refreshUsersBtn.layer.zPosition = 10
-        
-        refreshUsersImage.layer.zPosition = 11
+        cardsDeckView.type = .linear
         
         refreshUsersBtn.isEnabled = false
         
@@ -127,14 +134,15 @@ class DeckVC: UIViewController {
         menuView.heightAnchor.constraint(equalToConstant: 70).isActive = true
         
         // setup views
-        let stackView = UIStackView(arrangedSubviews: [headerView, cardsDeckView!, menuView])
+         
+        let stackView = UIStackView(arrangedSubviews: [headerView, cardsDeckView, menuView])
         stackView.axis = .vertical
         view.addSubview(stackView)
         stackView.frame = .init(x: 0, y: 0, width: 300, height: 200)
         stackView.fillSuperview()
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.layoutMargins = .init(top: 0, left: 12, bottom: 0, right: 12)
-        stackView.bringSubviewToFront(cardsDeckView!)
+        stackView.bringSubviewToFront(cardsDeckView)
         
         menuView.settingsButton.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
         menuView.messagesButton.addTarget(self, action: #selector(handleMessages), for: .touchUpInside)
@@ -142,6 +150,10 @@ class DeckVC: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             self.setupAds()
         }
+        
+        self.view.bringSubviewToFront(refreshUsersBtn)
+        self.view.bringSubviewToFront(refreshUsersImage)
+        
     }
     
     // setup location manager to get current user location, live
@@ -248,7 +260,7 @@ class DeckVC: UIViewController {
         } else {
             print("Banner view is nil.")
         }
-        setupBannerAdCards()
+        //setupBannerAdCards()
     }
 
     func observeDeck() {
@@ -279,6 +291,7 @@ class DeckVC: UIViewController {
                 if strongSelf.users.isEmpty {
                     strongSelf.users = strongSelf.cachedUsers
                     strongSelf.setupCards()
+                    strongSelf.cardsDeckView.reloadData()
                 } else {
                    // Show refresh button
                     
@@ -295,7 +308,7 @@ class DeckVC: UIViewController {
     @IBAction func refreshUsersBtnWasPressed(_ sender: Any) {
         
         self.users = self.cachedUsers
-        self.setupCards()
+        self.cardsDeckView.reloadData()
         
         self.refreshUsersImage.isHidden = true
         self.refreshUsersBtn.isHidden = true
@@ -435,11 +448,11 @@ class DeckVC: UIViewController {
         // go to specific user chat after this transition
     }
     
-    var index = 0
+    var indexForCards = 0
     
-    // setup nearby user cards
     func setupCards() {
         for user in users {
+            let cardView = CardView(frame: CGRect(x: 0, y: 0, width: 370, height: 570))
             let gradientView = GlympsGradientView()
             let barsStackView = UIStackView()
             let moreInfoButton = UIButton(type: .system)
@@ -451,7 +464,6 @@ class DeckVC: UIViewController {
             messageUserButton.isUserInteractionEnabled = true
             messageUserButton.addTarget(self, action: #selector(messageUserTapped(sender:)), for: .touchUpInside)
             gradientView.layer.opacity = 0.5
-            let cardView = CardView(frame: .zero)
             self.userId = user.id
             cardView.images = user.profileImages
             if let photoUrlString = user.profileImages {
@@ -465,27 +477,27 @@ class DeckVC: UIViewController {
                 barsStackView.addArrangedSubview(barView)
                 barsStackView.arrangedSubviews.first?.backgroundColor = .white
             }
-            
+                
             let nametraits = [UIFontDescriptor.TraitKey.weight: UIFont.Weight.semibold]
             var nameFontDescriptor = UIFontDescriptor(fontAttributes: [UIFontDescriptor.AttributeName.family: "Avenir Next"])
             nameFontDescriptor = nameFontDescriptor.addingAttributes([UIFontDescriptor.AttributeName.traits: nametraits])
-            
+                
             let agetraits = [UIFontDescriptor.TraitKey.weight: UIFont.Weight.light]
             var ageFontDescriptor = UIFontDescriptor(fontAttributes: [UIFontDescriptor.AttributeName.family: "Avenir Next"])
             ageFontDescriptor = ageFontDescriptor.addingAttributes([UIFontDescriptor.AttributeName.traits: agetraits])
-            
+                
             let jobtraits = [UIFontDescriptor.TraitKey.weight: UIFont.Weight.light]
             var jobFontDescriptor = UIFontDescriptor(fontAttributes: [UIFontDescriptor.AttributeName.family: "Avenir Next"])
             jobFontDescriptor = jobFontDescriptor.addingAttributes([UIFontDescriptor.AttributeName.traits: jobtraits])
-            
+                
             let attributedText = NSMutableAttributedString(string: user.name!, attributes: [.font: UIFont(descriptor: nameFontDescriptor, size: 30)])
             attributedText.append(NSAttributedString(string: " \(user.age!)", attributes: [.font: UIFont(descriptor: ageFontDescriptor, size: 24)]))
             if user.profession != "" && user.company != "" {
                 attributedText.append(NSAttributedString(string: "\n\(user.profession!) @ \(user.company!)", attributes: [.font: UIFont(descriptor: jobFontDescriptor, size: 20)]))
             }
-            
+                
             cardView.informationLabel.attributedText = attributedText
-            
+                
             cardView.addSubview(gradientView)
             cardView.addSubview(barsStackView)
             cardView.addSubview(moreInfoButton)
@@ -494,48 +506,69 @@ class DeckVC: UIViewController {
             cardView.messageUserButton = messageUserButton
             cardView.stackView = barsStackView
             cardView.userId = self.userId
-            cardView.moreInfoButton?.tag = index
-            cardView.messageUserButton?.tag = index
+            cardView.moreInfoButton?.tag = indexForCards
+            cardView.messageUserButton?.tag = indexForCards
             moreInfoButton.anchor(top: nil, leading: nil, bottom: cardView.bottomAnchor, trailing: cardView.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 20, right: 20), size: .init(width: 50, height: 50))
             messageUserButton.anchor(top: cardView.topAnchor, leading: nil, bottom: nil, trailing: cardView.trailingAnchor, padding: .init(top: 25, left: 0, bottom: 0, right: 25), size: .init(width: 44, height: 44))
             barsStackView.anchor(top: cardView.topAnchor, leading: cardView.leadingAnchor, bottom: nil, trailing: cardView.trailingAnchor, padding: .init(top: 8, left: 8, bottom: 0, right: 8), size: .init(width: 0, height: 4))
             barsStackView.spacing = 4
             barsStackView.distribution = .fillEqually
-            cardView.fillSuperview()
+            //cardView.fillSuperview()
             gradientView.fillSuperview()
-            
+                
             hud.textLabel.text = "All done! \u{1F389}"
             hud.dismiss(afterDelay: 0.0)
-            
-            self.index += 1
+                
+            self.indexForCards += 1
             self.cardViews.append(cardView)
-            
-            self.cardsDeckView?.appendContent(view: cardView)
+            self.noUsersView.isHidden = true
         }
-        self.noUsersView.isHidden = true
+    }
+    
+    // setup nearby user cards
+    func numberOfItems(in carousel: iCarousel) -> Int {
+        users.count
+    }
+    
+    func carousel(_ carousel: iCarousel, valueFor option: iCarouselOption, withDefault value: CGFloat) -> CGFloat {
+        if (option == .spacing) {
+            return value * 1.01
+        }
+        return value
+    }
+    
+    func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: UIView?) -> UIView {
+        
+//        let tempView = UIView(frame: CGRect(x: 0, y: 0, width: 370, height: 570))
+//        tempView.layer.cornerRadius = 15
+//        tempView.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
+//
+//        return tempView
+        
+        return cardViews[index]
     }
     
     // setup mobile ad cards
-    func setupBannerAdCards() {
-        
-        API.User.observeCurrentUser { (user) in
-            if user.isPremium == false {
-                //self.callWhenYouNeedInterstitial()
-                for banner in self.bannerAds {
-                    let advertiserView = AdvertiserView(frame: .zero)
-                    print("BANNER: \(banner)")
-                    advertiserView.addSubview(banner)
-                    advertiserView.bannerView = banner
-                    banner.anchor(top: advertiserView.topAnchor, leading: advertiserView.leadingAnchor, bottom: advertiserView.bottomAnchor, trailing: advertiserView.trailingAnchor)
-                    advertiserView.fillSuperview()
-
-                    self.cardsDeckView?.appendContent(view: advertiserView)
-                }
-                print("Banners: \(self.bannerAds.count)")
-            }
-        }
-        self.noUsersView.isHidden = true
-    }
+//    func setupBannerAdCards() {
+//
+//        API.User.observeCurrentUser { (user) in
+//            if user.isPremium == false {
+//                //self.callWhenYouNeedInterstitial()
+//                for banner in self.bannerAds {
+//                    let advertiserView = AdvertiserView(frame: .zero)
+//                    print("BANNER: \(banner)")
+//                    advertiserView.addSubview(banner)
+//                    advertiserView.bannerView = banner
+//                    banner.anchor(top: advertiserView.topAnchor, leading: advertiserView.leadingAnchor, bottom: advertiserView.bottomAnchor, trailing: advertiserView.trailingAnchor)
+//                    advertiserView.fillSuperview()
+//
+//                    //self.cardsDeckView?.appendContent(view: advertiserView)
+//                }
+//                print("Banners: \(self.bannerAds.count)")
+//            }
+//        }
+//        self.noUsersView.isHidden = true
+//    }
     
 //    func callWhenYouNeedInterstitial() {
 //        SmaatoSDK.loadInterstitial(forAdSpaceId: "0",                                                     delegate: self)

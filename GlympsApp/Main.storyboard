@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="tax-kI-zzY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="tax-kI-zzY">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15508"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -2006,7 +2006,7 @@
             </objects>
             <point key="canvasLocation" x="5731.884057971015" y="-799.72826086956525"/>
         </scene>
-        <!--DeckVC-->
+        <!--Data Source-->
         <scene sceneID="z66-b5-cWh">
             <objects>
                 <viewController storyboardIdentifier="DeckVC" modalPresentationStyle="fullScreen" id="tax-kI-zzY" customClass="DeckVC" customModule="GlympsApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -2086,6 +2086,14 @@
                                     <action selector="refreshUsersBtnWasPressed:" destination="tax-kI-zzY" eventType="touchUpInside" id="32z-4c-9Lg"/>
                                 </connections>
                             </button>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6KT-cF-cdE" customClass="iCarousel">
+                                <rect key="frame" x="0.0" y="80" width="414" height="576"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="tax-kI-zzY" id="pdU-Cz-vl8"/>
+                                    <outlet property="delegate" destination="tax-kI-zzY" id="8Mj-0O-YdL"/>
+                                </connections>
+                            </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="refresh-users" translatesAutoresizingMaskIntoConstraints="NO" id="MoZ-ul-fIl">
                                 <rect key="frame" x="107" y="97" width="40" height="40"/>
                                 <constraints>
@@ -2096,18 +2104,24 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="6KT-cF-cdE" firstAttribute="leading" secondItem="1JN-zF-ETQ" secondAttribute="leading" id="53r-iP-vWz"/>
                             <constraint firstItem="UIl-RT-3gT" firstAttribute="centerY" secondItem="j9W-Kk-Kty" secondAttribute="centerY" id="5BS-vJ-IQL"/>
                             <constraint firstItem="MoZ-ul-fIl" firstAttribute="centerY" secondItem="XI5-US-tFs" secondAttribute="centerY" id="7CB-zv-f4Q"/>
+                            <constraint firstItem="6KT-cF-cdE" firstAttribute="trailing" secondItem="1JN-zF-ETQ" secondAttribute="trailing" id="9fA-Wx-LO7"/>
                             <constraint firstItem="7zD-oA-3Px" firstAttribute="top" secondItem="1JN-zF-ETQ" secondAttribute="top" constant="15" id="HWd-13-AIR"/>
                             <constraint firstItem="XI5-US-tFs" firstAttribute="centerX" secondItem="j9W-Kk-Kty" secondAttribute="centerX" id="J0u-g1-Oke"/>
                             <constraint firstItem="MoZ-ul-fIl" firstAttribute="leading" secondItem="XI5-US-tFs" secondAttribute="leading" constant="10" id="OaY-g3-CZc"/>
+                            <constraint firstItem="6KT-cF-cdE" firstAttribute="top" secondItem="7zD-oA-3Px" secondAttribute="bottom" constant="36" id="cJd-zw-Xgu"/>
+                            <constraint firstItem="6KT-cF-cdE" firstAttribute="centerY" secondItem="j9W-Kk-Kty" secondAttribute="centerY" id="elm-DW-GAI"/>
                             <constraint firstItem="UIl-RT-3gT" firstAttribute="centerX" secondItem="j9W-Kk-Kty" secondAttribute="centerX" id="fHz-cZ-dOc"/>
                             <constraint firstItem="XI5-US-tFs" firstAttribute="top" secondItem="7zD-oA-3Px" secondAttribute="bottom" constant="50" id="nXl-Tq-PAk"/>
                             <constraint firstItem="7zD-oA-3Px" firstAttribute="centerX" secondItem="j9W-Kk-Kty" secondAttribute="centerX" id="oU6-ef-W21"/>
+                            <constraint firstItem="6KT-cF-cdE" firstAttribute="centerX" secondItem="j9W-Kk-Kty" secondAttribute="centerX" id="zTp-Fl-H6i"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="1JN-zF-ETQ"/>
                     </view>
                     <connections>
+                        <outlet property="cardsDeckView" destination="6KT-cF-cdE" id="Oq8-A8-nKf"/>
                         <outlet property="noUsersView" destination="UIl-RT-3gT" id="I7X-hf-VUr"/>
                         <outlet property="refreshUsersBtn" destination="XI5-US-tFs" id="gnT-Dl-Jq3"/>
                         <outlet property="refreshUsersImage" destination="MoZ-ul-fIl" id="IkF-qy-iVN"/>
@@ -2595,7 +2609,7 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="314" height="105"/>
                                                         </imageView>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SWk-pA-JwP">
-                                                            <rect key="frame" x="259" y="5" width="50" height="50"/>
+                                                            <rect key="frame" x="284" y="5" width="25" height="25"/>
                                                             <state key="normal" image="play"/>
                                                             <connections>
                                                                 <action selector="videoMessageButtonWasPressed:" destination="DNZ-N0-lVq" eventType="touchUpInside" id="UHk-Eb-izc"/>

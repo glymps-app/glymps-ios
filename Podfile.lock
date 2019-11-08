@@ -83,6 +83,7 @@ PODS:
   - GoogleUtilities/UserDefaults (5.8.0):
     - GoogleUtilities/Logger
   - GTMSessionFetcher/Core (1.2.2)
+  - iCarousel (1.8.3)
   - JGProgressHUD (2.0.4)
   - LBTATools (1.0.8)
   - leveldb-library (1.22)
@@ -141,6 +142,7 @@ DEPENDENCIES:
   - Firebase/Messaging
   - Firebase/Storage
   - GeoFire
+  - iCarousel
   - JGProgressHUD
   - LBTATools
   - Mapbox-iOS-SDK
@@ -167,6 +169,7 @@ SPEC REPOS:
     - GoogleAppMeasurement
     - GoogleUtilities
     - GTMSessionFetcher
+    - iCarousel
     - JGProgressHUD
     - LBTATools
     - leveldb-library
@@ -205,6 +208,7 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: ffe513e90551844a739e7bcbb1d2aca1c28a4338
   GoogleUtilities: 04fce34bcd5620c1ee76fb79172105c74a4df335
   GTMSessionFetcher: 61bb0f61a4cb560030f1222021178008a5727a23
+  iCarousel: d782f635afac190c49bb8ee455882284cff8b85f
   JGProgressHUD: 62658b14e72cccf179efc7a13bcb54d30b92fc22
   LBTATools: 913ba0a3fbad250d042368ca2a0f314cdb015de1
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
@@ -218,6 +222,6 @@ SPEC CHECKSUMS:
   smaato-ios-sdk: 0a416d48befd0ca94900668550edfb30513f8874
   SwiftRangeSlider: f86e3b637c961120158fa1a89277c8343845cbe4
 
-PODFILE CHECKSUM: 802ae194cffe741d1f81c0fb8604c1b78d40b97d
+PODFILE CHECKSUM: ab4ad8c4655ca47dccf599b94e39921d289680ce
 
 COCOAPODS: 1.8.1

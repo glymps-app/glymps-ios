@@ -22,4 +22,5 @@ target 'GlympsApp' do
   pod 'Alamofire'
   pod 'Mapbox-iOS-SDK'
   pod 'GeoFire'
+  pod 'iCarousel'
 end
