@@ -74,7 +74,7 @@ class PremiumVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupPurchases()
+        //setupPurchases()
 
         continueBtn.isEnabled = true
         continueBtn.setTitleColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), for: .normal)
@@ -86,148 +86,148 @@ class PremiumVC: UIViewController {
     }
     
     // setup products from RevenueCat
-    func setupPurchases() {
-        
-        Purchases.shared.entitlements { (entitlements, error) in
-            if let e = error {
-                print(e.localizedDescription)
-            }
-            
-            guard let pro = entitlements?["pro"] else {
-                print("Error finding pro entitlement")
-                return
-            }
-            
-            guard let glympsMonthly = pro.offerings["monthly"] else {
-                print("Error finding monthly offering")
-                return
-            }
-            guard let glympsSemiAnnually = pro.offerings["semi-annually"] else {
-                print("Erro finding semi-annual offering")
-                return
-            }
-            guard let glympsYearly = pro.offerings["yearly"] else {
-                print("Error finding yearly offering")
-                return
-            }
-            
-            guard let glympsMonthlyCoin = pro.offerings["monthly (coin)"] else {
-                print("Error finding monthly coin offering")
-                return
-            }
-            guard let glympsSemiAnnuallyCoin = pro.offerings["semi-annually (coin)"] else {
-                print("Erro finding semi-annual coin offering")
-                return
-            }
-            guard let glympsYearlyCoin = pro.offerings["yearly (coin)"] else {
-                print("Error finding yearly coin offering")
-                return
-            }
-            
-            guard let monthlyProduct = glympsMonthly.activeProduct else {
-                print("Error finding monthly active product")
-                return
-            }
-            guard let semiAnnualProduct = glympsSemiAnnually.activeProduct else {
-                print("Error finding semi-annual active product")
-                return
-            }
-            guard let yearlyProduct = glympsYearly.activeProduct else {
-                print("Error finding yearly active product")
-                return
-            }
-            
-            guard let monthlyCoinProduct = glympsMonthlyCoin.activeProduct else {
-                print("Error finding monthly active coin product")
-                return
-            }
-            guard let semiAnnualCoinProduct = glympsSemiAnnuallyCoin.activeProduct else {
-                print("Error finding semi-annual active coin product")
-                return
-            }
-            guard let yearlyCoinProduct = glympsYearlyCoin.activeProduct else {
-                print("Error finding yearly active coin product")
-                return
-            }
-            
-            self.glympsMonthly = monthlyProduct
-            self.glympsSemiAnnually = semiAnnualProduct
-            self.glympsYearly = yearlyProduct
-            
-            self.glympsMonthlyCoin = monthlyCoinProduct
-            self.glympsSemiAnnuallyCoin = semiAnnualCoinProduct
-            self.glympsYearlyCoin = yearlyCoinProduct
-            
-            print("All entitlements fetched successfully 🎉")
-            
-        }
-        
-    }
+//    func setupPurchases() {
+//
+//        Purchases.shared.entitlements { (entitlements, error) in
+//            if let e = error {
+//                print(e.localizedDescription)
+//            }
+//
+//            guard let pro = entitlements?["pro"] else {
+//                print("Error finding pro entitlement")
+//                return
+//            }
+//
+//            guard let glympsMonthly = pro.offerings["monthly"] else {
+//                print("Error finding monthly offering")
+//                return
+//            }
+//            guard let glympsSemiAnnually = pro.offerings["semi-annually"] else {
+//                print("Erro finding semi-annual offering")
+//                return
+//            }
+//            guard let glympsYearly = pro.offerings["yearly"] else {
+//                print("Error finding yearly offering")
+//                return
+//            }
+//
+//            guard let glympsMonthlyCoin = pro.offerings["monthly (coin)"] else {
+//                print("Error finding monthly coin offering")
+//                return
+//            }
+//            guard let glympsSemiAnnuallyCoin = pro.offerings["semi-annually (coin)"] else {
+//                print("Erro finding semi-annual coin offering")
+//                return
+//            }
+//            guard let glympsYearlyCoin = pro.offerings["yearly (coin)"] else {
+//                print("Error finding yearly coin offering")
+//                return
+//            }
+//
+//            guard let monthlyProduct = glympsMonthly.activeProduct else {
+//                print("Error finding monthly active product")
+//                return
+//            }
+//            guard let semiAnnualProduct = glympsSemiAnnually.activeProduct else {
+//                print("Error finding semi-annual active product")
+//                return
+//            }
+//            guard let yearlyProduct = glympsYearly.activeProduct else {
+//                print("Error finding yearly active product")
+//                return
+//            }
+//
+//            guard let monthlyCoinProduct = glympsMonthlyCoin.activeProduct else {
+//                print("Error finding monthly active coin product")
+//                return
+//            }
+//            guard let semiAnnualCoinProduct = glympsSemiAnnuallyCoin.activeProduct else {
+//                print("Error finding semi-annual active coin product")
+//                return
+//            }
+//            guard let yearlyCoinProduct = glympsYearlyCoin.activeProduct else {
+//                print("Error finding yearly active coin product")
+//                return
+//            }
+//
+//            self.glympsMonthly = monthlyProduct
+//            self.glympsSemiAnnually = semiAnnualProduct
+//            self.glympsYearly = yearlyProduct
+//
+//            self.glympsMonthlyCoin = monthlyCoinProduct
+//            self.glympsSemiAnnuallyCoin = semiAnnualCoinProduct
+//            self.glympsYearlyCoin = yearlyCoinProduct
+//
+//            print("All entitlements fetched successfully 🎉")
+//
+//        }
+//
+//    }
     
     // purchase subscription product
-    func makePurchase(product: SKProduct) {
-        
-        Purchases.shared.makePurchase(product) { (transaction, purchaserInfo, error, userCancelled) in
-            if let e = error {
-                print("PURCHASE ERROR: - \(e.localizedDescription)")
-                
-            } else if purchaserInfo?.activeEntitlements.contains("pro") ?? false {
-                
-                if product == self.glympsMonthlyCoin {
-                    
-                    GlympsPremiumService.instance.decreaseCoins(coinAmount: 13)
-                    AuthService.subscribe()
-                    
-                } else if product == self.glympsSemiAnnuallyCoin {
-                    
-                    GlympsPremiumService.instance.decreaseCoins(coinAmount: 37)
-                    AuthService.subscribe()
-                    
-                } else if product == self.glympsYearlyCoin {
-                    
-                    GlympsPremiumService.instance.decreaseCoins(coinAmount: 83)
-                    AuthService.subscribe()
-                    
-                } else {
-                    AuthService.subscribe()
-                }
-                
-                print("Purchased Glymps Premium 🎉")
-            }
-        }
-    }
+//    func makePurchase(product: SKProduct) {
+//
+//        Purchases.shared.makePurchase(product) { (transaction, purchaserInfo, error, userCancelled) in
+//            if let e = error {
+//                print("PURCHASE ERROR: - \(e.localizedDescription)")
+//
+//            } else if purchaserInfo?.activeEntitlements.contains("pro") ?? false {
+//
+//                if product == self.glympsMonthlyCoin {
+//
+//                    GlympsPremiumService.instance.decreaseCoins(coinAmount: 13)
+//                    AuthService.subscribe()
+//
+//                } else if product == self.glympsSemiAnnuallyCoin {
+//
+//                    GlympsPremiumService.instance.decreaseCoins(coinAmount: 37)
+//                    AuthService.subscribe()
+//
+//                } else if product == self.glympsYearlyCoin {
+//
+//                    GlympsPremiumService.instance.decreaseCoins(coinAmount: 83)
+//                    AuthService.subscribe()
+//
+//                } else {
+//                    AuthService.subscribe()
+//                }
+//
+//                print("Purchased Glymps Premium 🎉")
+//            }
+//        }
+//    }
     
     // buy a Glymps monthly subscription
-    func buyGlympsMonthly() {
-        guard let product = glympsMonthly else { return }
-        makePurchase(product: product)
-    }
-    // buy a Glymps bi-annual subscription
-    func buyGlympsSemiAnnual() {
-        guard let product = glympsSemiAnnually else { return }
-        makePurchase(product: product)
-    }
-    // buy a Glymps yearly subscription
-    func buyGlympsYearly() {
-        guard let product = glympsYearly else { return }
-        makePurchase(product: product)
-    }
-    
-    // buy a Glymps monthly subscription w/ coins
-    func buyGlympsMonthlyCoin() {
-        guard let product = glympsMonthlyCoin else { return }
-        makePurchase(product: product)
-    }
-    // buy a Glymps bi-annual subscription w/ coins
-    func buyGlympsSemiAnnualCoin() {
-        guard let product = glympsSemiAnnuallyCoin else { return }
-        makePurchase(product: product)
-    }
-    // buy a Glymps yearly subscription w/ coins
-    func buyGlympsYearlyCoin() {
-        guard let product = glympsYearlyCoin else { return }
-        makePurchase(product: product)
-    }
+//    func buyGlympsMonthly() {
+//        guard let product = glympsMonthly else { return }
+//        makePurchase(product: product)
+//    }
+//    // buy a Glymps bi-annual subscription
+//    func buyGlympsSemiAnnual() {
+//        guard let product = glympsSemiAnnually else { return }
+//        makePurchase(product: product)
+//    }
+//    // buy a Glymps yearly subscription
+//    func buyGlympsYearly() {
+//        guard let product = glympsYearly else { return }
+//        makePurchase(product: product)
+//    }
+//
+//    // buy a Glymps monthly subscription w/ coins
+//    func buyGlympsMonthlyCoin() {
+//        guard let product = glympsMonthlyCoin else { return }
+//        makePurchase(product: product)
+//    }
+//    // buy a Glymps bi-annual subscription w/ coins
+//    func buyGlympsSemiAnnualCoin() {
+//        guard let product = glympsSemiAnnuallyCoin else { return }
+//        makePurchase(product: product)
+//    }
+//    // buy a Glymps yearly subscription w/ coins
+//    func buyGlympsYearlyCoin() {
+//        guard let product = glympsYearlyCoin else { return }
+//        makePurchase(product: product)
+//    }
     
     // select one month subscription
     @IBAction func oneMonthUSDBtnWasPressed(_ sender: Any) {
@@ -428,21 +428,21 @@ class PremiumVC: UIViewController {
         // change user "isPremium" attribute to true
         // dismiss payment view and payment option view
         
-        if chosenPayment[0] == "1 Month USD" {
-            buyGlympsMonthly()
-        } else if chosenPayment[0] == "6 Month USD" {
-            buyGlympsSemiAnnual()
-        } else if chosenPayment[0] == "12 Month USD" {
-            buyGlympsYearly()
-        } else if chosenPayment[0] == "1 Month COIN" {
-            buyGlympsMonthlyCoin()
-        } else if chosenPayment[0] == "6 Month COIN" {
-            buyGlympsSemiAnnualCoin()
-        } else if chosenPayment[0] == "12 Month COIN" {
-            buyGlympsYearlyCoin()
-        } else {
-            return
-        }
+//        if chosenPayment[0] == "1 Month USD" {
+//            buyGlympsMonthly()
+//        } else if chosenPayment[0] == "6 Month USD" {
+//            buyGlympsSemiAnnual()
+//        } else if chosenPayment[0] == "12 Month USD" {
+//            buyGlympsYearly()
+//        } else if chosenPayment[0] == "1 Month COIN" {
+//            buyGlympsMonthlyCoin()
+//        } else if chosenPayment[0] == "6 Month COIN" {
+//            buyGlympsSemiAnnualCoin()
+//        } else if chosenPayment[0] == "12 Month COIN" {
+//            buyGlympsYearlyCoin()
+//        } else {
+//            return
+//        }
     }
     
     // dismiss popover

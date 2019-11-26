@@ -25,7 +25,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>MGLMapboxAccessToken</key>
-	<string>pk.eyJ1IjoiamJtb3JyaXMyIiwiYSI6ImNqenJ0ejdqdjEycTMzam1pNGxxM21xNHQifQ.1tLluhnow9Lk4hMOo3edIw</string>
+	<string>pk.eyJ1IjoiZ2x5bXBzIiwiYSI6ImNrM2J0YXpsdDBzZ3AzZHBkNnV0b2t4MnUifQ.TnR9UQ-zIj46aBWAv3GMpg</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Glymps allows you to take pictures and share them with others.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
@@ -38,6 +38,8 @@
 	<string>Glymps allows you to take videos and share them with others.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Glymps allows you to choose photos and videos from your library and share them with others.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Glymps allows you to send your shareable link to your friends.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

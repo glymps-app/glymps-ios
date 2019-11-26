@@ -29,7 +29,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:709215467543:ios:d896977a49be012a</string>
+	<string>1:709215467543:ios:b5037f462271dbd9774452</string>
 	<key>DATABASE_URL</key>
 	<string>https://glymps-a02f6.firebaseio.com</string>
 </dict>

@@ -12,15 +12,9 @@ class ShareGlympsVC: UIViewController {
     
     @IBOutlet weak var dismissBtn: UIButton!
     
-    @IBOutlet weak var shareWithFacebookBtn: UIButton!
+    @IBOutlet weak var shareWithCodeBtn: UIButton!
     
-    @IBOutlet weak var shareWithTwitterBtn: UIButton!
-    
-    @IBOutlet weak var shareWithEmailBtn: UIButton!
-    
-    @IBOutlet weak var shareWithSMSBtn: UIButton!
-    
-    @IBOutlet weak var personalCodeLabel: UILabel!
+    @IBOutlet weak var inviteContactBtn: UIButton!
     
     @IBOutlet weak var ambassadorSignupBtn: UIButton!
 
@@ -38,35 +32,30 @@ class ShareGlympsVC: UIViewController {
                 let codeSuffix = String(NSUUID().uuidString.prefix(5))
                 let code = user.name! + codeSuffix
                 defaults.set("\(code)", forKey: "hasSeenShare")
-                self.personalCodeLabel.text = defaults.string(forKey: "hasSeenShare")
+                self.shareWithCodeBtn.setTitle(defaults.string(forKey: "hasSeenShare"), for: .normal)
             }
         } else {
-            self.personalCodeLabel.text = defaults.string(forKey: "hasSeenShare")
+            self.shareWithCodeBtn.setTitle(defaults.string(forKey: "hasSeenShare"), for: .normal)
         }
     }
     
     @IBAction func dismissBtnWasPressed(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
-    
-    @IBAction func shareWithFacebookBtnWasPressed(_ sender: Any) {
-        
+    @IBAction func shareWithCodeBtnWasPressed(_ sender: Any) {
+        let activityController = UIActivityViewController(activityItems: [shareWithCodeBtn.titleLabel!.text!], applicationActivities: nil)
+        present(activityController, animated: true, completion: nil)
     }
     
-    @IBAction func shareWithTwitterBtnWasPressed(_ sender: Any) {
-        
-    }
-    
-    @IBAction func shareWithEmailBtnWasPressed(_ sender: Any) {
-        
-    }
-    
-    @IBAction func shareWithSMSBtnWasPressed(_ sender: Any) {
-        
+    @IBAction func inviteContactBtnWasPressed(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let contactsVC = storyboard.instantiateViewController(withIdentifier: "ContactsVC") as! ContactsVC
+        contactsVC.shareableLink = shareWithCodeBtn.titleLabel!.text!
+        self.present(contactsVC, animated: true, completion: nil)
     }
     
     @IBAction func ambassadorBtnWasPressed(_ sender: Any) {
-        
+        // go to campus ambassador onboarding
     }
     
 }

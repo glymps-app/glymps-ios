@@ -117,7 +117,7 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate {
         
         setupDeviceToken()
         
-        checkIfPremium()
+        //checkIfPremium()
         
         noUsersView.isHidden = true
         
@@ -193,59 +193,58 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate {
     }
     
     // check if current user is a Glymps Premium user
-    func checkIfPremium() {
-        
-        Purchases.shared.purchaserInfo { (purchaserInfo, error) in
-            if let purchaserInfo = purchaserInfo {
-                
-                print(purchaserInfo.activeSubscriptions)
-                
-                // Option 1: Check if user has access to entitlement (from RevenueCat dashboard)
-                if purchaserInfo.activeEntitlements.contains("pro") {
-                    print("User has access to Glymps entitlements!")
-                } else {
-                    print("User does not have access to Glymps entitlements!")
-                }
-
-                // Option 2: Check if user has active subscription (from App Store Connect or Play Store)
-                if purchaserInfo.activeSubscriptions.contains("JamesBMorris.GlympsApp.USDSubscription1Month") {
-                    // Grant user "pro" access
-                    print("User has Glymps Premium (1 mo subscription)")
-                    AuthService.subscribe()
-                } else if purchaserInfo.activeSubscriptions.contains("JamesBMorris.GlympsApp.USDSubscription6Month") {
-                    // Grant user "pro" access
-                    print("User has Glymps Premium (6 mo subscription)")
-                    AuthService.subscribe()
-                } else if purchaserInfo.activeSubscriptions.contains("JamesBMorris.GlympsApp.USDSubscription12Month") {
-                    // Grant user "pro" access
-                    print("User has Glymps Premium (12 mo subscription)")
-                    AuthService.subscribe()
-                } else if purchaserInfo.activeSubscriptions.contains("JamesBMorris.GlympsApp.CoinSubscription1Month") {
-                    // Grant user "pro" access
-                    print("User has Glymps Premium (1 mo coin subscription)")
-                    AuthService.subscribe()
-                } else if purchaserInfo.activeSubscriptions.contains("JamesBMorris.GlympsApp.CoinSubscription6Month") {
-                    // Grant user "pro" access
-                    print("User has Glymps Premium (6 mo coin subscription)")
-                    AuthService.subscribe()
-                } else if purchaserInfo.activeSubscriptions.contains("JamesBMorris.GlympsApp.CoinSubscription12Month") {
-                    // Grant user "pro" access
-                    print("User has Glymps Premium (12 mo coin subscription)")
-                    AuthService.subscribe()
-                } else {
-                    // User is not premium
-                    print("User does not have Glymps Premium!")
-                    AuthService.unsubscribe()
-                }
-            }
-        }
-        
-    }
+//    func checkIfPremium() {
+//
+//        Purchases.shared.purchaserInfo { (purchaserInfo, error) in
+//            if let purchaserInfo = purchaserInfo {
+//
+//                print(purchaserInfo.activeSubscriptions)
+//                // Option 1: Check if user has access to entitlement (from RevenueCat dashboard)
+//                if purchaserInfo.activeEntitlements.contains("pro") {
+//                    print("User has access to Glymps entitlements!")
+//                } else {
+//                    print("User does not have access to Glymps entitlements!")
+//                }
+//
+//                // Option 2: Check if user has active subscription (from App Store Connect or Play Store)
+//                if purchaserInfo.activeSubscriptions.contains("JamesBMorris.GlympsApp.USDSubscription1Month") {
+//                    // Grant user "pro" access
+//                    print("User has Glymps Premium (1 mo subscription)")
+//                    AuthService.subscribe()
+//                } else if purchaserInfo.activeSubscriptions.contains("JamesBMorris.GlympsApp.USDSubscription6Month") {
+//                    // Grant user "pro" access
+//                    print("User has Glymps Premium (6 mo subscription)")
+//                    AuthService.subscribe()
+//                } else if purchaserInfo.activeSubscriptions.contains("JamesBMorris.GlympsApp.USDSubscription12Month") {
+//                    // Grant user "pro" access
+//                    print("User has Glymps Premium (12 mo subscription)")
+//                    AuthService.subscribe()
+//                } else if purchaserInfo.activeSubscriptions.contains("JamesBMorris.GlympsApp.CoinSubscription1Month") {
+//                    // Grant user "pro" access
+//                    print("User has Glymps Premium (1 mo coin subscription)")
+//                    AuthService.subscribe()
+//                } else if purchaserInfo.activeSubscriptions.contains("JamesBMorris.GlympsApp.CoinSubscription6Month") {
+//                    // Grant user "pro" access
+//                    print("User has Glymps Premium (6 mo coin subscription)")
+//                    AuthService.subscribe()
+//                } else if purchaserInfo.activeSubscriptions.contains("JamesBMorris.GlympsApp.CoinSubscription12Month") {
+//                    // Grant user "pro" access
+//                    print("User has Glymps Premium (12 mo coin subscription)")
+//                    AuthService.subscribe()
+//                } else {
+//                    // User is not premium
+//                    print("User does not have Glymps Premium!")
+//                    AuthService.unsubscribe()
+//                }
+//            }
+//        }
+//
+//    }
     
     // any updated purchases from RevenueCat?
-    func purchases(_ purchases: Purchases, didReceiveUpdated purchaserInfo: PurchaserInfo) {
-        // handle any changes to purchaserInfo
-    }
+//    func purchases(_ purchases: Purchases, didReceiveUpdated purchaserInfo: PurchaserInfo) {
+//        // handle any changes to purchaserInfo
+//    }
     
     // setup mobile ads from Smaato
     func setupAds() {

@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (4.9.0)
+  - Alamofire (4.9.1)
   - Firebase/Auth (5.20.2):
     - Firebase/CoreOnly
     - FirebaseAuth (= 5.4.2)
@@ -82,54 +82,55 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (5.8.0):
     - GoogleUtilities/Logger
-  - GTMSessionFetcher/Core (1.2.2)
+  - GTMSessionFetcher/Core (1.3.0)
   - iCarousel (1.8.3)
-  - JGProgressHUD (2.0.4)
-  - LBTATools (1.0.8)
+  - JGProgressHUD (2.1)
+  - LBTATools (1.0.12)
   - leveldb-library (1.22)
-  - Mapbox-iOS-SDK (5.4.0)
-  - nanopb (0.3.901):
-    - nanopb/decode (= 0.3.901)
-    - nanopb/encode (= 0.3.901)
-  - nanopb/decode (0.3.901)
-  - nanopb/encode (0.3.901)
+  - Mapbox-iOS-SDK (5.5.0)
+  - nanopb (0.3.9011):
+    - nanopb/decode (= 0.3.9011)
+    - nanopb/encode (= 0.3.9011)
+  - nanopb/decode (0.3.9011)
+  - nanopb/encode (0.3.9011)
   - Protobuf (3.10.0)
-  - Purchases (2.6.0)
+  - Purchases (3.0.0)
   - PureLayout (3.1.5)
-  - SDWebImage (5.2.3):
-    - SDWebImage/Core (= 5.2.3)
-  - SDWebImage/Core (5.2.3)
+  - SDWebImage (5.3.1):
+    - SDWebImage/Core (= 5.3.1)
+  - SDWebImage/Core (5.3.1)
   - SLCarouselView (0.1.5):
     - PureLayout
-  - smaato-ios-sdk (21.1.4):
-    - smaato-ios-sdk/Full (= 21.1.4)
-  - smaato-ios-sdk/Banner (21.1.4):
+  - smaato-ios-sdk (21.2.1):
+    - smaato-ios-sdk/Full (= 21.2.1)
+  - smaato-ios-sdk/Banner (21.2.1):
     - smaato-ios-sdk/Modules/Banner
     - smaato-ios-sdk/Modules/Core
     - smaato-ios-sdk/Modules/RichMedia
-  - smaato-ios-sdk/Full (21.1.4):
+  - smaato-ios-sdk/Full (21.2.1):
     - smaato-ios-sdk/Banner
     - smaato-ios-sdk/Interstitial
     - smaato-ios-sdk/RewardedAds
-  - smaato-ios-sdk/Interstitial (21.1.4):
+  - smaato-ios-sdk/Interstitial (21.2.1):
     - smaato-ios-sdk/Modules/Interstitial
     - smaato-ios-sdk/Modules/RichMedia
     - smaato-ios-sdk/Modules/Video
-  - smaato-ios-sdk/Modules/Banner (21.1.4):
+  - smaato-ios-sdk/Modules/Banner (21.2.1):
     - smaato-ios-sdk/Modules/Core
-  - smaato-ios-sdk/Modules/Core (21.1.4)
-  - smaato-ios-sdk/Modules/Interstitial (21.1.4):
+  - smaato-ios-sdk/Modules/Core (21.2.1)
+  - smaato-ios-sdk/Modules/Interstitial (21.2.1):
     - smaato-ios-sdk/Modules/Core
-  - smaato-ios-sdk/Modules/OpenMeasurement (21.1.4):
+  - smaato-ios-sdk/Modules/OpenMeasurement (21.2.1):
     - smaato-ios-sdk/Modules/Core
-  - smaato-ios-sdk/Modules/RewardedAds (21.1.4):
+  - smaato-ios-sdk/Modules/RewardedAds (21.2.1):
     - smaato-ios-sdk/Modules/Core
-  - smaato-ios-sdk/Modules/RichMedia (21.1.4):
+  - smaato-ios-sdk/Modules/RichMedia (21.2.1):
     - smaato-ios-sdk/Modules/Core
     - smaato-ios-sdk/Modules/OpenMeasurement
-  - smaato-ios-sdk/Modules/Video (21.1.4):
+  - smaato-ios-sdk/Modules/Video (21.2.1):
     - smaato-ios-sdk/Modules/Core
-  - smaato-ios-sdk/RewardedAds (21.1.4):
+    - smaato-ios-sdk/Modules/OpenMeasurement
+  - smaato-ios-sdk/RewardedAds (21.2.1):
     - smaato-ios-sdk/Modules/RewardedAds
     - smaato-ios-sdk/Modules/Video
   - SwiftRangeSlider (2.0.0)
@@ -146,7 +147,7 @@ DEPENDENCIES:
   - JGProgressHUD
   - LBTATools
   - Mapbox-iOS-SDK
-  - Purchases
+  - Purchases (= 3.0.0)
   - SDWebImage
   - SLCarouselView (from `https://github.com/liusally/SLCarouselView.git`)
   - smaato-ios-sdk (from `https://s3.amazonaws.com/smaato-sdk-releases/ios/smaato-ios-sdk-latest.podspec`)
@@ -193,7 +194,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/liusally/SLCarouselView.git
 
 SPEC CHECKSUMS:
-  Alamofire: afc3e7c6db61476cb45cdd23fed06bad03bbc321
+  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   Firebase: 0c8cf33f266410c61ab3e2265cfa412200351d9c
   FirebaseAnalytics: ece1aa57a4f43c64d53a648b5a5e05151aae947b
   FirebaseAnalyticsInterop: d48b6ab67bcf016a05e55b71fc39c61c0cb6b7f3
@@ -207,21 +208,21 @@ SPEC CHECKSUMS:
   GeoFire: e3ae6f4be3f2466c3467ef6c1c203db3af935c59
   GoogleAppMeasurement: ffe513e90551844a739e7bcbb1d2aca1c28a4338
   GoogleUtilities: 04fce34bcd5620c1ee76fb79172105c74a4df335
-  GTMSessionFetcher: 61bb0f61a4cb560030f1222021178008a5727a23
+  GTMSessionFetcher: 43b8b64263023d4f32caa0b40f4c8bfa3c5f36d8
   iCarousel: d782f635afac190c49bb8ee455882284cff8b85f
-  JGProgressHUD: 62658b14e72cccf179efc7a13bcb54d30b92fc22
-  LBTATools: 913ba0a3fbad250d042368ca2a0f314cdb015de1
+  JGProgressHUD: aa403e9a5b45cae98903c4600cccdd98c0c3ec90
+  LBTATools: 389a901a01b9a56bea5682c40cd6e23530f40015
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
-  Mapbox-iOS-SDK: 2b58f752d94e57e95b8e54f3b52569199f6efdba
-  nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
+  Mapbox-iOS-SDK: 7fa66a27e586acb14c7f32ec5a487343e3994451
+  nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   Protobuf: a4dc852ad69c027ca2166ed287b856697814375b
-  Purchases: c1d7501729e14fc61e564cc47fcd05eb99b19e81
+  Purchases: e22cbc4cd3bccdb482b5cc9a9a2a2008887d0ba4
   PureLayout: 9b4ad47b2f0388c84ff534af23d96e720c1b875a
-  SDWebImage: 46a7f73228f84ce80990c786e4372cf4db5875ce
+  SDWebImage: 7137d57385fb632129838c1e6ab9528a22c666cc
   SLCarouselView: fa0dd6e4cdeca88f8fc43ae19f16d33e8d11d643
-  smaato-ios-sdk: 0a416d48befd0ca94900668550edfb30513f8874
+  smaato-ios-sdk: 5bf782553132891bd5b150102520b4c6a91bc010
   SwiftRangeSlider: f86e3b637c961120158fa1a89277c8343845cbe4
 
-PODFILE CHECKSUM: ab4ad8c4655ca47dccf599b94e39921d289680ce
+PODFILE CHECKSUM: d19653d7cbbc075bf16031fdd60c2d4bcbf0553c
 
-COCOAPODS: 1.8.1
+COCOAPODS: 1.8.4

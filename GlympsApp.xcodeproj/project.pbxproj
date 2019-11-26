@@ -39,7 +39,6 @@
 		C32FE649229381C300E9BA1D /* PasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32FE63F229381C300E9BA1D /* PasswordVC.swift */; };
 		C32FE64E229381CC00E9BA1D /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32FE64B229381CC00E9BA1D /* ProfileVC.swift */; };
 		C32FE650229381CC00E9BA1D /* DeckVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32FE64D229381CC00E9BA1D /* DeckVC.swift */; };
-		C32FE652229382B700E9BA1D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C32FE651229382B700E9BA1D /* GoogleService-Info.plist */; };
 		C32FE6592293872800E9BA1D /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32FE6582293872800E9BA1D /* Config.swift */; };
 		C32FE65B2293873000E9BA1D /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32FE65A2293873000E9BA1D /* API.swift */; };
 		C32FE65D2293873A00E9BA1D /* UserAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32FE65C2293873A00E9BA1D /* UserAPI.swift */; };
@@ -52,6 +51,7 @@
 		C33170492321439D00280FAD /* OnboardingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33170482321439D00280FAD /* OnboardingVC.swift */; };
 		C331704B232147FB00280FAD /* OnboardingContentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C331704A232147FB00280FAD /* OnboardingContentVC.swift */; };
 		C3448AC422B77914000BCB4C /* EditProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3448AC322B77914000BCB4C /* EditProfileVC.swift */; };
+		C358F4F6238B795000F8CF00 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C358F4F5238B795000F8CF00 /* GoogleService-Info.plist */; };
 		C35D469D234142D50019FE35 /* BlockOptionsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35D469C234142D50019FE35 /* BlockOptionsVC.swift */; };
 		C35D469F2341A51A0019FE35 /* ShareGlympsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35D469E2341A51A0019FE35 /* ShareGlympsVC.swift */; };
 		C3829A64230F15EF00659744 /* BlockUserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3829A63230F15EF00659744 /* BlockUserVC.swift */; };
@@ -66,12 +66,15 @@
 		C385587B22F74ABF006DB712 /* MessagesAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C385587A22F74ABF006DB712 /* MessagesAPI.swift */; };
 		C385587D22FB1619006DB712 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = C385587C22FB1619006DB712 /* Message.swift */; };
 		C3A83E6422937FF2000E8BA4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A83E6322937FF2000E8BA4 /* AppDelegate.swift */; };
+		C3BB797D238B2DAF0026A783 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3BB797C238B2DAF0026A783 /* Alamofire.framework */; };
 		C3C0E92F230AE68B00FA53DD /* DeclineUserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C0E92E230AE68B00FA53DD /* DeclineUserVC.swift */; };
 		C3C3416922DE0CF9000B1F02 /* AdvertiserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C3416822DE0CF9000B1F02 /* AdvertiserView.swift */; };
 		C3C3416D22DE16D0000B1F02 /* GlympsPremiumService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C3416C22DE16D0000B1F02 /* GlympsPremiumService.swift */; };
 		C3C3416F22E02DB0000B1F02 /* BuyCoinsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C3416E22E02DB0000B1F02 /* BuyCoinsVC.swift */; };
 		C3C3417122E16FF1000B1F02 /* IAPProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C3417022E16FF1000B1F02 /* IAPProduct.swift */; };
 		C3C3418422E6CC49000B1F02 /* CoinNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C3418322E6CC49000B1F02 /* CoinNotification.swift */; };
+		C3D355C7238265A000B81344 /* ContactsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D355C6238265A000B81344 /* ContactsVC.swift */; };
+		C3D355C923842E6800B81344 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D355C823842E6800B81344 /* Contact.swift */; };
 		C3D512D72300AA9400B25BDC /* MatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D512D62300AA9400B25BDC /* MatchView.swift */; };
 		C3D512D92300C23700B25BDC /* GlympsGradientButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D512D82300C23700B25BDC /* GlympsGradientButton.swift */; };
 		C3D512DB2301A6E500B25BDC /* GlympsGradientBorderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D512DA2301A6E500B25BDC /* GlympsGradientBorderButton.swift */; };
@@ -116,7 +119,6 @@
 		C32FE63F229381C300E9BA1D /* PasswordVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordVC.swift; sourceTree = "<group>"; };
 		C32FE64B229381CC00E9BA1D /* ProfileVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		C32FE64D229381CC00E9BA1D /* DeckVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckVC.swift; sourceTree = "<group>"; };
-		C32FE651229382B700E9BA1D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C32FE6582293872800E9BA1D /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		C32FE65A2293873000E9BA1D /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		C32FE65C2293873A00E9BA1D /* UserAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAPI.swift; sourceTree = "<group>"; };
@@ -128,8 +130,9 @@
 		C331704623138F1C00280FAD /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 		C33170482321439D00280FAD /* OnboardingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingVC.swift; sourceTree = "<group>"; };
 		C331704A232147FB00280FAD /* OnboardingContentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContentVC.swift; sourceTree = "<group>"; };
-		C3448ABB22B35920000BCB4C /* GlympsApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GlympsApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		C3448AC322B77914000BCB4C /* EditProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileVC.swift; sourceTree = "<group>"; };
+		C358F4F4238B605100F8CF00 /* GlympsApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GlympsApp-Bridging-Header.h"; sourceTree = "<group>"; };
+		C358F4F5238B795000F8CF00 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C35D469C234142D50019FE35 /* BlockOptionsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockOptionsVC.swift; sourceTree = "<group>"; };
 		C35D469E2341A51A0019FE35 /* ShareGlympsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareGlympsVC.swift; sourceTree = "<group>"; };
 		C3829A63230F15EF00659744 /* BlockUserVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockUserVC.swift; sourceTree = "<group>"; };
@@ -146,12 +149,15 @@
 		C3A83E6022937FF2000E8BA4 /* GlympsApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GlympsApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3A83E6322937FF2000E8BA4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C3A83E6F22937FF4000E8BA4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C3BB797C238B2DAF0026A783 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3C0E92E230AE68B00FA53DD /* DeclineUserVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeclineUserVC.swift; sourceTree = "<group>"; };
 		C3C3416822DE0CF9000B1F02 /* AdvertiserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertiserView.swift; sourceTree = "<group>"; };
 		C3C3416C22DE16D0000B1F02 /* GlympsPremiumService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlympsPremiumService.swift; sourceTree = "<group>"; };
 		C3C3416E22E02DB0000B1F02 /* BuyCoinsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyCoinsVC.swift; sourceTree = "<group>"; };
 		C3C3417022E16FF1000B1F02 /* IAPProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPProduct.swift; sourceTree = "<group>"; };
 		C3C3418322E6CC49000B1F02 /* CoinNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinNotification.swift; sourceTree = "<group>"; };
+		C3D355C6238265A000B81344 /* ContactsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContactsVC.swift; path = GlympsApp/ContactsVC.swift; sourceTree = SOURCE_ROOT; };
+		C3D355C823842E6800B81344 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		C3D512D62300AA9400B25BDC /* MatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchView.swift; sourceTree = "<group>"; };
 		C3D512D82300C23700B25BDC /* GlympsGradientButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlympsGradientButton.swift; sourceTree = "<group>"; };
 		C3D512DA2301A6E500B25BDC /* GlympsGradientBorderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlympsGradientBorderButton.swift; sourceTree = "<group>"; };
@@ -163,6 +169,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C3BB797D238B2DAF0026A783 /* Alamofire.framework in Frameworks */,
 				CB4F1203C24CE17CCEE45B6D /* Pods_GlympsApp.framework in Frameworks */,
 				C3130FEC22DC31A0001DE9A8 /* StoreKit.framework in Frameworks */,
 			);
@@ -174,6 +181,7 @@
 		1D9E11FE53343819E92AA97F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C3BB797C238B2DAF0026A783 /* Alamofire.framework */,
 				C3130FEB22DC31A0001DE9A8 /* StoreKit.framework */,
 				1011C405943C4F414502F0AA /* Pods_GlympsApp.framework */,
 			);
@@ -194,6 +202,7 @@
 			children = (
 				C32FE6192293817A00E9BA1D /* User.swift */,
 				C385587C22FB1619006DB712 /* Message.swift */,
+				C3D355C823842E6800B81344 /* Contact.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -248,6 +257,7 @@
 			children = (
 				C32FE64B229381CC00E9BA1D /* ProfileVC.swift */,
 				C35D469E2341A51A0019FE35 /* ShareGlympsVC.swift */,
+				C3D355C6238265A000B81344 /* ContactsVC.swift */,
 				C3448AC322B77914000BCB4C /* EditProfileVC.swift */,
 				C3130FE022C5DC78001DE9A8 /* SettingsVC.swift */,
 				C3130FE622DB0031001DE9A8 /* ActivatePremiumVC.swift */,
@@ -341,9 +351,9 @@
 				C32FE66522938A0000E9BA1D /* Welcome.storyboard */,
 				C32FE610229380E700E9BA1D /* Main.storyboard */,
 				C32FE6162293812000E9BA1D /* Assets.xcassets */,
+				C358F4F5238B795000F8CF00 /* GoogleService-Info.plist */,
 				C3A83E6F22937FF4000E8BA4 /* Info.plist */,
-				C32FE651229382B700E9BA1D /* GoogleService-Info.plist */,
-				C3448ABB22B35920000BCB4C /* GlympsApp-Bridging-Header.h */,
+				C358F4F4238B605100F8CF00 /* GlympsApp-Bridging-Header.h */,
 			);
 			path = GlympsApp;
 			sourceTree = "<group>";
@@ -432,8 +442,8 @@
 				C32FE66622938A0000E9BA1D /* Welcome.storyboard in Resources */,
 				C32FE6152293810500E9BA1D /* LaunchScreen.storyboard in Resources */,
 				C32FE611229380E700E9BA1D /* Main.storyboard in Resources */,
-				C32FE652229382B700E9BA1D /* GoogleService-Info.plist in Resources */,
 				C32FE6172293812000E9BA1D /* Assets.xcassets in Resources */,
+				C358F4F6238B795000F8CF00 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -489,6 +499,7 @@
 				C3130FE322D2AE35001DE9A8 /* UserDetailsVC.swift in Sources */,
 				C32FE6212293818500E9BA1D /* GlympsGradientView.swift in Sources */,
 				C385587722F262F7006DB712 /* MessageCell.swift in Sources */,
+				C3D355C7238265A000B81344 /* ContactsVC.swift in Sources */,
 				C3448AC422B77914000BCB4C /* EditProfileVC.swift in Sources */,
 				15DA3E06234E9D7100A0FB8E /* APIType.swift in Sources */,
 				C385586B22F25027006DB712 /* EmptyUITableViewExt.swift in Sources */,
@@ -537,6 +548,7 @@
 				C3A83E6422937FF2000E8BA4 /* AppDelegate.swift in Sources */,
 				C33170432313438B00280FAD /* Notifications.swift in Sources */,
 				C32FE6202293818500E9BA1D /* WelcomeGlympsGradientView.swift in Sources */,
+				C3D355C923842E6800B81344 /* Contact.swift in Sources */,
 				C3130FE722DB0031001DE9A8 /* ActivatePremiumVC.swift in Sources */,
 				C32FE6232293818500E9BA1D /* BottomNavigationStackView.swift in Sources */,
 				C3D512DB2301A6E500B25BDC /* GlympsGradientBorderButton.swift in Sources */,
@@ -558,6 +570,7 @@
 		C3A83E7022937FF4000E8BA4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -590,6 +603,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = H76D944ZRK;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -619,6 +633,7 @@
 		C3A83E7122937FF4000E8BA4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -651,6 +666,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = H76D944ZRK;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -664,6 +680,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -675,22 +692,23 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 55E0ED9DB1E0F761F03BAB1C /* Pods-GlympsApp.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = GlympsApp/GlympsApp.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = H76D944ZRK;
 				INFOPLIST_FILE = GlympsApp/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
+				MACH_O_TYPE = mh_dylib;
 				PRODUCT_BUNDLE_IDENTIFIER = JamesBMorris.GlympsApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "GlympsApp/GlympsApp-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -698,21 +716,23 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9985B9CBD42E1BEA1AD6D096 /* Pods-GlympsApp.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = GlympsApp/GlympsApp.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = H76D944ZRK;
 				INFOPLIST_FILE = GlympsApp/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
+				MACH_O_TYPE = mh_dylib;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = JamesBMorris.GlympsApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "GlympsApp/GlympsApp-Bridging-Header.h";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
