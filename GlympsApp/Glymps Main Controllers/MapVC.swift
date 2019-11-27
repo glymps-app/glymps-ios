@@ -132,12 +132,12 @@ class MapVC: UIViewController, MGLMapViewDelegate {
 
             guard let response = (result?.data as? [String: [[Double]]])?["locations"] else { return }
 
-            self?.locations =  [
-                   CLLocationCoordinate2D(latitude: 37.80243725413708, longitude: -122.42362685443663),
-                   CLLocationCoordinate2D(latitude: 37.80243725413708, longitude: -122.42362685443663),
-                   CLLocationCoordinate2D(latitude: 37.80243725413708, longitude: -122.42362685443663),
-                   CLLocationCoordinate2D(latitude: 37.80243725413708, longitude: -122.42362685443663),
-               ]
+//            self?.locations =  [
+//                   CLLocationCoordinate2D(latitude: 37.80243725413708, longitude: -122.42362685443663),
+//                   CLLocationCoordinate2D(latitude: 37.80243725413708, longitude: -122.42362685443663),
+//                   CLLocationCoordinate2D(latitude: 37.80243725413708, longitude: -122.42362685443663),
+//                   CLLocationCoordinate2D(latitude: 37.80243725413708, longitude: -122.42362685443663),
+//               ]
             
             for locationData in response {
                 guard let lat = CLLocationDegrees(exactly: locationData[0]), let long = CLLocationDegrees(exactly: locationData[1]) else { return }
