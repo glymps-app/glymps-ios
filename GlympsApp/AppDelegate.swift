@@ -32,9 +32,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         UNUserNotificationCenter.current().removeAllDeliveredNotifications()
         
         // initialize RevenueCat iOS SDK
-        Purchases.debugLogsEnabled = true
-        Purchases.configure(withAPIKey: "YgURteRoOLoOhJgOlUNNGDettfjWLqLn", appUserID: nil)
-        
+//        Purchases.debugLogsEnabled = true
+//        Purchases.configure(withAPIKey: "YgURteRoOLoOhJgOlUNNGDettfjWLqLn", appUserID: nil)
+//        
         // initialize Smaato iOS SDK
         guard let config = SMAConfiguration(publisherId: "0") else {
                 fatalError("SDK config is nil!")

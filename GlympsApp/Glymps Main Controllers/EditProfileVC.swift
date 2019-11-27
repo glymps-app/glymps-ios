@@ -307,7 +307,7 @@ extension EditProfileVC: UIImagePickerControllerDelegate, UINavigationController
     }
 }
 
-// setup pickers for profile images
+// setup pickers for gender
 extension EditProfileVC: UIPickerViewDataSource, UIPickerViewDelegate {
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {

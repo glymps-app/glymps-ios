@@ -17,7 +17,7 @@ class ActivatePremiumVC: UIViewController {
     @IBOutlet weak var activatePremiumBtn: UIButton!
     
     // app entitlements
-    var entitlements: [String : Entitlement] = [:]
+    //var entitlements: [String : Entitlement] = [:]
 
     override func viewDidLoad() {
         super.viewDidLoad()

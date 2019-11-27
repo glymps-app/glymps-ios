@@ -155,7 +155,7 @@ class AuthService {
         })
     }
 
-    static func updateDatabase(url: [String], name: String, gender: String, age: Int, email: String, bio: String, profession: String, company: String, onSuccess: @escaping () -> Void, onError: @escaping () -> Void) { // update key User information such as username, email, artforms, bio, and profile image, on database
+    static func updateDatabase(url: [String], name: String, gender: String, age: Int, email: String, bio: String, profession: String, company: String, onSuccess: @escaping () -> Void, onError: @escaping () -> Void) { // update key User information such as username, email, bio, and profile image, on database
 
         let dict = ["name" : name, "gender" : gender, "age" : age, "email" : email, "bio" : bio, "profession" : profession, "company" : company, "profileImages" : url] as [String : Any]
 

@@ -14,6 +14,7 @@ import FirebaseStorage
 import FirebaseAnalytics
 import SDWebImage
 import SLCarouselView
+import iCarousel
 import JGProgressHUD
 import Purchases
 import CoreLocation
@@ -22,7 +23,11 @@ import SmaatoSDKCore
 import SmaatoSDKBanner
 import SmaatoSDKInterstitial
 
-class DeckVC: UIViewController {
+class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate {
+    
+    @IBOutlet weak var refreshUsersBtn: UIButton!
+    
+    @IBOutlet weak var refreshUsersImage: UIImageView!
     
     @IBOutlet weak var noUsersView: UIView! // image if no nearby users found
     
@@ -32,10 +37,14 @@ class DeckVC: UIViewController {
     
     let headerView = UIView() // top view (Glymps + heatmap)
     // TODO: change this cardsDeckView below from a third-party SLCarouselView to UICollectionView for expanded UI capabilities
-    let cardsDeckView = SLCarouselView(coder: NSCoder.empty()) // "card deck" carousels
+    
+    @IBOutlet weak var cardsDeckView: iCarousel!
+    
     let menuView = BottomNavigationStackView() // bottom navigation bar
     
     var users: [User] = []
+    
+    var cachedUsers: [User] = []
     
     var requests: [String] = []
     
@@ -74,12 +83,30 @@ class DeckVC: UIViewController {
     let manager = CLLocationManager()
     var myQuery: GFQuery!
     var queryHandle: DatabaseHandle?
+    let authAPI = AuthAPI(user: Auth.auth().currentUser!)
+    lazy var deckService = DeckService(authAPI: authAPI)
+    let connectionGroup = ConnectionGroup()
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        observeDeck()
+    }
 
     // setup UI and backend systems (Geolocation – GeoFire, Premium, Firebase)
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        cardsDeckView.type = .linear
+        
+        refreshUsersBtn.isEnabled = false
+        
+        refreshUsersImage.isHidden = true
+        
+        refreshUsersBtn.isHidden = true
+        
         configureLocationManager()
+        observeDeck()
         
         mapBtn.layer.zPosition = 30
         headerView.addSubview(mapBtn)
@@ -90,7 +117,7 @@ class DeckVC: UIViewController {
         
         setupDeviceToken()
         
-        checkIfPremium()
+        //checkIfPremium()
         
         noUsersView.isHidden = true
         
@@ -107,14 +134,15 @@ class DeckVC: UIViewController {
         menuView.heightAnchor.constraint(equalToConstant: 70).isActive = true
         
         // setup views
-        let stackView = UIStackView(arrangedSubviews: [headerView, cardsDeckView!, menuView])
+         
+        let stackView = UIStackView(arrangedSubviews: [headerView, cardsDeckView, menuView])
         stackView.axis = .vertical
         view.addSubview(stackView)
         stackView.frame = .init(x: 0, y: 0, width: 300, height: 200)
         stackView.fillSuperview()
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.layoutMargins = .init(top: 0, left: 12, bottom: 0, right: 12)
-        stackView.bringSubviewToFront(cardsDeckView!)
+        stackView.bringSubviewToFront(cardsDeckView)
         
         menuView.settingsButton.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
         menuView.messagesButton.addTarget(self, action: #selector(handleMessages), for: .touchUpInside)
@@ -122,6 +150,10 @@ class DeckVC: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             self.setupAds()
         }
+        
+        self.view.bringSubviewToFront(refreshUsersBtn)
+        self.view.bringSubviewToFront(refreshUsersImage)
+        
     }
     
     // setup location manager to get current user location, live
@@ -161,59 +193,58 @@ class DeckVC: UIViewController {
     }
     
     // check if current user is a Glymps Premium user
-    func checkIfPremium() {
-        
-        Purchases.shared.purchaserInfo { (purchaserInfo, error) in
-            if let purchaserInfo = purchaserInfo {
-                
-                print(purchaserInfo.activeSubscriptions)
-                
-                // Option 1: Check if user has access to entitlement (from RevenueCat dashboard)
-                if purchaserInfo.activeEntitlements.contains("pro") {
-                    print("User has access to Glymps entitlements!")
-                } else {
-                    print("User does not have access to Glymps entitlements!")
-                }
-
-                // Option 2: Check if user has active subscription (from App Store Connect or Play Store)
-                if purchaserInfo.activeSubscriptions.contains("JamesBMorris.GlympsApp.USDSubscription1Month") {
-                    // Grant user "pro" access
-                    print("User has Glymps Premium (1 mo subscription)")
-                    AuthService.subscribe()
-                } else if purchaserInfo.activeSubscriptions.contains("JamesBMorris.GlympsApp.USDSubscription6Month") {
-                    // Grant user "pro" access
-                    print("User has Glymps Premium (6 mo subscription)")
-                    AuthService.subscribe()
-                } else if purchaserInfo.activeSubscriptions.contains("JamesBMorris.GlympsApp.USDSubscription12Month") {
-                    // Grant user "pro" access
-                    print("User has Glymps Premium (12 mo subscription)")
-                    AuthService.subscribe()
-                } else if purchaserInfo.activeSubscriptions.contains("JamesBMorris.GlympsApp.CoinSubscription1Month") {
-                    // Grant user "pro" access
-                    print("User has Glymps Premium (1 mo coin subscription)")
-                    AuthService.subscribe()
-                } else if purchaserInfo.activeSubscriptions.contains("JamesBMorris.GlympsApp.CoinSubscription6Month") {
-                    // Grant user "pro" access
-                    print("User has Glymps Premium (6 mo coin subscription)")
-                    AuthService.subscribe()
-                } else if purchaserInfo.activeSubscriptions.contains("JamesBMorris.GlympsApp.CoinSubscription12Month") {
-                    // Grant user "pro" access
-                    print("User has Glymps Premium (12 mo coin subscription)")
-                    AuthService.subscribe()
-                } else {
-                    // User is not premium
-                    print("User does not have Glymps Premium!")
-                    AuthService.unsubscribe()
-                }
-            }
-        }
-        
-    }
+//    func checkIfPremium() {
+//
+//        Purchases.shared.purchaserInfo { (purchaserInfo, error) in
+//            if let purchaserInfo = purchaserInfo {
+//
+//                print(purchaserInfo.activeSubscriptions)
+//                // Option 1: Check if user has access to entitlement (from RevenueCat dashboard)
+//                if purchaserInfo.activeEntitlements.contains("pro") {
+//                    print("User has access to Glymps entitlements!")
+//                } else {
+//                    print("User does not have access to Glymps entitlements!")
+//                }
+//
+//                // Option 2: Check if user has active subscription (from App Store Connect or Play Store)
+//                if purchaserInfo.activeSubscriptions.contains("JamesBMorris.GlympsApp.USDSubscription1Month") {
+//                    // Grant user "pro" access
+//                    print("User has Glymps Premium (1 mo subscription)")
+//                    AuthService.subscribe()
+//                } else if purchaserInfo.activeSubscriptions.contains("JamesBMorris.GlympsApp.USDSubscription6Month") {
+//                    // Grant user "pro" access
+//                    print("User has Glymps Premium (6 mo subscription)")
+//                    AuthService.subscribe()
+//                } else if purchaserInfo.activeSubscriptions.contains("JamesBMorris.GlympsApp.USDSubscription12Month") {
+//                    // Grant user "pro" access
+//                    print("User has Glymps Premium (12 mo subscription)")
+//                    AuthService.subscribe()
+//                } else if purchaserInfo.activeSubscriptions.contains("JamesBMorris.GlympsApp.CoinSubscription1Month") {
+//                    // Grant user "pro" access
+//                    print("User has Glymps Premium (1 mo coin subscription)")
+//                    AuthService.subscribe()
+//                } else if purchaserInfo.activeSubscriptions.contains("JamesBMorris.GlympsApp.CoinSubscription6Month") {
+//                    // Grant user "pro" access
+//                    print("User has Glymps Premium (6 mo coin subscription)")
+//                    AuthService.subscribe()
+//                } else if purchaserInfo.activeSubscriptions.contains("JamesBMorris.GlympsApp.CoinSubscription12Month") {
+//                    // Grant user "pro" access
+//                    print("User has Glymps Premium (12 mo coin subscription)")
+//                    AuthService.subscribe()
+//                } else {
+//                    // User is not premium
+//                    print("User does not have Glymps Premium!")
+//                    AuthService.unsubscribe()
+//                }
+//            }
+//        }
+//
+//    }
     
     // any updated purchases from RevenueCat?
-    func purchases(_ purchases: Purchases, didReceiveUpdated purchaserInfo: PurchaserInfo) {
-        // handle any changes to purchaserInfo
-    }
+//    func purchases(_ purchases: Purchases, didReceiveUpdated purchaserInfo: PurchaserInfo) {
+//        // handle any changes to purchaserInfo
+//    }
     
     // setup mobile ads from Smaato
     func setupAds() {
@@ -228,9 +259,62 @@ class DeckVC: UIViewController {
         } else {
             print("Banner view is nil.")
         }
-        setupBannerAdCards()
+        //setupBannerAdCards()
+    }
+
+    func observeDeck() {
+        deckService.observeDeck { [weak self] deck in
+            API.User.observeCurrentUser { currentUser in
+                guard let strongSelf = self else { return }
+
+                strongSelf.cachedUsers = []
+
+                for card in deck {
+                    let user = card.user
+                    if (user.id != API.User.CURRENT_USER?.uid) && (currentUser.preferedGender == user.gender) && (currentUser.minAge!...currentUser.maxAge! ~= user.age!) && !strongSelf.requests.contains(user.id!) && !strongSelf.matches.contains(user.id!) && !strongSelf.blockedUsers.contains(user.id!) {
+                        print(user.name!)
+                        strongSelf.cachedUsers.append(user)
+                        strongSelf.noUsersView.isHidden = true
+                    } else if (user.id != API.User.CURRENT_USER?.uid) && (currentUser.preferedGender == "Both") && (currentUser.minAge!...currentUser.maxAge! ~= user.age!) {
+                        print(user.name!)
+                        strongSelf.cachedUsers.append(user)
+                        strongSelf.noUsersView.isHidden = true
+                    } else if strongSelf.bannerAds != [] {
+                        strongSelf.noUsersView.isHidden = true
+                    } else {
+                        strongSelf.hud.dismiss()
+                        strongSelf.noUsersView.isHidden = false
+                    }
+                }
+
+                if strongSelf.users.isEmpty {
+                    strongSelf.users = strongSelf.cachedUsers
+                    strongSelf.setupCards()
+                    strongSelf.cardsDeckView.reloadData()
+                } else {
+                   // Show refresh button
+                    
+                    strongSelf.refreshUsersImage.isHidden = false
+                    
+                    strongSelf.refreshUsersBtn.isHidden = false
+                    
+                    strongSelf.refreshUsersBtn.isEnabled = true
+                }
+            }
+        }.add(to: connectionGroup)
     }
     
+    @IBAction func refreshUsersBtnWasPressed(_ sender: Any) {
+        
+        self.users = self.cachedUsers
+        self.cardsDeckView.reloadData()
+        
+        self.refreshUsersImage.isHidden = true
+        self.refreshUsersBtn.isHidden = true
+        self.refreshUsersBtn.isEnabled = false
+    }
+    
+
     // find nearby users in 400 foot radius of current user
     func findUsers(completion: @escaping (User) -> Void) {
 
@@ -363,11 +447,11 @@ class DeckVC: UIViewController {
         // go to specific user chat after this transition
     }
     
-    var index = 0
+    var indexForCards = 0
     
-    // setup nearby user cards
     func setupCards() {
         for user in users {
+            let cardView = CardView(frame: CGRect(x: 0, y: 0, width: 370, height: 570))
             let gradientView = GlympsGradientView()
             let barsStackView = UIStackView()
             let moreInfoButton = UIButton(type: .system)
@@ -379,7 +463,6 @@ class DeckVC: UIViewController {
             messageUserButton.isUserInteractionEnabled = true
             messageUserButton.addTarget(self, action: #selector(messageUserTapped(sender:)), for: .touchUpInside)
             gradientView.layer.opacity = 0.5
-            let cardView = CardView(frame: .zero)
             self.userId = user.id
             cardView.images = user.profileImages
             if let photoUrlString = user.profileImages {
@@ -393,27 +476,27 @@ class DeckVC: UIViewController {
                 barsStackView.addArrangedSubview(barView)
                 barsStackView.arrangedSubviews.first?.backgroundColor = .white
             }
-            
+                
             let nametraits = [UIFontDescriptor.TraitKey.weight: UIFont.Weight.semibold]
             var nameFontDescriptor = UIFontDescriptor(fontAttributes: [UIFontDescriptor.AttributeName.family: "Avenir Next"])
             nameFontDescriptor = nameFontDescriptor.addingAttributes([UIFontDescriptor.AttributeName.traits: nametraits])
-            
+                
             let agetraits = [UIFontDescriptor.TraitKey.weight: UIFont.Weight.light]
             var ageFontDescriptor = UIFontDescriptor(fontAttributes: [UIFontDescriptor.AttributeName.family: "Avenir Next"])
             ageFontDescriptor = ageFontDescriptor.addingAttributes([UIFontDescriptor.AttributeName.traits: agetraits])
-            
+                
             let jobtraits = [UIFontDescriptor.TraitKey.weight: UIFont.Weight.light]
             var jobFontDescriptor = UIFontDescriptor(fontAttributes: [UIFontDescriptor.AttributeName.family: "Avenir Next"])
             jobFontDescriptor = jobFontDescriptor.addingAttributes([UIFontDescriptor.AttributeName.traits: jobtraits])
-            
+                
             let attributedText = NSMutableAttributedString(string: user.name!, attributes: [.font: UIFont(descriptor: nameFontDescriptor, size: 30)])
             attributedText.append(NSAttributedString(string: " \(user.age!)", attributes: [.font: UIFont(descriptor: ageFontDescriptor, size: 24)]))
             if user.profession != "" && user.company != "" {
                 attributedText.append(NSAttributedString(string: "\n\(user.profession!) @ \(user.company!)", attributes: [.font: UIFont(descriptor: jobFontDescriptor, size: 20)]))
             }
-            
+                
             cardView.informationLabel.attributedText = attributedText
-            
+                
             cardView.addSubview(gradientView)
             cardView.addSubview(barsStackView)
             cardView.addSubview(moreInfoButton)
@@ -422,48 +505,69 @@ class DeckVC: UIViewController {
             cardView.messageUserButton = messageUserButton
             cardView.stackView = barsStackView
             cardView.userId = self.userId
-            cardView.moreInfoButton?.tag = index
-            cardView.messageUserButton?.tag = index
+            cardView.moreInfoButton?.tag = indexForCards
+            cardView.messageUserButton?.tag = indexForCards
             moreInfoButton.anchor(top: nil, leading: nil, bottom: cardView.bottomAnchor, trailing: cardView.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 20, right: 20), size: .init(width: 50, height: 50))
             messageUserButton.anchor(top: cardView.topAnchor, leading: nil, bottom: nil, trailing: cardView.trailingAnchor, padding: .init(top: 25, left: 0, bottom: 0, right: 25), size: .init(width: 44, height: 44))
             barsStackView.anchor(top: cardView.topAnchor, leading: cardView.leadingAnchor, bottom: nil, trailing: cardView.trailingAnchor, padding: .init(top: 8, left: 8, bottom: 0, right: 8), size: .init(width: 0, height: 4))
             barsStackView.spacing = 4
             barsStackView.distribution = .fillEqually
-            cardView.fillSuperview()
+            //cardView.fillSuperview()
             gradientView.fillSuperview()
-            
+                
             hud.textLabel.text = "All done! \u{1F389}"
             hud.dismiss(afterDelay: 0.0)
-            
-            self.index += 1
+                
+            self.indexForCards += 1
             self.cardViews.append(cardView)
-            
-            self.cardsDeckView?.appendContent(view: cardView)
+            self.noUsersView.isHidden = true
         }
-        self.noUsersView.isHidden = true
+    }
+    
+    // setup nearby user cards
+    func numberOfItems(in carousel: iCarousel) -> Int {
+        users.count
+    }
+    
+    func carousel(_ carousel: iCarousel, valueFor option: iCarouselOption, withDefault value: CGFloat) -> CGFloat {
+        if (option == .spacing) {
+            return value * 1.01
+        }
+        return value
+    }
+    
+    func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: UIView?) -> UIView {
+        
+//        let tempView = UIView(frame: CGRect(x: 0, y: 0, width: 370, height: 570))
+//        tempView.layer.cornerRadius = 15
+//        tempView.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
+//
+//        return tempView
+        
+        return cardViews[index]
     }
     
     // setup mobile ad cards
-    func setupBannerAdCards() {
-        
-        API.User.observeCurrentUser { (user) in
-            if user.isPremium == false {
-                //self.callWhenYouNeedInterstitial()
-                for banner in self.bannerAds {
-                    let advertiserView = AdvertiserView(frame: .zero)
-                    print("BANNER: \(banner)")
-                    advertiserView.addSubview(banner)
-                    advertiserView.bannerView = banner
-                    banner.anchor(top: advertiserView.topAnchor, leading: advertiserView.leadingAnchor, bottom: advertiserView.bottomAnchor, trailing: advertiserView.trailingAnchor)
-                    advertiserView.fillSuperview()
-
-                    self.cardsDeckView?.appendContent(view: advertiserView)
-                }
-                print("Banners: \(self.bannerAds.count)")
-            }
-        }
-        self.noUsersView.isHidden = true
-    }
+//    func setupBannerAdCards() {
+//
+//        API.User.observeCurrentUser { (user) in
+//            if user.isPremium == false {
+//                //self.callWhenYouNeedInterstitial()
+//                for banner in self.bannerAds {
+//                    let advertiserView = AdvertiserView(frame: .zero)
+//                    print("BANNER: \(banner)")
+//                    advertiserView.addSubview(banner)
+//                    advertiserView.bannerView = banner
+//                    banner.anchor(top: advertiserView.topAnchor, leading: advertiserView.leadingAnchor, bottom: advertiserView.bottomAnchor, trailing: advertiserView.trailingAnchor)
+//                    advertiserView.fillSuperview()
+//
+//                    //self.cardsDeckView?.appendContent(view: advertiserView)
+//                }
+//                print("Banners: \(self.bannerAds.count)")
+//            }
+//        }
+//        self.noUsersView.isHidden = true
+//    }
     
 //    func callWhenYouNeedInterstitial() {
 //        SmaatoSDK.loadInterstitial(forAdSpaceId: "0",                                                     delegate: self)
@@ -496,7 +600,6 @@ extension DeckVC: CLLocationManagerDelegate {
     
     // update current location of current user whenever changed, on Firebase via GeoFire
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        manager.stopUpdatingLocation()
         manager.delegate = nil
         let updatedLocation: CLLocation = locations.first!
         let newCoordinate: CLLocationCoordinate2D = updatedLocation.coordinate
@@ -509,35 +612,10 @@ extension DeckVC: CLLocationManagerDelegate {
             
             let location: CLLocation = CLLocation(latitude: CLLocationDegrees(Double(userLat)!), longitude: CLLocationDegrees(Double(userLong)!))
             
-            self.geoFire.setLocation(location, forKey: API.User.CURRENT_USER!.uid)
-            self.geoFire.setLocation(location, forKey: API.User.CURRENT_USER!.uid) { (error) in
-                if error == nil {
-                    // Query nearby users
-                    self.findUsers { (user) in
-                        API.User.observeCurrentUser(completion: { (currentUser) in
-                            if (user.id != API.User.CURRENT_USER?.uid) && (currentUser.preferedGender == user.gender) && (currentUser.minAge!...currentUser.maxAge! ~= user.age!) && !self.requests.contains(user.id!) && !self.matches.contains(user.id!) && !self.blockedUsers.contains(user.id!) {
-                                print(user.name!)
-                                self.users.append(user)
-                                self.noUsersView.isHidden = true
-                                DispatchQueue.main.async {
-                                    self.setupCards()
-                                }
-                            } else if (user.id != API.User.CURRENT_USER?.uid) && (currentUser.preferedGender == "Both") && (currentUser.minAge!...currentUser.maxAge! ~= user.age!) {
-                                print(user.name!)
-                                self.users.append(user)
-                                self.noUsersView.isHidden = true
-                                DispatchQueue.main.async {
-                                    self.setupCards()
-                                }
-                            } else if self.bannerAds != [] {
-                                self.noUsersView.isHidden = true
-                            } else {
-                                self.hud.dismiss()
-                                self.noUsersView.isHidden = false
-                            }
-                        })
-                    }
-                }
+            geoFire.setLocation(location, forKey: API.User.CURRENT_USER!.uid) { error in //[weak self] error in
+                print("[RESULT]: " + String(describing: error))
+//                if error != nil { return }
+//                self?.authAPI.location.addTimestamp()
             }
         }
     }
