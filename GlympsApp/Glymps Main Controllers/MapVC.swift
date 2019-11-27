@@ -73,9 +73,8 @@ class MapVC: UIViewController, MGLMapViewDelegate {
     }
 
     func configureHeatmap(with style: MGLStyle) {
-        if let source = style.sources.first, let layer = style.layers.first {
-            style.removeLayer(layer)
-            style.removeSource(source)
+        if style.sources.first != nil {
+            return
         }
 
         var points = [MGLPointAnnotation]()
