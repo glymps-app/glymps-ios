@@ -313,34 +313,7 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate {
         self.refreshUsersBtn.isHidden = true
         self.refreshUsersBtn.isEnabled = false
     }
-    
-
-    // find nearby users in 400 foot radius of current user
-    func findUsers(completion: @escaping (User) -> Void) {
-
-        if queryHandle != nil, myQuery != nil {
-            myQuery.removeObserver(withFirebaseHandle: queryHandle!)
-            queryHandle = nil
-            myQuery = nil
-        }
         
-        guard let userLat = UserDefaults.standard.value(forKey: "current_location_latitude") as? String, let userLong = UserDefaults.standard.value(forKey: "current_location_longitude") as? String else {
-            return
-        }
-        
-        // query geolocations of nearby users with GeoFire
-        let location: CLLocation = CLLocation(latitude: CLLocationDegrees(Double(userLat)!), longitude: CLLocationDegrees(Double(userLong)!))
-        self.users.removeAll()
-        myQuery = geoFire.query(at: location, withRadius: 0.12) // load users within 400 feet
-        queryHandle = myQuery.observe(.keyEntered) { (key, location) in
-            if key != API.User.CURRENT_USER!.uid {
-                API.User.observeUsers(withId: key, completion: { (user) in
-                    completion(user)
-                })
-            }
-        }
-    }
-    
     func loadRequests() {
         
         // load new message requests
