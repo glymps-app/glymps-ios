@@ -25,14 +25,10 @@ class MapVC: UIViewController, MGLMapViewDelegate {
     @IBOutlet weak var mapView: MGLMapView!
     
     @IBOutlet weak var dismissBtn: UIButton!
-    
-    // setup GeoFire
-    var userLat = ""
-    var userLong = ""
 
+    var heatmapLoaded = false
     var locations: [CLLocationCoordinate2D] = []
-//    var geoFire: GeoFire!
-//    var geoFireRef: DatabaseReference!
+
     let manager = CLLocationManager()
     lazy var functions = Functions.functions(app: FirebaseApp.app()!)
 
@@ -60,9 +56,6 @@ class MapVC: UIViewController, MGLMapViewDelegate {
         if CLLocationManager.locationServicesEnabled() {
             manager.startUpdatingLocation()
         }
-        
-//        self.geoFireRef = Database.database().reference().child("Geolocs")
-//        self.geoFire = GeoFire(firebaseRef: self.geoFireRef)
     }
     
     // layout heatmap
@@ -73,9 +66,11 @@ class MapVC: UIViewController, MGLMapViewDelegate {
     }
 
     func configureHeatmap(with style: MGLStyle) {
-        if style.sources.first != nil {
+        if heatmapLoaded {
             return
         }
+
+        heatmapLoaded = true
 
         var points = [MGLPointAnnotation]()
         for location in locations {
@@ -114,8 +109,13 @@ class MapVC: UIViewController, MGLMapViewDelegate {
                                                    9: 30])
 
         // The heatmap layer should be visible up to zoom level 9.
-        //heatmapLayer.heatmapOpacity = NSExpression(format: "mgl_step:from:stops:($zoomLevel, 0.75, %@)", [0: 0.75, 9: 0])
-        style.addLayer(heatmapLayer)
+        heatmapLayer.heatmapOpacity = NSExpression(forConstantValue: 0.75)
+
+        if let symbolLayer = style.layers.filter({ $0 is MGLSymbolStyleLayer })[safe: 8] {
+            style.insertLayer(heatmapLayer, below: symbolLayer)
+        } else {
+            style.addLayer(heatmapLayer)
+        }
     }
     
     // go back to "card deck"
@@ -130,13 +130,6 @@ class MapVC: UIViewController, MGLMapViewDelegate {
             }
 
             guard let response = (result?.data as? [String: [[Double]]])?["locations"] else { return }
-
-//            self?.locations =  [
-//                   CLLocationCoordinate2D(latitude: 37.80243725413708, longitude: -122.42362685443663),
-//                   CLLocationCoordinate2D(latitude: 37.80243725413708, longitude: -122.42362685443663),
-//                   CLLocationCoordinate2D(latitude: 37.80243725413708, longitude: -122.42362685443663),
-//                   CLLocationCoordinate2D(latitude: 37.80243725413708, longitude: -122.42362685443663),
-//               ]
             
             for locationData in response {
                 guard let lat = CLLocationDegrees(exactly: locationData[0]), let long = CLLocationDegrees(exactly: locationData[1]) else { return }
@@ -171,5 +164,14 @@ extension MapVC: CLLocationManagerDelegate {
 
         getHeatmapData(lat: location.coordinate.latitude.magnitude, long: location.coordinate.longitude.magnitude)
     }
-    
+}
+
+extension Array {
+    public subscript(safe index: Int) -> Element? {
+        guard index >= 0, index < endIndex else {
+            return nil
+        }
+
+        return self[index]
+    }
 }
