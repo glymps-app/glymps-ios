@@ -693,13 +693,13 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = GlympsApp/GlympsApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = J94H7L6UP9;
+				DEVELOPMENT_TEAM = D7948N3PY8;
 				INFOPLIST_FILE = GlympsApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.glympsapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.glymps.glympsapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "GlympsApp/GlympsApp-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -722,7 +722,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = JamesBMorris.GlympsApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.glymps.glympsapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "GlympsApp/GlympsApp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
