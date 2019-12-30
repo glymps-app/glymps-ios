@@ -12,6 +12,7 @@ import FirebaseAuth
 import FirebaseDatabase
 import FirebaseStorage
 import FirebaseAnalytics
+import FirebaseFunctions
 import Mapbox
 import CoreLocation
 import GeoFire
@@ -24,13 +25,12 @@ class MapVC: UIViewController, MGLMapViewDelegate {
     @IBOutlet weak var mapView: MGLMapView!
     
     @IBOutlet weak var dismissBtn: UIButton!
-    
-    // setup GeoFire
-    var userLat = ""
-    var userLong = ""
-    var geoFire: GeoFire!
-    var geoFireRef: DatabaseReference!
+
+    var heatmapLoaded = false
+    var locations: [CLLocationCoordinate2D] = []
+
     let manager = CLLocationManager()
+    lazy var functions = Functions.functions(app: FirebaseApp.app()!)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,22 +56,35 @@ class MapVC: UIViewController, MGLMapViewDelegate {
         if CLLocationManager.locationServicesEnabled() {
             manager.startUpdatingLocation()
         }
-        
-        self.geoFireRef = Database.database().reference().child("Geolocs")
-        self.geoFire = GeoFire(firebaseRef: self.geoFireRef)
     }
     
     // layout heatmap
     func mapView(_ mapView: MGLMapView, didFinishLoading style: MGLStyle) {
-        
-        // Parse GeoJSON data. This example uses all M1.0+ earthquakes from 12/22/15 to 1/21/16 as logged by USGS' Earthquake hazards program.
-        guard let url = URL(string: "https://www.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson") else { return }
-        let source = MGLShapeSource(identifier: "earthquakes", url: url, options: nil)
+        if !locations.isEmpty {
+            configureHeatmap(with: style)
+        }
+    }
+
+    func configureHeatmap(with style: MGLStyle) {
+        if heatmapLoaded {
+            return
+        }
+
+        heatmapLoaded = true
+
+        var points = [MGLPointAnnotation]()
+        for location in locations {
+            let point = MGLPointAnnotation()
+            point.coordinate = location
+            points.append(point)
+        }
+
+        let source = MGLShapeSource(identifier: "locations", shapes: points, options: nil)
         style.addSource(source)
-        
+
         // Create a heatmap layer.
-        let heatmapLayer = MGLHeatmapStyleLayer(identifier: "earthquakes", source: source)
-        
+        let heatmapLayer = MGLHeatmapStyleLayer(identifier: "locations", source: source)
+
         // Adjust the color of the heatmap based on the point density.
         let colorDictionary: [NSNumber: UIColor] = [
             0.0: .clear,
@@ -81,12 +94,12 @@ class MapVC: UIViewController, MGLMapViewDelegate {
             1: .yellow
         ]
         heatmapLayer.heatmapColor = NSExpression(format: "mgl_interpolate:withCurveType:parameters:stops:($heatmapDensity, 'linear', nil, %@)", colorDictionary)
-        
+
         // Heatmap weight measures how much a single data point impacts the layer's appearance.
         heatmapLayer.heatmapWeight = NSExpression(format: "mgl_interpolate:withCurveType:parameters:stops:(mag, 'linear', nil, %@)",
                                                   [0: 0,
                                                    6: 1])
-        
+
         // Heatmap intensity multiplies the heatmap weight based on zoom level.
         heatmapLayer.heatmapIntensity = NSExpression(format: "mgl_interpolate:withCurveType:parameters:stops:($zoomLevel, 'linear', nil, %@)",
                                                      [0: 1,
@@ -94,27 +107,15 @@ class MapVC: UIViewController, MGLMapViewDelegate {
         heatmapLayer.heatmapRadius = NSExpression(format: "mgl_interpolate:withCurveType:parameters:stops:($zoomLevel, 'linear', nil, %@)",
                                                   [0: 4,
                                                    9: 30])
-        
+
         // The heatmap layer should be visible up to zoom level 9.
-        heatmapLayer.heatmapOpacity = NSExpression(format: "mgl_step:from:stops:($zoomLevel, 0.75, %@)", [0: 0.75, 9: 0])
-        style.addLayer(heatmapLayer)
-        
-        // Add a circle layer to represent the earthquakes at higher zoom levels.
-        let circleLayer = MGLCircleStyleLayer(identifier: "circle-layer", source: source)
-        
-        let magnitudeDictionary: [NSNumber: UIColor] = [
-            0: .white,
-            0.5: .yellow,
-            2.5: UIColor(red: 0.73, green: 0.23, blue: 0.25, alpha: 1.0),
-            5: UIColor(red: 0.19, green: 0.30, blue: 0.80, alpha: 1.0)
-        ]
-        circleLayer.circleColor = NSExpression(format: "mgl_interpolate:withCurveType:parameters:stops:(mag, 'linear', nil, %@)", magnitudeDictionary)
-        
-        // The heatmap layer will have an opacity of 0.75 up to zoom level 9, when the opacity becomes 0.
-        circleLayer.circleOpacity = NSExpression(format: "mgl_step:from:stops:($zoomLevel, 0, %@)", [0: 0, 9: 0.75])
-        circleLayer.circleRadius = NSExpression(forConstantValue: 20)
-        style.addLayer(circleLayer)
-        
+        heatmapLayer.heatmapOpacity = NSExpression(forConstantValue: 0.75)
+
+        if let symbolLayer = style.layers.filter({ $0 is MGLSymbolStyleLayer })[safe: 8] {
+            style.insertLayer(heatmapLayer, below: symbolLayer)
+        } else {
+            style.addLayer(heatmapLayer)
+        }
     }
     
     // go back to "card deck"
@@ -122,6 +123,25 @@ class MapVC: UIViewController, MGLMapViewDelegate {
         dismiss(animated: true, completion: nil)
     }
 
+    func getHeatmapData(lat: Double, long: Double) {
+        functions.httpsCallable("heatmap").call(["latitude": lat, "longitude": long]) { [weak self] (result, error) in
+            if let error = error as NSError? {
+                print(error)
+            }
+
+            guard let response = (result?.data as? [String: [[Double]]])?["locations"] else { return }
+            
+            for locationData in response {
+                guard let lat = CLLocationDegrees(exactly: locationData[0]), let long = CLLocationDegrees(exactly: locationData[1]) else { return }
+                let location = CLLocationCoordinate2D(latitude: lat, longitude: long)
+                self?.locations.append(location)
+            }
+
+            if let style = self?.mapView.style {
+                self?.configureHeatmap(with: style)
+            }
+        }
+    }
 }
 
 // check on authorization status for location manager
@@ -138,21 +158,20 @@ extension MapVC: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Location services authorization error: \(error.localizedDescription)")
     }
-    // update current location of current user whenever changed, on Firebase via GeoFire
+
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let updatedLocation: CLLocation = locations.first!
-        let newCoordinate: CLLocationCoordinate2D = updatedLocation.coordinate
-        let userDefaults: UserDefaults = UserDefaults.standard
-        userDefaults.setValue("\(newCoordinate.latitude)", forKey: "current_location_latitude")
-        userDefaults.setValue("\(newCoordinate.longitude)", forKey: "current_location_longitude")
-        userDefaults.synchronize()
-        
-        if let userLat = UserDefaults.standard.value(forKey: "current_location_latitude") as? String, let userLong = UserDefaults.standard.value(forKey: "current_location_longitude") as? String {
-            
-            let location: CLLocation = CLLocation(latitude: CLLocationDegrees(Double(userLat)!), longitude: CLLocationDegrees(Double(userLong)!))
-            
-            self.geoFire.setLocation(location, forKey: API.User.CURRENT_USER!.uid)
-        }
+        guard let location: CLLocation = locations.first else { return }
+
+        getHeatmapData(lat: location.coordinate.latitude.magnitude, long: location.coordinate.longitude.magnitude)
     }
-    
+}
+
+extension Array {
+    public subscript(safe index: Int) -> Element? {
+        guard index >= 0, index < endIndex else {
+            return nil
+        }
+
+        return self[index]
+    }
 }
