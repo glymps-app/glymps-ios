@@ -123,36 +123,36 @@ PODS:
   - SDWebImage/Core (5.3.2)
   - SLCarouselView (0.1.5):
     - PureLayout
-  - smaato-ios-sdk (21.2.1):
-    - smaato-ios-sdk/Full (= 21.2.1)
-  - smaato-ios-sdk/Banner (21.2.1):
+  - smaato-ios-sdk (21.3.0):
+    - smaato-ios-sdk/Full (= 21.3.0)
+  - smaato-ios-sdk/Banner (21.3.0):
     - smaato-ios-sdk/Modules/Banner
     - smaato-ios-sdk/Modules/Core
     - smaato-ios-sdk/Modules/RichMedia
-  - smaato-ios-sdk/Full (21.2.1):
+  - smaato-ios-sdk/Full (21.3.0):
     - smaato-ios-sdk/Banner
     - smaato-ios-sdk/Interstitial
     - smaato-ios-sdk/RewardedAds
-  - smaato-ios-sdk/Interstitial (21.2.1):
+  - smaato-ios-sdk/Interstitial (21.3.0):
     - smaato-ios-sdk/Modules/Interstitial
     - smaato-ios-sdk/Modules/RichMedia
     - smaato-ios-sdk/Modules/Video
-  - smaato-ios-sdk/Modules/Banner (21.2.1):
+  - smaato-ios-sdk/Modules/Banner (21.3.0):
     - smaato-ios-sdk/Modules/Core
-  - smaato-ios-sdk/Modules/Core (21.2.1)
-  - smaato-ios-sdk/Modules/Interstitial (21.2.1):
+  - smaato-ios-sdk/Modules/Core (21.3.0)
+  - smaato-ios-sdk/Modules/Interstitial (21.3.0):
     - smaato-ios-sdk/Modules/Core
-  - smaato-ios-sdk/Modules/OpenMeasurement (21.2.1):
+  - smaato-ios-sdk/Modules/OpenMeasurement (21.3.0):
     - smaato-ios-sdk/Modules/Core
-  - smaato-ios-sdk/Modules/RewardedAds (21.2.1):
+  - smaato-ios-sdk/Modules/RewardedAds (21.3.0):
     - smaato-ios-sdk/Modules/Core
-  - smaato-ios-sdk/Modules/RichMedia (21.2.1):
-    - smaato-ios-sdk/Modules/Core
-    - smaato-ios-sdk/Modules/OpenMeasurement
-  - smaato-ios-sdk/Modules/Video (21.2.1):
+  - smaato-ios-sdk/Modules/RichMedia (21.3.0):
     - smaato-ios-sdk/Modules/Core
     - smaato-ios-sdk/Modules/OpenMeasurement
-  - smaato-ios-sdk/RewardedAds (21.2.1):
+  - smaato-ios-sdk/Modules/Video (21.3.0):
+    - smaato-ios-sdk/Modules/Core
+    - smaato-ios-sdk/Modules/OpenMeasurement
+  - smaato-ios-sdk/RewardedAds (21.3.0):
     - smaato-ios-sdk/Modules/RewardedAds
     - smaato-ios-sdk/Modules/Video
   - SwiftRangeSlider (2.0.0)
@@ -253,7 +253,7 @@ SPEC CHECKSUMS:
   PureLayout: 9b4ad47b2f0388c84ff534af23d96e720c1b875a
   SDWebImage: 6ac2eb96571bff96ecde31a987172c5934a0eb7d
   SLCarouselView: fa0dd6e4cdeca88f8fc43ae19f16d33e8d11d643
-  smaato-ios-sdk: 5bf782553132891bd5b150102520b4c6a91bc010
+  smaato-ios-sdk: 8cf2efbcb1a62f6f4b749a76e5ff3eed786a7a08
   SwiftRangeSlider: f86e3b637c961120158fa1a89277c8343845cbe4
 
 PODFILE CHECKSUM: 230b232cdee87445e416d301b9f9b1518f6658a5
