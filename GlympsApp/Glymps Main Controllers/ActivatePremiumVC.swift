@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Purchases
 
 // screen that displays advantages of upgrading to Glymps Premium
 class ActivatePremiumVC: UIViewController {
@@ -15,9 +14,6 @@ class ActivatePremiumVC: UIViewController {
     @IBOutlet weak var dismissBtn: UIButton!
     
     @IBOutlet weak var activatePremiumBtn: UIButton!
-    
-    // app entitlements
-    //var entitlements: [String : Entitlement] = [:]
 
     override func viewDidLoad() {
         super.viewDidLoad()

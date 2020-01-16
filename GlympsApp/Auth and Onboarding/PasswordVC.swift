@@ -19,6 +19,10 @@ class PasswordVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        passwordTextfield.delegate = self
+        
+        passwordTextfield.returnKeyType = UIReturnKeyType.done
 
         nextBtn.isEnabled = false
         nextBtn.setTitleColor(#colorLiteral(red: 0.6140708327, green: 0.7837085724, blue: 0.8509241939, alpha: 1), for: .normal)
@@ -77,5 +81,13 @@ class PasswordVC: UIViewController {
         }
     }
     
+}
 
+extension PasswordVC: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        textField.resignFirstResponder()
+        return true
+    }
 }

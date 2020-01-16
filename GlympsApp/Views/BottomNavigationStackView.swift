@@ -13,17 +13,15 @@ class BottomNavigationStackView: UIStackView {
     
     let settingsButton = UIButton(type: .system)
     let messagesButton = UIButton(type: .system)
-    let glympsImage = UIImageView(image: #imageLiteral(resourceName: "glymps_logo"))
+    let glympsImage = UIButton(type: .system)
 
     // setup navigation content
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        glympsImage.contentMode = .scaleAspectFit
-        
-        settingsButton.setImage(#imageLiteral(resourceName: "top_left_profile").withRenderingMode(.alwaysOriginal), for: .normal)
-        messagesButton.setImage(#imageLiteral(resourceName: "top_right_messages").withRenderingMode(.alwaysOriginal), for: .normal)
-        glympsImage.image?.withRenderingMode(.alwaysOriginal)
+        settingsButton.setImage(#imageLiteral(resourceName: "top_left_profile").withRenderingMode(.alwaysTemplate), for: .normal)
+        messagesButton.setImage(#imageLiteral(resourceName: "top_right_messages").withRenderingMode(.alwaysTemplate), for: .normal)
+        glympsImage.setImage(#imageLiteral(resourceName: "glymps_logo").withRenderingMode(.alwaysTemplate), for: .normal)
         
         [settingsButton, UIView(), glympsImage, UIView(), messagesButton].forEach { (v) in
             addArrangedSubview(v)
@@ -33,6 +31,7 @@ class BottomNavigationStackView: UIStackView {
         
         isLayoutMarginsRelativeArrangement = true
         layoutMargins = .init(top: 0, left: 25, bottom: 0, right: 25)
+        
     }
     
     // default view encoder

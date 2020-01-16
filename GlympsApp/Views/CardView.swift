@@ -9,6 +9,10 @@
 import UIKit
 import SDWebImage
 
+protocol MoreInfoDelegate: class {
+    func goToMoreInfo(userId: String, cardView: CardView)
+}
+
 // A card in the "card deck" that displays each User's information
 class CardView: UIView {
     
@@ -25,6 +29,12 @@ class CardView: UIView {
     var moreInfoButton: UIButton?
     
     var messageUserButton: UIButton?
+    
+    var cycleLeftButton: UIButton?
+    
+    var cycleRightButton: UIButton?
+    
+    weak var moreInfoDelegate: MoreInfoDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -58,12 +68,58 @@ class CardView: UIView {
     @objc func handleTap(gesture: UITapGestureRecognizer) {
         
         let tapLocation = gesture.location(in: imageView)
-        let shouldAdvanceNextPhoto = (tapLocation.x > frame.width / 2) && (tapLocation.y < moreInfoButton!.frame.origin.y - 10) && (tapLocation.y > (messageUserButton?.frame.origin.y)! + 50) ? true : false
+        let shouldAdvanceNextPhoto = (tapLocation.x > ((frame.width / 2) + 120)) && (tapLocation.y < moreInfoButton!.frame.origin.y - 10) && (tapLocation.y > (messageUserButton?.frame.origin.y)! + 50) ? true : false
         
         if shouldAdvanceNextPhoto {
             imageIndex = min(imageIndex + 1, images!.count - 1)
-        } else if (tapLocation.y < moreInfoButton!.frame.origin.y - 10) && (tapLocation.y > (messageUserButton?.frame.origin.y)! + 50) {
+            
+            if (imageIndex == 0) && (images!.count > 1) {
+                cycleLeftButton?.isHidden = true
+                cycleLeftButton?.isEnabled = false
+                cycleRightButton?.isHidden = false
+                cycleRightButton?.isEnabled = true
+            } else if (imageIndex == 1) && (images!.count > 2) {
+                cycleLeftButton?.isHidden = false
+                cycleLeftButton?.isEnabled = true
+                cycleRightButton?.isHidden = false
+                cycleRightButton?.isEnabled = true
+            } else if (imageIndex == 1) && (images!.count == 2){
+                cycleLeftButton?.isHidden = false
+                cycleLeftButton?.isEnabled = true
+                cycleRightButton?.isHidden = true
+                cycleRightButton?.isEnabled = false
+            } else if (imageIndex == 2) && (images!.count > 2){
+                cycleLeftButton?.isHidden = false
+                cycleLeftButton?.isEnabled = true
+                cycleRightButton?.isHidden = true
+                cycleRightButton?.isEnabled = false
+            }
+        } else if (tapLocation.x < ((frame.width / 2) - 120)) && (tapLocation.y < moreInfoButton!.frame.origin.y - 10) && (tapLocation.y > (messageUserButton?.frame.origin.y)! + 50) {
             imageIndex = max(0, imageIndex - 1)
+            
+            if (imageIndex == 0) && (images!.count > 1) {
+                cycleLeftButton?.isHidden = true
+                cycleLeftButton?.isEnabled = false
+                cycleRightButton?.isHidden = false
+                cycleRightButton?.isEnabled = true
+            } else if (imageIndex == 1) && (images!.count > 2) {
+                cycleLeftButton?.isHidden = false
+                cycleLeftButton?.isEnabled = true
+                cycleRightButton?.isHidden = false
+                cycleRightButton?.isEnabled = true
+            } else if (imageIndex == 1) && (images!.count == 2){
+                cycleLeftButton?.isHidden = false
+                cycleLeftButton?.isEnabled = true
+                cycleRightButton?.isHidden = true
+                cycleRightButton?.isEnabled = false
+            } else if (imageIndex == 2) && (images!.count > 2){
+                cycleLeftButton?.isHidden = false
+                cycleLeftButton?.isEnabled = true
+                cycleRightButton?.isHidden = true
+                cycleRightButton?.isEnabled = false
+            }
+        } else if (tapLocation.y < moreInfoButton!.frame.origin.y - 10) && (tapLocation.y > (messageUserButton?.frame.origin.y)! + 50) {
+            moreInfoDelegate?.goToMoreInfo(userId: self.userId ?? "", cardView: self)
         }
         
         let imageUrls = images![imageIndex]

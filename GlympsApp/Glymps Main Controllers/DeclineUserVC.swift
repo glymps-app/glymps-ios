@@ -17,6 +17,8 @@ class DeclineUserVC: UIViewController {
     
     @IBOutlet weak var dismissBtn: UIButton!
     
+    @IBOutlet weak var closeBtn: UIButton!
+    
     var userId: String?
     
     var chatVC: ChatVC?
@@ -67,6 +69,11 @@ class DeclineUserVC: UIViewController {
     @IBAction func dismissBtnWasPressed(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
+    
+    @IBAction func closeBtnWasPressed(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
     
     
 

@@ -102,8 +102,8 @@ class OnboardingContentVC: UIViewController, UNUserNotificationCenterDelegate, U
             transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
             view.window!.layer.add(transition, forKey: kCATransition)
             let storyboard = UIStoryboard(name: "Welcome", bundle: nil)
-            let settingsVC = storyboard.instantiateViewController(withIdentifier: "SignUpVC")
-            self.presentingViewController!.present(settingsVC, animated: true, completion: nil)
+            let signUpVC = storyboard.instantiateViewController(withIdentifier: "SignUpVC")
+            self.presentingViewController!.present(signUpVC, animated: true, completion: nil)
             
         default:
             print("")

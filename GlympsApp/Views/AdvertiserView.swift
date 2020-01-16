@@ -8,12 +8,12 @@
 
 import UIKit
 import SDWebImage
-import SmaatoSDKBanner
+//import SmaatoSDKBanner
 
 // A card in the "card deck" that displays an ad
 class AdvertiserView: UIView {
     
-    var bannerView: SMABannerView?
+    //var bannerView: SMABannerView?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -25,7 +25,7 @@ class AdvertiserView: UIView {
         
         backgroundColor = #colorLiteral(red: 0.6140708327, green: 0.7837085724, blue: 0.8509241939, alpha: 1)
 
-        bannerView?.fillSuperview()
+        //bannerView?.fillSuperview()
     }
     
     // default view encoder

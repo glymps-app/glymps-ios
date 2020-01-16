@@ -27,6 +27,15 @@ class LoginVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        emailTextfield.delegate = self
+        passwordTextfield.delegate = self
+        
+        emailTextfield.tag = 0
+        passwordTextfield.tag = 1
+        
+        emailTextfield.returnKeyType = UIReturnKeyType.next
+        passwordTextfield.returnKeyType = UIReturnKeyType.go
 
         signInBtn.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         signInBtn.layer.borderWidth = 1
@@ -49,6 +58,10 @@ class LoginVC: UIViewController {
             if let onboardingVC = storyboard?.instantiateViewController(withIdentifier: "OnboardingVC") as? OnboardingVC {
                 present(onboardingVC, animated: true, completion: nil)
             }
+        }
+        
+        if Auth.auth().currentUser != nil {
+            self.goToMain()
         }
     }
     
@@ -76,6 +89,11 @@ class LoginVC: UIViewController {
     
     // authenticate and sign-in user
     @IBAction func signInBtnWasPressed(_ sender: Any) {
+        signIn()
+    }
+    
+    // sign- in function
+    func signIn() {
         let email = emailTextfield.text
         let password = passwordTextfield.text
         
@@ -123,5 +141,28 @@ class LoginVC: UIViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let initial = storyboard.instantiateInitialViewController()!
         self.present(initial, animated: true, completion: nil)
+    }
+}
+
+extension LoginVC: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        if textField == passwordTextfield {
+            textField.resignFirstResponder()
+            signIn()
+        }
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        let nextTag = textField.tag + 1
+
+        if let nextResponder = textField.superview?.viewWithTag(nextTag) {
+            nextResponder.becomeFirstResponder()
+        } else {
+            textField.resignFirstResponder()
+        }
     }
 }

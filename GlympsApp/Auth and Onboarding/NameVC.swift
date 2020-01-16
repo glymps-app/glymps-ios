@@ -20,6 +20,10 @@ class NameVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        nameTextfield.delegate = self
+        
+        nameTextfield.returnKeyType = UIReturnKeyType.done
 
         nextBtn.isEnabled = false
         nextBtn.setTitleColor(#colorLiteral(red: 0.6140708327, green: 0.7837085724, blue: 0.8509241939, alpha: 1), for: .normal)
@@ -77,7 +81,14 @@ class NameVC: UIViewController {
             performSegue(withIdentifier: "nameToBirthday", sender: self)
         }
     }
+
+}
+
+extension NameVC: UITextFieldDelegate {
     
-
-
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        textField.resignFirstResponder()
+        return true
+    }
 }

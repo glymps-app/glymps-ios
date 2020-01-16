@@ -19,11 +19,12 @@ import JGProgressHUD
 import Purchases
 import CoreLocation
 import GeoFire
-import SmaatoSDKCore
-import SmaatoSDKBanner
-import SmaatoSDKInterstitial
+import PushNotifications
+//import SmaatoSDKCore
+//import SmaatoSDKBanner
+//import SmaatoSDKInterstitial
 
-class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate {
+class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfoDelegate {
     
     @IBOutlet weak var refreshUsersBtn: UIButton!
     
@@ -31,12 +32,9 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate {
     
     @IBOutlet weak var noUsersView: UIView! // image if no nearby users found
     
-    var bannerView: SMABannerView? // Smaato medium-sized rectangle banner advertisement
-    
-    var interstitial: SMAInterstitial? // Smaato full-screen interstitial advertisement
+    // Put Smaato Banner View Here
     
     let headerView = UIView() // top view (Glymps + heatmap)
-    // TODO: change this cardsDeckView below from a third-party SLCarouselView to UICollectionView for expanded UI capabilities
     
     @IBOutlet weak var cardsDeckView: iCarousel!
     
@@ -54,11 +52,17 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate {
     
     var permanentlyBlockedUsers: [String] = []
     
+    var ghostModeUsers: [String] = []
+    
     var cardViews: [CardView] = []
     
-    var bannerAds: [SMABannerView] = []
+    //var bannerAds: [SMABannerView] = []
     
     var userId: String?
+    
+    var currentUsername: String?
+    
+    var currentUser: User?
     
     let hud = JGProgressHUD(style: .extraLight)
     
@@ -68,7 +72,7 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate {
         button.setBackgroundImage(#imageLiteral(resourceName: "globe"), for: .normal)
         button.setImage(#imageLiteral(resourceName: "heat-map").withRenderingMode(.alwaysOriginal), for: .normal)
         button.imageView?.contentMode = .scaleAspectFit
-        button.imageView?.alpha = 0.6
+        //button.imageView?.alpha = 0.6
         button.imageView?.image?.withAlignmentRectInsets(UIEdgeInsets(top: -2, left: -4, bottom: 2, right: 0))
         button.clipsToBounds = true
         button.addTarget(self, action: #selector(handleMap), for: .touchUpInside)
@@ -87,8 +91,17 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate {
     lazy var deckService = DeckService(authAPI: authAPI)
     let connectionGroup = ConnectionGroup()
     
+    var currentUserReferredBy: String = ""
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        setupCurrentUser()
+        loadRequests()
+        loadMatches()
+        loadBlockedUsers()
+        loadPermanentlyBlockedUsers()
+        loadGhostModeUsers()
         
         observeDeck()
     }
@@ -97,7 +110,22 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupPusher()
+        
+        menuView.glympsImage.tintColor = #colorLiteral(red: 0, green: 0.7123068571, blue: 1, alpha: 1)
+        menuView.settingsButton.tintColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+        menuView.messagesButton.tintColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+        
+        setupCurrentUser()
+        loadRequests()
+        loadMatches()
+        loadBlockedUsers()
+        loadPermanentlyBlockedUsers()
+        loadGhostModeUsers()
+        
         cardsDeckView.type = .linear
+        cardsDeckView.bounceDistance = 3.00
+        cardsDeckView.decelerationRate = 3.00
         
         refreshUsersBtn.isEnabled = false
         
@@ -115,20 +143,13 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate {
         mapBtn.centerYToSuperview()
         mapBtn.isUserInteractionEnabled = true
         
-        setupDeviceToken()
-        
-        //checkIfPremium()
+        checkIfPremium()
         
         noUsersView.isHidden = true
         
         hud.textLabel.text = "Loading nearby users..."
         hud.layer.zPosition = 50
         hud.show(in: view)
-        
-        loadRequests()
-        loadMatches()
-        loadBlockedUsers()
-        loadPermanentlyBlockedUsers()
         
         headerView.heightAnchor.constraint(equalToConstant: 70).isActive = true
         menuView.heightAnchor.constraint(equalToConstant: 70).isActive = true
@@ -147,13 +168,39 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate {
         menuView.settingsButton.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
         menuView.messagesButton.addTarget(self, action: #selector(handleMessages), for: .touchUpInside)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            self.setupAds()
-        }
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+//            self.setupAds()
+//        }
         
         self.view.bringSubviewToFront(refreshUsersBtn)
         self.view.bringSubviewToFront(refreshUsersImage)
         
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            print("Users in Ghost Mode: \(self.ghostModeUsers)")
+        }
+        
+        if currentUserReferredBy != "" {
+            rewardReferralUser(refUser: currentUserReferredBy, coinAmount: 3)
+        }
+    }
+    
+    // get current user
+    func setupCurrentUser() {
+        API.User.observeCurrentUser { (user) in
+            self.currentUser = user
+            self.currentUsername = user.name!
+            print("Current user: \(self.currentUser!)")
+        }
+    }
+    
+    func rewardReferralUser(refUser: String, coinAmount: Int) {
+        
+        var newCoins = coinAmount
+        
+        API.User.observeUsers(withId: refUser) { (user) in
+            newCoins += user.coins!
+        Database.database().reference().child("users").child(refUser).updateChildValues(["coins" : newCoins]) { (error, ref) in }
+        }
     }
     
     // setup location manager to get current user location, live
@@ -172,95 +219,95 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate {
         self.geoFire = GeoFire(firebaseRef: self.geoFireRef)
     }
     
-    // get current user's device token for push notifications
-    func setupDeviceToken() {
+    // setup Pusher for current user's uid
+    func setupPusher() {
         
-        let defaults = UserDefaults.standard
-        let hasSetDeviceToken = defaults.bool(forKey: "hasSetDeviceToken")
-        if !hasSetDeviceToken {
-        Database.database().reference().child("deviceTokens").child(API.User.CURRENT_USER!.uid).updateChildValues(["deviceToken":userDeviceToken])
-            
-            UserDefaults.standard.set(true, forKey: "hasSetDeviceToken")
-        } else {
-            return
+        let tokenProvider = BeamsTokenProvider(authURL: "https://glymps-pusher-notifications.herokuapp.com/pusher/beams-auth") { () -> AuthData in
+          let headers = ["Authorization": "Bearer"] // Headers your auth endpoint needs
+            let queryParams: [String: String] = ["user_id":API.User.CURRENT_USER!.uid] // URL query params your auth endpoint needs
+            return AuthData(headers: headers, queryParams: queryParams)
         }
+        
+        beamsClient.setUserId(API.User.CURRENT_USER!.uid, tokenProvider: tokenProvider, completion: { error in
+          guard error == nil else {
+            print("Failed to authenticate with Pusher Beams. Error: \(error?.localizedDescription ?? "")")
+              return
+          }
+
+          print("Successfully authenticated with Pusher Beams")
+        })
+        
     }
     
-    // add Smaato ad to Advertiser View
-    func addBannerViewToView(_ bannerView: SMABannerView) {
-        bannerView.translatesAutoresizingMaskIntoConstraints = false
-        bannerAds.append(bannerView)
-    }
+    
+//    // add Smaato ad to Advertiser View
+//    func addBannerViewToView(_ bannerView: SMABannerView) {
+//        bannerView.translatesAutoresizingMaskIntoConstraints = false
+//        bannerAds.append(bannerView)
+//    }
     
     // check if current user is a Glymps Premium user
-//    func checkIfPremium() {
-//
-//        Purchases.shared.purchaserInfo { (purchaserInfo, error) in
-//            if let purchaserInfo = purchaserInfo {
-//
-//                print(purchaserInfo.activeSubscriptions)
-//                // Option 1: Check if user has access to entitlement (from RevenueCat dashboard)
-//                if purchaserInfo.activeEntitlements.contains("pro") {
-//                    print("User has access to Glymps entitlements!")
-//                } else {
-//                    print("User does not have access to Glymps entitlements!")
-//                }
-//
+    func checkIfPremium() {
+
+        Purchases.shared.purchaserInfo { (purchaserInfo, error) in
+            if let purchaserInfo = purchaserInfo {
+
+                print(purchaserInfo.activeSubscriptions)
+                // Option 1: Check if user has access to entitlement (from RevenueCat dashboard)
+                if purchaserInfo.entitlements["pro"]?.isActive == true {
+                  print("User has access to Glymps Premium.")
+                }
+
 //                // Option 2: Check if user has active subscription (from App Store Connect or Play Store)
-//                if purchaserInfo.activeSubscriptions.contains("JamesBMorris.GlympsApp.USDSubscription1Month") {
-//                    // Grant user "pro" access
-//                    print("User has Glymps Premium (1 mo subscription)")
-//                    AuthService.subscribe()
-//                } else if purchaserInfo.activeSubscriptions.contains("JamesBMorris.GlympsApp.USDSubscription6Month") {
-//                    // Grant user "pro" access
-//                    print("User has Glymps Premium (6 mo subscription)")
-//                    AuthService.subscribe()
-//                } else if purchaserInfo.activeSubscriptions.contains("JamesBMorris.GlympsApp.USDSubscription12Month") {
-//                    // Grant user "pro" access
-//                    print("User has Glymps Premium (12 mo subscription)")
-//                    AuthService.subscribe()
-//                } else if purchaserInfo.activeSubscriptions.contains("JamesBMorris.GlympsApp.CoinSubscription1Month") {
-//                    // Grant user "pro" access
-//                    print("User has Glymps Premium (1 mo coin subscription)")
-//                    AuthService.subscribe()
-//                } else if purchaserInfo.activeSubscriptions.contains("JamesBMorris.GlympsApp.CoinSubscription6Month") {
-//                    // Grant user "pro" access
-//                    print("User has Glymps Premium (6 mo coin subscription)")
-//                    AuthService.subscribe()
-//                } else if purchaserInfo.activeSubscriptions.contains("JamesBMorris.GlympsApp.CoinSubscription12Month") {
-//                    // Grant user "pro" access
-//                    print("User has Glymps Premium (12 mo coin subscription)")
-//                    AuthService.subscribe()
-//                } else {
-//                    // User is not premium
-//                    print("User does not have Glymps Premium!")
-//                    AuthService.unsubscribe()
-//                }
-//            }
-//        }
-//
-//    }
-    
-    // any updated purchases from RevenueCat?
-//    func purchases(_ purchases: Purchases, didReceiveUpdated purchaserInfo: PurchaserInfo) {
-//        // handle any changes to purchaserInfo
-//    }
-    
-    // setup mobile ads from Smaato
-    func setupAds() {
-        let bV = SMABannerView()
-        bV.autoreloadInterval = .veryShort
-        bV.delegate = self
-        bV.load(withAdSpaceId: "0", adSize: .mediumRectangle_300x250)
-        self.bannerView = bV
-        self.bannerView?.fillSuperview()
-        if let bV = bannerView {
-            bannerAds.append(bV)
-        } else {
-            print("Banner view is nil.")
+                if purchaserInfo.activeSubscriptions.contains("com.glymps.Glymps.1MonthUSDSubscription") {
+                    // Grant user "pro" access
+                    print("User has Glymps Premium (1 month subscription)")
+                    AuthService.subscribe()
+                } else if purchaserInfo.activeSubscriptions.contains("com.glymps.Glymps.6MonthUSDSubscription") {
+                    // Grant user "pro" access
+                    print("User has Glymps Premium (6 month subscription)")
+                    AuthService.subscribe()
+                } else if purchaserInfo.activeSubscriptions.contains("com.glymps.Glymps.12MonthUSDSubscription") {
+                    // Grant user "pro" access
+                    print("User has Glymps Premium (1 year subscription)")
+                    AuthService.subscribe()
+                } else if purchaserInfo.activeSubscriptions.contains("com.glymps.Glymps.1MonthCoinSubscription") {
+                    // Grant user "pro" access
+                    print("User has Glymps Premium (1 month subscription, coin)")
+                    AuthService.subscribe()
+                } else if purchaserInfo.activeSubscriptions.contains("com.glymps.Glymps.6MonthCoinSubscription") {
+                    // Grant user "pro" access
+                    print("User has Glymps Premium (6 month subscription, coin)")
+                    AuthService.subscribe()
+                } else if purchaserInfo.activeSubscriptions.contains("com.glymps.Glymps.12MonthCoinSubscription") {
+                    // Grant user "pro" access
+                    print("User has Glymps Premium (1 year subscription, coin)")
+                    AuthService.subscribe()
+                } else {
+                    // User is not premium
+                    print("User does not have Glymps Premium!")
+                    AuthService.unsubscribe()
+                }
+            }
         }
-        //setupBannerAdCards()
+
     }
+    
+//    // setup mobile ads from Smaato
+//    func setupAds() {
+//        let bV = SMABannerView()
+//        bV.autoreloadInterval = .veryShort
+//        bV.delegate = self
+//        bV.load(withAdSpaceId: "0", adSize: .mediumRectangle_300x250)
+//        self.bannerView = bV
+//        self.bannerView?.fillSuperview()
+//        if let bV = bannerView {
+//            bannerAds.append(bV)
+//        } else {
+//            print("Banner view is nil.")
+//        }
+//        //setupBannerAdCards()
+//    }
 
     func observeDeck() {
         deckService.observeDeck { [weak self] deck in
@@ -271,15 +318,44 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate {
 
                 for card in deck {
                     let user = card.user
-                    if (user.id != API.User.CURRENT_USER?.uid) && (currentUser.preferedGender == user.gender) && (currentUser.minAge!...currentUser.maxAge! ~= user.age!) && !strongSelf.requests.contains(user.id!) && !strongSelf.matches.contains(user.id!) && !strongSelf.blockedUsers.contains(user.id!) {
-                        print(user.name!)
+                    if (user.id != API.User.CURRENT_USER?.uid) && (currentUser.preferedGender == user.gender) &&
+                        (currentUser.gender == user.preferedGender) &&
+                        (currentUser.minAge!...currentUser.maxAge! ~= user.age!) &&
+                        (user.minAge!...user.maxAge! ~= currentUser.age!) &&
+                        !strongSelf.requests.contains(user.id!) && !strongSelf.matches.contains(user.id!) && !strongSelf.blockedUsers.contains(user.id!) &&
+                        !strongSelf.permanentlyBlockedUsers.contains(user.id!) &&
+                        !strongSelf.ghostModeUsers.contains(user.id!) {
                         strongSelf.cachedUsers.append(user)
                         strongSelf.noUsersView.isHidden = true
-                    } else if (user.id != API.User.CURRENT_USER?.uid) && (currentUser.preferedGender == "Both") && (currentUser.minAge!...currentUser.maxAge! ~= user.age!) {
-                        print(user.name!)
+                    } else if (user.id != API.User.CURRENT_USER?.uid) && (currentUser.preferedGender == "Both") &&
+                        (currentUser.gender == user.preferedGender) &&
+                        (currentUser.minAge!...currentUser.maxAge! ~= user.age!) &&
+                        (user.minAge!...user.maxAge! ~= currentUser.age!) &&
+                        !strongSelf.requests.contains(user.id!) && !strongSelf.matches.contains(user.id!) && !strongSelf.blockedUsers.contains(user.id!) &&
+                        !strongSelf.permanentlyBlockedUsers.contains(user.id!) &&
+                        !strongSelf.ghostModeUsers.contains(user.id!) {
                         strongSelf.cachedUsers.append(user)
                         strongSelf.noUsersView.isHidden = true
-                    } else if strongSelf.bannerAds != [] {
+//                    } else if strongSelf.bannerAds != [] {
+//                        strongSelf.noUsersView.isHidden = true
+                    } else if (user.id != API.User.CURRENT_USER?.uid) &&
+                        (user.preferedGender == "Both") &&
+                        (currentUser.preferedGender == user.gender) &&
+                        (currentUser.minAge!...currentUser.maxAge! ~= user.age!) &&
+                        (user.minAge!...user.maxAge! ~= currentUser.age!) &&
+                        !strongSelf.requests.contains(user.id!) && !strongSelf.matches.contains(user.id!) && !strongSelf.blockedUsers.contains(user.id!) &&
+                        !strongSelf.permanentlyBlockedUsers.contains(user.id!) &&
+                        !strongSelf.ghostModeUsers.contains(user.id!) {
+                        strongSelf.cachedUsers.append(user)
+                        strongSelf.noUsersView.isHidden = true
+                    } else if (user.id != API.User.CURRENT_USER?.uid) &&
+                        ((currentUser.preferedGender == "Both") && (user.preferedGender == "Both")) &&
+                        (currentUser.minAge!...currentUser.maxAge! ~= user.age!) &&
+                        (user.minAge!...user.maxAge! ~= currentUser.age!) &&
+                        !strongSelf.requests.contains(user.id!) && !strongSelf.matches.contains(user.id!) && !strongSelf.blockedUsers.contains(user.id!) &&
+                        !strongSelf.permanentlyBlockedUsers.contains(user.id!) &&
+                        !strongSelf.ghostModeUsers.contains(user.id!) {
+                        strongSelf.cachedUsers.append(user)
                         strongSelf.noUsersView.isHidden = true
                     } else {
                         strongSelf.hud.dismiss()
@@ -365,6 +441,18 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate {
         }
     }
     
+    func loadGhostModeUsers() {
+        
+        // load ghost mode users (users that want to go inactive for 24 hours max)
+        
+        API.Inbox.loadUsersInGhostMode { (user) in
+            let ghostModeUser = user as! User
+            if ghostModeUser.id != API.User.CURRENT_USER!.uid {
+                self.ghostModeUsers.insert(ghostModeUser.id!, at: 0)
+            }
+        }
+    }
+    
     // go to main profile screen
     @objc func handleSettings() {
         let transition = CATransition()
@@ -401,6 +489,16 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate {
         userDetailsController.cardView = cv
         present(userDetailsController, animated: true, completion: nil)
     }
+    
+    // go to user details screen when card, not info button, is tapped, other than edges
+    func goToMoreInfo(userId: String, cardView: CardView) {
+        let data = userId
+        let cv = cardView
+        let userDetailsController = UserDetailsVC()
+        userDetailsController.userId = data
+        userDetailsController.cardView = cv
+        present(userDetailsController, animated: true, completion: nil)
+    }
 
     // go to chat to message a user
     @objc func messageUserTapped(sender: UIButton) {
@@ -413,9 +511,11 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate {
         view.window!.layer.add(transition, forKey: kCATransition)
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let messagesVC = storyboard.instantiateViewController(withIdentifier: "MessagesVC") as! MessagesVC
-        messagesVC.userId = data
-        self.present(messagesVC, animated: true, completion: nil)
+        let chatVC = storyboard.instantiateViewController(withIdentifier: "ChatVC") as! ChatVC
+        chatVC.userId = data
+        chatVC.currentUsername = self.currentUsername
+        chatVC.currentUser = self.currentUser
+        self.present(chatVC, animated: true, completion: nil)
         
         // go to specific user chat after this transition
     }
@@ -425,6 +525,7 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate {
     func setupCards() {
         for user in users {
             let cardView = CardView(frame: CGRect(x: 0, y: 0, width: 370, height: 570))
+            cardView.moreInfoDelegate = self
             let gradientView = GlympsGradientView()
             let barsStackView = UIStackView()
             let moreInfoButton = UIButton(type: .system)
@@ -435,6 +536,20 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate {
             messageUserButton.setImage(#imageLiteral(resourceName: "message-icon2").withRenderingMode(.alwaysOriginal), for: .normal)
             messageUserButton.isUserInteractionEnabled = true
             messageUserButton.addTarget(self, action: #selector(messageUserTapped(sender:)), for: .touchUpInside)
+            let cycleLeftButton = UIButton(type: .system)
+            if #available(iOS 13.0, *) {
+                cycleLeftButton.setImage(UIImage(systemName: "chevron.left")?.withRenderingMode(.alwaysTemplate), for: .normal)
+            } else {
+                continue
+            }
+            cycleLeftButton.isUserInteractionEnabled = true
+            let cycleRightButton = UIButton(type: .system)
+            if #available(iOS 13.0, *) {
+                cycleRightButton.setImage(UIImage(systemName: "chevron.right")?.withRenderingMode(.alwaysTemplate), for: .normal)
+            } else {
+                continue
+            }
+            cycleRightButton.isUserInteractionEnabled = true
             gradientView.layer.opacity = 0.5
             self.userId = user.id
             cardView.images = user.profileImages
@@ -474,19 +589,43 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate {
             cardView.addSubview(barsStackView)
             cardView.addSubview(moreInfoButton)
             cardView.addSubview(messageUserButton)
+            cardView.addSubview(cycleLeftButton)
+            cardView.addSubview(cycleRightButton)
             cardView.moreInfoButton = moreInfoButton
             cardView.messageUserButton = messageUserButton
+            cardView.cycleLeftButton = cycleLeftButton
+            cardView.cycleRightButton = cycleRightButton
             cardView.stackView = barsStackView
             cardView.userId = self.userId
             cardView.moreInfoButton?.tag = indexForCards
             cardView.messageUserButton?.tag = indexForCards
+            cardView.cycleLeftButton?.tag = indexForCards
+            cardView.cycleRightButton?.tag = indexForCards
+            cardView.cycleLeftButton?.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            cardView.cycleRightButton?.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
             moreInfoButton.anchor(top: nil, leading: nil, bottom: cardView.bottomAnchor, trailing: cardView.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 20, right: 20), size: .init(width: 50, height: 50))
             messageUserButton.anchor(top: cardView.topAnchor, leading: nil, bottom: nil, trailing: cardView.trailingAnchor, padding: .init(top: 25, left: 0, bottom: 0, right: 25), size: .init(width: 44, height: 44))
+            cycleLeftButton.anchor(top: nil, leading: cardView.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 0, left: 8, bottom: 0, right: 0), size: .init(width: 50, height: 50))
+            cycleLeftButton.centerYToSuperview()
+            cycleRightButton.anchor(top: nil, leading: nil, bottom: nil, trailing: cardView.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 8), size: .init(width: 50, height: 50))
+            cycleRightButton.centerYToSuperview()
             barsStackView.anchor(top: cardView.topAnchor, leading: cardView.leadingAnchor, bottom: nil, trailing: cardView.trailingAnchor, padding: .init(top: 8, left: 8, bottom: 0, right: 8), size: .init(width: 0, height: 4))
             barsStackView.spacing = 4
             barsStackView.distribution = .fillEqually
             //cardView.fillSuperview()
             gradientView.fillSuperview()
+            
+            if (cardView.imageIndex == 0) && (user.profileImages!.count > 1) {
+                cycleLeftButton.isHidden = true
+                cycleLeftButton.isEnabled = false
+                cycleRightButton.isHidden = false
+                cycleRightButton.isEnabled = true
+            } else {
+                cycleLeftButton.isHidden = true
+                cycleLeftButton.isEnabled = false
+                cycleRightButton.isHidden = true
+                cycleRightButton.isEnabled = false
+            }
                 
             hud.textLabel.text = "All done! \u{1F389}"
             hud.dismiss(afterDelay: 0.0)
@@ -595,17 +734,17 @@ extension DeckVC: CLLocationManagerDelegate {
     
 }
 
-extension DeckVC: SMABannerViewDelegate {
-
-    func presentingViewController(for bannerView: SMABannerView) -> UIViewController {
-        return self
-    }
-
-    func bannerViewDidTTLExpire(_ bannerView: SMABannerView) {
-        print("TTL Expired.")
-    }
-
-}
+//extension DeckVC: SMABannerViewDelegate {
+//
+//    func presentingViewController(for bannerView: SMABannerView) -> UIViewController {
+//        return self
+//    }
+//
+//    func bannerViewDidTTLExpire(_ bannerView: SMABannerView) {
+//        print("TTL Expired.")
+//    }
+//
+//}
 
 //extension DeckVC: SMAInterstitialDelegate {
 //    // Interstitial did successfully loaded

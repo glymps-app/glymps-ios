@@ -12,6 +12,10 @@ import SDWebImage
 // screen for a user to view another user's info and learn more about them
 class UserDetailsVC: UIViewController, UIScrollViewDelegate {
     
+    var currentUsername: String?
+    
+    var currentUser: User?
+    
     lazy var scrollView: UIScrollView = {
        let sv = UIScrollView()
         sv.alwaysBounceVertical = true
@@ -98,6 +102,8 @@ class UserDetailsVC: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupCurrentUser()
+        
         self.modalPresentationStyle = .fullScreen
         
         setupLayout()
@@ -108,6 +114,15 @@ class UserDetailsVC: UIViewController, UIScrollViewDelegate {
             if let id = self.userId {
                 print(id)
             }
+        }
+    }
+    
+    // get current user
+    func setupCurrentUser() {
+        API.User.observeCurrentUser { (user) in
+            self.currentUser = user
+            self.currentUsername = user.name!
+            print("Current user: \(self.currentUser!)")
         }
     }
     
@@ -141,7 +156,7 @@ class UserDetailsVC: UIViewController, UIScrollViewDelegate {
         blockUserButton.withWidth(50)
         
         scrollView.addSubview(buttonStack)
-        buttonStack.anchor(top: nil, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 80, bottom: 30, right: 80))
+        buttonStack.anchor(top: nil, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 80, bottom: 20, right: 80))
     }
     
     // prep to setup up profile image layout
@@ -188,9 +203,11 @@ class UserDetailsVC: UIViewController, UIScrollViewDelegate {
         view.window!.layer.add(transition, forKey: kCATransition)
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let messagesVC = storyboard.instantiateViewController(withIdentifier: "MessagesVC") as! MessagesVC
-        messagesVC.userId = self.userId
-        self.present(messagesVC, animated: true, completion: nil)
+        let chatVC = storyboard.instantiateViewController(withIdentifier: "ChatVC") as! ChatVC
+        chatVC.userId = self.userId
+        chatVC.currentUsername = self.currentUsername
+        chatVC.currentUser = self.currentUser
+        self.present(chatVC, animated: true, completion: nil)
         
         // go to specific user chat after this transition
     }

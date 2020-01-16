@@ -40,9 +40,9 @@ class MatchView: UIView {
     }()
     
     // setup description label
-    var username: String! {
+    var username: String? {
         didSet {
-            descriptionLabel.text = "Congratulations!\n\(username!) is interested in you!"
+            descriptionLabel.text = "Congratulations!\n\(username ?? "") is interested in you!"
         }
     }
     

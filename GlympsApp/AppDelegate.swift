@@ -15,10 +15,12 @@ import FirebaseAnalytics
 import FirebaseMessaging
 import FirebaseInstanceID
 import UserNotifications
-import SmaatoSDKCore
-import SmaatoSDKBanner
-import SmaatoSDKInterstitial
+import PushNotifications
+//import SmaatoSDKCore
+//import SmaatoSDKBanner
+//import SmaatoSDKInterstitial
 import Purchases
+import FirebaseDynamicLinks
 
 // entire application config for Glymps iOS
 @UIApplicationMain
@@ -28,26 +30,85 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
+        beamsClient.start(instanceId: "bfb3dfa2-8c01-4647-a156-71e369bbae73")
+        beamsClient.registerForRemoteNotifications()
+        
         // remove notifications already delivered
         UNUserNotificationCenter.current().removeAllDeliveredNotifications()
         
         // initialize RevenueCat iOS SDK
-//        Purchases.debugLogsEnabled = true
-//        Purchases.configure(withAPIKey: "YgURteRoOLoOhJgOlUNNGDettfjWLqLn", appUserID: nil)
+        Purchases.debugLogsEnabled = true
+        Purchases.configure(withAPIKey: "CfiZTEdVKAjzcufUcFsVfYuuEWdHjuYm", appUserID: nil)
 //        
-        // initialize Smaato iOS SDK
-        guard let config = SMAConfiguration(publisherId: "0") else {
-                fatalError("SDK config is nil!")
-        }
-        config.httpsOnly = true // allow HTTPS traffic only
-        config.logLevel = .error // log errors only
-        SmaatoSDK.initSDK(withConfig: config)
+//        // initialize Smaato iOS SDK
+//        guard let config = SMAConfiguration(publisherId: "0") else {
+//                fatalError("SDK config is nil!")
+//        }
+//        config.httpsOnly = true // allow HTTPS traffic only
+//        config.logLevel = .error // log errors only
+//        SmaatoSDK.initSDK(withConfig: config)
         
         // Override point for customization after application launch, initialize Firebase iOS SDK
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
         
         return true
+    }
+    
+    func handleIncomingDynamicLink(_ dynamicLink: DynamicLink) {
+        
+        guard let url = dynamicLink.url else {
+            print("Whoops! This dynamic link does not contain a URL...")
+            return
+        }
+        print("Welcome! Your referring URL: \(url.absoluteString)")
+        
+        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false), let queryItems = components.queryItems else { return }
+        
+        for queryItem in queryItems {
+            if queryItem.name == "referringUser" {
+                print("You've been referred by \(queryItem.value ?? "No user found :(")")
+                
+                // Handle the deep link.
+                // Set referralUID string on sign up to referring user's UID (from path of referral URL). Pass through the onboarding process and increase that user's coin amount by 3 after the user finishes sign up.
+                referringUser = queryItem.value ?? ""
+            }
+        }
+    }
+    
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity,
+                     restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        if let incomingURL = userActivity.webpageURL {
+            print("Incoming URL is \(incomingURL)")
+            let linkHandled = DynamicLinks.dynamicLinks().handleUniversalLink(incomingURL) { (dynamicLink, error) in
+                guard error == nil else {
+                    print("Found an error: \(error!.localizedDescription)")
+                    return
+                }
+                if let dynamicLink = dynamicLink {
+                    self.handleIncomingDynamicLink(dynamicLink)
+                }
+            }
+            if linkHandled {
+                return true
+            } else {
+                // Maybe do something else with this URL?
+                return false
+            }
+        }
+        return false
+    }
+    
+    @available(iOS 9.0, *)
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
+        print("I have received a URL through a custom scheme! \(url.absoluteString)")
+        if let dynamicLink = DynamicLinks.dynamicLinks().dynamicLink(fromCustomSchemeURL: url) {
+            self.handleIncomingDynamicLink(dynamicLink)
+            return true
+        } else {
+            // Maybe handle Google or Facebook sign-in auth here?
+            return false
+        }
     }
     
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
@@ -88,6 +149,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     // do stuff if push notification received
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         
+        beamsClient.handleNotification(userInfo: userInfo)
+        
         print("APN recieved")
         // print(userInfo)
         
@@ -110,10 +173,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     // setup user device token
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        let myDeviceToken = deviceToken.reduce("", {$0 + String(format: "%02X", $1)})
-        print("\(myDeviceToken)")
-        
-        userDeviceToken = myDeviceToken
+        beamsClient.registerDeviceToken(deviceToken)
     }
     
     // handle push notification presentation

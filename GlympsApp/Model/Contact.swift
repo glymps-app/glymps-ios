@@ -10,8 +10,8 @@ import Foundation
 
 struct Contact {
     
-    let name: String
-    let family: String
-    let number: String
+    let name: String?
+    let family: String?
+    let number: String?
     
 }
