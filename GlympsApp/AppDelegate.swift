@@ -171,6 +171,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
     }
     
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        // handle tapped user notifications
+        
+        if API.User.CURRENT_USER != nil {
+            
+            API.User.observeCurrentUser { (user) in
+                
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+
+                // instantiate the view controller from storyboard
+                if let chatVC = storyboard.instantiateViewController(withIdentifier: "ChatVC") as? ChatVC {
+
+                    // set the view controller as root
+                    chatVC.userId = response.notification.request.content.userInfo["user_id"] as? String
+                    chatVC.currentUsername = user.name
+                    chatVC.currentUser = user
+                    self.window?.rootViewController?.present(chatVC, animated: true, completion: nil)
+                }
+            }
+        }
+    }
+    
     // setup user device token
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         beamsClient.registerDeviceToken(deviceToken)

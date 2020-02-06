@@ -61,6 +61,30 @@ class ProfileVC: UIViewController {
         
         bottomNavBar.glympsImage.addTarget(self, action: #selector(handleDeck), for: .touchUpInside)
         bottomNavBar.messagesButton.addTarget(self, action: #selector(handleMessages), for: .touchUpInside)
+        
+        viewDidLayoutSubviews()
+    }
+    
+    // setup UI according to current user's device size
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        if UIDevice.modelName == "Simulator iPhone 6" || UIDevice.modelName == "Simulator iPhone 6s" || UIDevice.modelName == "Simulator iPhone 7" || UIDevice.modelName == "Simulator iPhone 8" || UIDevice.modelName == "iPhone 6" || UIDevice.modelName == "iPhone 6s" || UIDevice.modelName == "iPhone 7" || UIDevice.modelName == "iPhone 8" {
+            profileImageView.withSize(.init(width: 100, height: 100))
+            profileImageView.layer.cornerRadius = 50
+        } else if UIDevice.modelName == "Simulator iPhone 6 Plus" || UIDevice.modelName == "Simulator iPhone 7 Plus" || UIDevice.modelName == "Simulator iPhone 8 Plus" || UIDevice.modelName == "iPhone 6 Plus" || UIDevice.modelName == "iPhone 7 Plus" || UIDevice.modelName == "iPhone 8 Plus" {
+            profileImageView.withSize(.init(width: 150, height: 150))
+            profileImageView.layer.cornerRadius = 75
+        } else if UIDevice.modelName == "Simulator iPhone X" || UIDevice.modelName == "Simulator iPhone XS" || UIDevice.modelName == "Simulator iPhone 11 Pro" || UIDevice.modelName == "iPhone X" || UIDevice.modelName == "iPhone XS" || UIDevice.modelName == "iPhone 11 Pro" {
+            profileImageView.withSize(.init(width: 150, height: 150))
+            profileImageView.layer.cornerRadius = 75
+        } else if UIDevice.modelName == "Simulator iPhone XS Max" || UIDevice.modelName == "Simulator iPhone 11 Pro Max" || UIDevice.modelName == "iPhone XS Max" || UIDevice.modelName == "iPhone 11 Pro Max" {
+            profileImageView.withSize(.init(width: 150, height: 150))
+            profileImageView.layer.cornerRadius = 75
+        } else if UIDevice.modelName == "Simulator iPhone XR" || UIDevice.modelName == "Simulator iPhone 11" || UIDevice.modelName == "iPhone XR" || UIDevice.modelName == "iPhone 11" {
+            profileImageView.withSize(.init(width: 150, height: 150))
+            profileImageView.layer.cornerRadius = 75
+        }
     }
     
     // set up welcome message and current user profile image

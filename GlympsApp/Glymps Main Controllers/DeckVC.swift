@@ -182,6 +182,24 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
         if currentUserReferredBy != "" {
             rewardReferralUser(refUser: currentUserReferredBy, coinAmount: 3)
         }
+        
+        viewDidLayoutSubviews()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        if UIDevice.modelName == "Simulator iPhone 6" || UIDevice.modelName == "Simulator iPhone 6s" || UIDevice.modelName == "Simulator iPhone 7" || UIDevice.modelName == "Simulator iPhone 8" || UIDevice.modelName == "iPhone 6" || UIDevice.modelName == "iPhone 6s" || UIDevice.modelName == "iPhone 7" || UIDevice.modelName == "iPhone 8" {
+            refreshUsersBtn.anchor(top: headerView.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 25, left: 0, bottom: 0, right: 0), size: .init(width: 200, height: 40))
+        } else if UIDevice.modelName == "Simulator iPhone 6 Plus" || UIDevice.modelName == "Simulator iPhone 7 Plus" || UIDevice.modelName == "Simulator iPhone 8 Plus" || UIDevice.modelName == "iPhone 6 Plus" || UIDevice.modelName == "iPhone 7 Plus" || UIDevice.modelName == "iPhone 8 Plus" {
+            refreshUsersBtn.anchor(top: headerView.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 35, left: 0, bottom: 0, right: 0), size: .init(width: 200, height: 40))
+        } else if UIDevice.modelName == "Simulator iPhone X" || UIDevice.modelName == "Simulator iPhone XS" || UIDevice.modelName == "Simulator iPhone 11 Pro" || UIDevice.modelName == "iPhone X" || UIDevice.modelName == "iPhone XS" || UIDevice.modelName == "iPhone 11 Pro" {
+            refreshUsersBtn.anchor(top: headerView.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 65, left: 0, bottom: 0, right: 0), size: .init(width: 200, height: 40))
+        } else if UIDevice.modelName == "Simulator iPhone XS Max" || UIDevice.modelName == "Simulator iPhone 11 Pro Max" || UIDevice.modelName == "iPhone XS Max" || UIDevice.modelName == "iPhone 11 Pro Max" {
+            refreshUsersBtn.anchor(top: headerView.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 80, left: 0, bottom: 0, right: 0), size: .init(width: 200, height: 40))
+        } else if UIDevice.modelName == "Simulator iPhone XR" || UIDevice.modelName == "Simulator iPhone 11" || UIDevice.modelName == "iPhone XR" || UIDevice.modelName == "iPhone 11" {
+            refreshUsersBtn.anchor(top: headerView.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 75, left: 0, bottom: 0, right: 0), size: .init(width: 200, height: 40))
+        }
     }
     
     // get current user
@@ -357,10 +375,12 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
                         !strongSelf.ghostModeUsers.contains(user.id!) {
                         strongSelf.cachedUsers.append(user)
                         strongSelf.noUsersView.isHidden = true
-                    } else {
-                        strongSelf.hud.dismiss()
-                        strongSelf.noUsersView.isHidden = false
                     }
+                }
+                
+                strongSelf.hud.dismiss()
+                if (strongSelf.cachedUsers.isEmpty) {
+                    strongSelf.noUsersView.isHidden = false
                 }
 
                 if strongSelf.users.isEmpty {
@@ -524,7 +544,18 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
     
     func setupCards() {
         for user in users {
-            let cardView = CardView(frame: CGRect(x: 0, y: 0, width: 370, height: 570))
+            var cardView = CardView()
+            if UIDevice.modelName == "Simulator iPhone 6" || UIDevice.modelName == "Simulator iPhone 6s" || UIDevice.modelName == "Simulator iPhone 7" || UIDevice.modelName == "Simulator iPhone 8" || UIDevice.modelName == "iPhone 6" || UIDevice.modelName == "iPhone 6s" || UIDevice.modelName == "iPhone 7" || UIDevice.modelName == "iPhone 8" {
+                cardView = CardView(frame: CGRect(x: 0, y: 0, width: 320, height: 500))
+            } else if UIDevice.modelName == "Simulator iPhone 6 Plus" || UIDevice.modelName == "Simulator iPhone 7 Plus" || UIDevice.modelName == "Simulator iPhone 8 Plus" || UIDevice.modelName == "iPhone 6 Plus" || UIDevice.modelName == "iPhone 7 Plus" || UIDevice.modelName == "iPhone 8 Plus" {
+                cardView = CardView(frame: CGRect(x: 0, y: 0, width: 370, height: 570))
+            } else if UIDevice.modelName == "Simulator iPhone X" || UIDevice.modelName == "Simulator iPhone XS" || UIDevice.modelName == "Simulator iPhone 11 Pro" || UIDevice.modelName == "iPhone X" || UIDevice.modelName == "iPhone XS" || UIDevice.modelName == "iPhone 11 Pro" {
+                cardView = CardView(frame: CGRect(x: 0, y: 0, width: 320, height: 580))
+            } else if UIDevice.modelName == "Simulator iPhone XS Max" || UIDevice.modelName == "Simulator iPhone 11 Pro Max" || UIDevice.modelName == "iPhone XS Max" || UIDevice.modelName == "iPhone 11 Pro Max" {
+                cardView = CardView(frame: CGRect(x: 0, y: 0, width: 370, height: 600))
+            } else if UIDevice.modelName == "Simulator iPhone XR" || UIDevice.modelName == "Simulator iPhone 11" || UIDevice.modelName == "iPhone XR" || UIDevice.modelName == "iPhone 11" {
+                cardView = CardView(frame: CGRect(x: 0, y: 0, width: 370, height: 580))
+            }
             cardView.moreInfoDelegate = self
             let gradientView = GlympsGradientView()
             let barsStackView = UIStackView()
@@ -603,8 +634,8 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
             cardView.cycleRightButton?.tag = indexForCards
             cardView.cycleLeftButton?.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
             cardView.cycleRightButton?.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            moreInfoButton.anchor(top: nil, leading: nil, bottom: cardView.bottomAnchor, trailing: cardView.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 20, right: 20), size: .init(width: 50, height: 50))
-            messageUserButton.anchor(top: cardView.topAnchor, leading: nil, bottom: nil, trailing: cardView.trailingAnchor, padding: .init(top: 25, left: 0, bottom: 0, right: 25), size: .init(width: 44, height: 44))
+            moreInfoButton.anchor(top: nil, leading: nil, bottom: cardView.bottomAnchor, trailing: cardView.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 20, right: 20), size: .init(width: 40, height: 40))
+            messageUserButton.anchor(top: cardView.topAnchor, leading: nil, bottom: nil, trailing: cardView.trailingAnchor, padding: .init(top: 25, left: 0, bottom: 0, right: 20), size: .init(width: 40, height: 40))
             cycleLeftButton.anchor(top: nil, leading: cardView.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 0, left: 8, bottom: 0, right: 0), size: .init(width: 50, height: 50))
             cycleLeftButton.centerYToSuperview()
             cycleRightButton.anchor(top: nil, leading: nil, bottom: nil, trailing: cardView.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 8), size: .init(width: 50, height: 50))

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nTD-fR-J8K">
-    <device id="retina5_5" orientation="portrait" appearance="light"/>
+    <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15703"/>
@@ -21,24 +21,24 @@
             <objects>
                 <viewController storyboardIdentifier="OnboardingContentVC" modalPresentationStyle="fullScreen" id="scc-yq-uzf" customClass="OnboardingContentVC" customModule="GlympsApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HC7-SG-rQt">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to Glymps!" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p4s-YM-RkF">
-                                <rect key="frame" x="86.000000000000014" y="35" width="242.33333333333337" height="34.333333333333343"/>
+                                <rect key="frame" x="86.000000000000014" y="79" width="242.33333333333337" height="34.333333333333343"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="25"/>
                                 <color key="textColor" red="0.087329114030000002" green="0.7221731267" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2NA-Y4-Mwo">
-                                <rect key="frame" x="117" y="159.33333333333334" width="180" height="180.00000000000003"/>
+                                <rect key="frame" x="117" y="203.33333333333337" width="180" height="180"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="180" id="YlA-VJ-BZf"/>
                                     <constraint firstAttribute="height" constant="180" id="lwj-w3-Kxy"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A short description" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ChO-lW-UeL">
-                                <rect key="frame" x="57" y="379.33333333333331" width="300" height="24.666666666666686"/>
+                                <rect key="frame" x="57" y="423.33333333333331" width="300" height="24.666666666666686"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="300" id="62q-mf-ehA"/>
                                 </constraints>
@@ -47,7 +47,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lfi-nF-WNa">
-                                <rect key="frame" x="77" y="434" width="260" height="40"/>
+                                <rect key="frame" x="77" y="448" width="260" height="40"/>
                                 <color key="backgroundColor" red="0.087329114030000002" green="0.7221731267" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="1fz-f5-Sie"/>
@@ -67,7 +67,7 @@
                                 </connections>
                             </button>
                             <button hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zqp-9N-kga">
-                                <rect key="frame" x="77" y="434" width="260" height="40"/>
+                                <rect key="frame" x="77" y="448" width="260" height="40"/>
                                 <color key="backgroundColor" red="0.087329114030000002" green="0.7221731267" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="260" id="5R4-Tm-iDX"/>
@@ -87,7 +87,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PXA-67-HYz">
-                                <rect key="frame" x="107" y="671" width="200" height="40"/>
+                                <rect key="frame" x="107" y="797" width="200" height="40"/>
                                 <color key="backgroundColor" red="0.087329114030000002" green="0.7221731267" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="6BW-Y3-Kg3"/>
@@ -107,7 +107,7 @@
                                 </connections>
                             </button>
                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="7" translatesAutoresizingMaskIntoConstraints="NO" id="7hh-Gf-Pfr">
-                                <rect key="frame" x="187" y="92.333333333333329" width="40" height="39.999999999999986"/>
+                                <rect key="frame" x="187" y="136.33333333333334" width="40" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="Gti-R9-Je2"/>
                                     <constraint firstAttribute="width" constant="40" id="pqj-Fl-r4u"/>
@@ -116,13 +116,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Lfi-nF-WNa" firstAttribute="top" secondItem="ChO-lW-UeL" secondAttribute="bottom" constant="30" id="JBl-MY-A0k"/>
+                            <constraint firstItem="Lfi-nF-WNa" firstAttribute="top" secondItem="ChO-lW-UeL" secondAttribute="bottom" id="JBl-MY-A0k"/>
                             <constraint firstItem="7hh-Gf-Pfr" firstAttribute="top" secondItem="p4s-YM-RkF" secondAttribute="bottom" constant="23" id="LDG-4T-U5U"/>
                             <constraint firstItem="2NA-Y4-Mwo" firstAttribute="top" secondItem="p4s-YM-RkF" secondAttribute="bottom" constant="90" id="PZ6-Np-95s"/>
                             <constraint firstItem="ChO-lW-UeL" firstAttribute="centerX" secondItem="HC7-SG-rQt" secondAttribute="centerX" id="RVg-CX-azH"/>
                             <constraint firstItem="zqp-9N-kga" firstAttribute="bottom" secondItem="Lfi-nF-WNa" secondAttribute="bottom" id="W2K-KR-X3i"/>
                             <constraint firstItem="PXA-67-HYz" firstAttribute="centerX" secondItem="HC7-SG-rQt" secondAttribute="centerX" id="YJG-6b-OC0"/>
-                            <constraint firstItem="zqp-9N-kga" firstAttribute="top" secondItem="ChO-lW-UeL" secondAttribute="bottom" constant="30" id="aTj-3y-0vS"/>
+                            <constraint firstItem="zqp-9N-kga" firstAttribute="top" secondItem="ChO-lW-UeL" secondAttribute="bottom" id="aTj-3y-0vS"/>
                             <constraint firstItem="C7J-2g-MDT" firstAttribute="bottom" secondItem="PXA-67-HYz" secondAttribute="bottom" constant="25" id="evB-2O-fhV"/>
                             <constraint firstItem="zqp-9N-kga" firstAttribute="trailing" secondItem="Lfi-nF-WNa" secondAttribute="trailing" id="f70-YQ-Hft"/>
                             <constraint firstItem="p4s-YM-RkF" firstAttribute="centerX" secondItem="HC7-SG-rQt" secondAttribute="centerX" id="few-6G-nhg"/>
@@ -155,11 +155,11 @@
             <objects>
                 <viewController storyboardIdentifier="LoginVC" modalPresentationStyle="fullScreen" id="nTD-fR-J8K" customClass="LoginVC" customModule="GlympsApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Xkg-sI-a4k">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qjX-Ut-n6h" customClass="WelcomeGlympsGradientView" customModule="GlympsApp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="glymps_logo_with_title" translatesAutoresizingMaskIntoConstraints="NO" id="FgV-Nd-HUu">
                                         <rect key="frame" x="117" y="80" width="180" height="180"/>
@@ -230,7 +230,7 @@
                                         </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Ptb-mv-OWb">
-                                        <rect key="frame" x="93.333333333333329" y="695" width="227.33333333333337" height="33"/>
+                                        <rect key="frame" x="93.333333333333329" y="809" width="227.33333333333337" height="33"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have an account?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2HA-fb-lwU">
                                                 <rect key="frame" x="0.0" y="0.0" width="160.33333333333334" height="33"/>
@@ -266,7 +266,7 @@
                                     <constraint firstItem="FgV-Nd-HUu" firstAttribute="centerX" secondItem="qjX-Ut-n6h" secondAttribute="centerX" id="l3u-AN-ceB"/>
                                     <constraint firstItem="klh-mO-gHo" firstAttribute="centerX" secondItem="qjX-Ut-n6h" secondAttribute="centerX" id="t4V-yw-c6g"/>
                                     <constraint firstItem="FgV-Nd-HUu" firstAttribute="top" secondItem="qjX-Ut-n6h" secondAttribute="top" constant="80" id="yhB-6t-00d"/>
-                                    <constraint firstAttribute="bottom" secondItem="Ptb-mv-OWb" secondAttribute="bottom" constant="8" id="zQU-Lk-cgP"/>
+                                    <constraint firstAttribute="bottom" secondItem="Ptb-mv-OWb" secondAttribute="bottom" constant="20" symbolic="YES" id="zQU-Lk-cgP"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -296,24 +296,24 @@
             <objects>
                 <viewController storyboardIdentifier="SignUpVC" modalPresentationStyle="fullScreen" id="fzF-qL-c1i" customClass="SignUpVC" customModule="GlympsApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="4sV-gM-4ON">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="glymps_logo_with_title" translatesAutoresizingMaskIntoConstraints="NO" id="ulF-v6-5P3">
-                                <rect key="frame" x="117" y="160.33333333333334" width="180" height="180.00000000000003"/>
+                                <rect key="frame" x="117" y="204.33333333333337" width="180" height="180"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="180" id="Xvw-i6-6QA"/>
                                     <constraint firstAttribute="width" constant="180" id="vlt-gs-FOC"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Let's create your account!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eOa-Zh-yV8">
-                                <rect key="frame" x="78" y="80" width="258" height="30.333333333333329"/>
+                                <rect key="frame" x="78" y="123.99999999999999" width="258" height="30.333333333333329"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="22"/>
                                 <color key="textColor" red="0.087329114030000002" green="0.7221731267" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pXO-Qj-lyU">
-                                <rect key="frame" x="77" y="440.33333333333331" width="260" height="59"/>
+                                <rect key="frame" x="77" y="484.33333333333326" width="260" height="59"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="260" id="Lmv-EC-5e3"/>
                                     <constraint firstAttribute="height" constant="59" id="e7x-Qh-ZXF"/>
@@ -332,7 +332,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Ll-UT-dos">
-                                <rect key="frame" x="77" y="519.33333333333337" width="260" height="59"/>
+                                <rect key="frame" x="77" y="563.33333333333337" width="260" height="59"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="59" id="QLt-Md-5aQ"/>
                                     <constraint firstAttribute="width" constant="260" id="kD8-Cv-2c5"/>
@@ -351,7 +351,7 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="con-Zz-e0g">
-                                <rect key="frame" x="37" y="698" width="340.33333333333331" height="33"/>
+                                <rect key="frame" x="37" y="824" width="340.33333333333331" height="33"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="By signing up you agree to our" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q1m-tE-z8H">
                                         <rect key="frame" x="0.0" y="0.0" width="210.33333333333334" height="33"/>
@@ -409,17 +409,20 @@
             <objects>
                 <viewController storyboardIdentifier="TermsOfServiceVC" modalPresentationStyle="fullScreen" id="8Ql-8u-Zc6" customClass="TermsOfServiceVC" customModule="GlympsApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gc6-QK-cL9">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Terms of Service" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RdH-NB-pSG">
-                                <rect key="frame" x="124.00000000000001" y="50.000000000000007" width="166.33333333333337" height="30.333333333333336"/>
+                                <rect key="frame" x="107" y="94" width="200" height="30.666666666666671"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="CCw-Oi-dew"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="22"/>
                                 <color key="textColor" red="0.087329114030000002" green="0.7221731267" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bku-Hu-rR4">
-                                <rect key="frame" x="20" y="88.333333333333314" width="374" height="647.66666666666674"/>
+                                <rect key="frame" x="20" y="132.66666666666669" width="374" height="729.33333333333326"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <string key="text">This End-User License Agreement ("EULA") is a legal agreement between you and Glymps LLC.
 
@@ -507,7 +510,7 @@ Effective as of May 1, 2019</string>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jjm-Pu-yFd">
-                                <rect key="frame" x="20" y="0.0" width="45" height="45"/>
+                                <rect key="frame" x="20" y="44" width="45" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="45" id="HJW-aq-AKk"/>
                                     <constraint firstAttribute="height" constant="45" id="Snp-re-ea2"/>
@@ -544,17 +547,17 @@ Effective as of May 1, 2019</string>
             <objects>
                 <viewController storyboardIdentifier="EmailVC" modalPresentationStyle="fullScreen" id="ReS-xL-6n6" customClass="EmailVC" customModule="GlympsApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DTt-t7-SFz">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter your email" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZiS-Lw-ckB">
-                                <rect key="frame" x="124.33333333333333" y="80" width="165.66666666666669" height="30.333333333333329"/>
+                                <rect key="frame" x="124" y="124.00000000000001" width="166" height="30.666666666666671"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="22"/>
                                 <color key="textColor" red="0.087329114030000002" green="0.7221731267" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="email" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="R51-cs-Dpw">
-                                <rect key="frame" x="59.666666666666657" y="260.33333333333331" width="295" height="40"/>
+                                <rect key="frame" x="59.666666666666657" y="304.66666666666669" width="295" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="6Xn-yJ-EYy"/>
                                     <constraint firstAttribute="width" constant="295" id="ySJ-ga-eUg"/>
@@ -569,14 +572,14 @@ Effective as of May 1, 2019</string>
                                 </userDefinedRuntimeAttributes>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OmZ-vb-3el">
-                                <rect key="frame" x="59.666666666666657" y="300.33333333333331" width="295" height="1"/>
+                                <rect key="frame" x="59.666666666666657" y="344.66666666666669" width="295" height="1"/>
                                 <color key="backgroundColor" red="0.087329114030000002" green="0.7221731267" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="My8-wn-ZW4"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ue2-qU-17k">
-                                <rect key="frame" x="45" y="632" width="324" height="59"/>
+                                <rect key="frame" x="45" y="758" width="324" height="59"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="59" id="k0w-MY-kzP"/>
                                     <constraint firstAttribute="width" constant="324" id="zzV-Rh-eUS"/>
@@ -624,17 +627,20 @@ Effective as of May 1, 2019</string>
             <objects>
                 <viewController storyboardIdentifier="PasswordVC" modalPresentationStyle="fullScreen" id="Glb-Jd-tOY" customClass="PasswordVC" customModule="GlympsApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2rq-DN-dNf">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter a password" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4hd-tv-OYZ">
-                                <rect key="frame" x="120.00000000000001" y="80" width="174.33333333333337" height="30.333333333333329"/>
+                                <rect key="frame" x="107" y="124.00000000000001" width="200" height="30.666666666666671"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="qmX-e2-3Da"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="22"/>
                                 <color key="textColor" red="0.087329114030000002" green="0.7221731267" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GmN-IT-ayT">
-                                <rect key="frame" x="59.666666666666657" y="260.33333333333331" width="295" height="40"/>
+                                <rect key="frame" x="59.666666666666657" y="304.66666666666669" width="295" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="295" id="T6q-vw-4Gj"/>
                                     <constraint firstAttribute="height" constant="40" id="X5T-wa-uib"/>
@@ -649,14 +655,14 @@ Effective as of May 1, 2019</string>
                                 </userDefinedRuntimeAttributes>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A6H-oy-pnu">
-                                <rect key="frame" x="59.666666666666657" y="300.33333333333331" width="295" height="1"/>
+                                <rect key="frame" x="59.666666666666657" y="344.66666666666669" width="295" height="1"/>
                                 <color key="backgroundColor" red="0.087329114030000002" green="0.7221731267" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="Io0-Nn-VXW"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your password must include at least 8 characters." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VuT-dC-fOd">
-                                <rect key="frame" x="110.66666666666669" y="319.33333333333331" width="193" height="49"/>
+                                <rect key="frame" x="110.66666666666669" y="363.66666666666669" width="193" height="49"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="193" id="DY7-U2-oGi"/>
                                     <constraint firstAttribute="height" constant="49" id="vae-b7-lXl"/>
@@ -666,7 +672,7 @@ Effective as of May 1, 2019</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vuV-ti-SRH">
-                                <rect key="frame" x="45" y="632" width="324" height="59"/>
+                                <rect key="frame" x="45" y="758" width="324" height="59"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="324" id="Scx-kf-HMK"/>
                                     <constraint firstAttribute="height" constant="59" id="xpl-os-u4M"/>
@@ -716,17 +722,17 @@ Effective as of May 1, 2019</string>
             <objects>
                 <viewController storyboardIdentifier="NameVC" modalPresentationStyle="fullScreen" id="FZ1-UK-flm" customClass="NameVC" customModule="GlympsApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="wLw-WI-ydK">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter your name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fxV-wJ-tqw">
-                                <rect key="frame" x="123.66666666666669" y="80" width="167" height="30.333333333333329"/>
+                                <rect key="frame" x="123.66666666666669" y="124.00000000000001" width="167" height="30.666666666666671"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="22"/>
                                 <color key="textColor" red="0.087329114030000002" green="0.7221731267" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="full name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3A4-sl-cmD">
-                                <rect key="frame" x="59.666666666666657" y="260.33333333333331" width="295" height="40"/>
+                                <rect key="frame" x="59.666666666666657" y="304.66666666666669" width="295" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="Z0j-Iu-TFf"/>
                                     <constraint firstAttribute="width" constant="295" id="pWs-95-Sfs"/>
@@ -741,14 +747,14 @@ Effective as of May 1, 2019</string>
                                 </userDefinedRuntimeAttributes>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yd9-QT-Bie">
-                                <rect key="frame" x="59.666666666666657" y="300.33333333333331" width="295" height="1"/>
+                                <rect key="frame" x="59.666666666666657" y="344.66666666666669" width="295" height="1"/>
                                 <color key="backgroundColor" red="0.087329114030000002" green="0.7221731267" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="eWj-jF-xqS"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is how your name will appear in Glymps." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VO4-IU-Amt">
-                                <rect key="frame" x="110.66666666666669" y="319.33333333333331" width="193" height="49"/>
+                                <rect key="frame" x="110.66666666666669" y="363.66666666666669" width="193" height="49"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="193" id="3c9-lm-7Qf"/>
                                     <constraint firstAttribute="height" constant="49" id="nOj-y1-KGb"/>
@@ -758,7 +764,7 @@ Effective as of May 1, 2019</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C1S-J5-Zek">
-                                <rect key="frame" x="45" y="632" width="324" height="59"/>
+                                <rect key="frame" x="45" y="758" width="324" height="59"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="324" id="4ak-nT-l64"/>
                                     <constraint firstAttribute="height" constant="59" id="DNa-Hr-s7X"/>
@@ -808,17 +814,17 @@ Effective as of May 1, 2019</string>
             <objects>
                 <viewController storyboardIdentifier="BirthdayVC" modalPresentationStyle="fullScreen" id="fW1-N4-Wce" customClass="BirthdayVC" customModule="GlympsApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bag-is-I1m">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter your birthday" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ocP-7c-fFA">
-                                <rect key="frame" x="109.66666666666667" y="80" width="194.66666666666663" height="30.333333333333329"/>
+                                <rect key="frame" x="109.66666666666667" y="123.99999999999999" width="194.66666666666663" height="30.333333333333329"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="22"/>
                                 <color key="textColor" red="0.087329114030000002" green="0.7221731267" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="RsH-qf-jCK">
-                                <rect key="frame" x="92" y="200.33333333333334" width="230" height="50"/>
+                                <rect key="frame" x="92" y="244.33333333333337" width="230" height="50"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="MM" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mJ8-E2-dw2">
                                         <rect key="frame" x="0.0" y="0.0" width="60" height="50"/>
@@ -871,7 +877,7 @@ Effective as of May 1, 2019</string>
                                 </subviews>
                             </stackView>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You must be 18 years old to use Glymps." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2b3-Vz-YLw">
-                                <rect key="frame" x="58" y="265.33333333333331" width="298" height="21"/>
+                                <rect key="frame" x="58" y="309.33333333333331" width="298" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="298" id="8Ov-9v-F30"/>
                                     <constraint firstAttribute="height" constant="21" id="Lq0-Jw-MmT"/>
@@ -881,7 +887,7 @@ Effective as of May 1, 2019</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a6H-WV-bRv">
-                                <rect key="frame" x="45" y="632" width="324" height="59"/>
+                                <rect key="frame" x="45" y="758" width="324" height="59"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="59" id="RkI-2D-hXV"/>
                                     <constraint firstAttribute="width" constant="324" id="sdY-AP-2hL"/>
@@ -900,7 +906,7 @@ Effective as of May 1, 2019</string>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your age will be published." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S60-DW-9gc">
-                                <rect key="frame" x="110.66666666666669" y="291.33333333333331" width="193" height="49"/>
+                                <rect key="frame" x="110.66666666666669" y="335.33333333333331" width="193" height="49"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="193" id="ELW-wp-8bt"/>
                                     <constraint firstAttribute="height" constant="49" id="Fhv-w6-61k"/>
@@ -943,17 +949,17 @@ Effective as of May 1, 2019</string>
             <objects>
                 <viewController storyboardIdentifier="GenderVC" modalPresentationStyle="fullScreen" id="Wyk-s9-xx1" customClass="GenderVC" customModule="GlympsApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="sfS-w4-TGS">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="I am" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A0M-Yl-xOy">
-                                <rect key="frame" x="185.66666666666666" y="80" width="43" height="30.333333333333329"/>
+                                <rect key="frame" x="185.66666666666666" y="124.00000000000001" width="43" height="30.666666666666671"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="22"/>
                                 <color key="textColor" red="0.087329114030000002" green="0.7221731267" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RGy-aV-Ua7">
-                                <rect key="frame" x="45" y="210.33333333333334" width="324" height="59.000000000000028"/>
+                                <rect key="frame" x="45" y="254.66666666666663" width="324" height="59"/>
                                 <color key="backgroundColor" red="0.087329114030000002" green="0.7221731267" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="324" id="YK6-ow-5zj"/>
@@ -973,7 +979,7 @@ Effective as of May 1, 2019</string>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qyR-53-LHq">
-                                <rect key="frame" x="45" y="299.33333333333331" width="324" height="59"/>
+                                <rect key="frame" x="45" y="343.66666666666669" width="324" height="59"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="59" id="bpT-yZ-Bxp"/>
                                     <constraint firstAttribute="width" constant="324" id="daa-Ur-F3b"/>
@@ -992,7 +998,7 @@ Effective as of May 1, 2019</string>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bas-4a-Sj8">
-                                <rect key="frame" x="45" y="632" width="324" height="59"/>
+                                <rect key="frame" x="45" y="758" width="324" height="59"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="324" id="Ozu-Gg-Jts"/>
                                     <constraint firstAttribute="height" constant="59" id="XvC-b0-CIN"/>
@@ -1040,17 +1046,17 @@ Effective as of May 1, 2019</string>
             <objects>
                 <viewController storyboardIdentifier="ProfileImageVC" modalPresentationStyle="fullScreen" id="4Fg-Ro-R4g" customClass="ProfileImageVC" customModule="GlympsApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tod-Hw-xTX">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose a photo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tTo-lz-dYd">
-                                <rect key="frame" x="126.33333333333333" y="80" width="161.66666666666669" height="30.333333333333329"/>
+                                <rect key="frame" x="126" y="124.00000000000001" width="162" height="30.666666666666671"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="22"/>
                                 <color key="textColor" red="0.087329114030000002" green="0.7221731267" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profileImage" translatesAutoresizingMaskIntoConstraints="NO" id="l3H-OI-ypV">
-                                <rect key="frame" x="82" y="180.33333333333337" width="250" height="250"/>
+                                <rect key="frame" x="82" y="224.66666666666663" width="250" height="250"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="EFj-X6-Lhl"/>
                                     <constraint firstAttribute="height" constant="250" id="mBw-bl-amO"/>
@@ -1062,7 +1068,7 @@ Effective as of May 1, 2019</string>
                                 </userDefinedRuntimeAttributes>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dsw-n1-Axh">
-                                <rect key="frame" x="45" y="632" width="324" height="59"/>
+                                <rect key="frame" x="45" y="758" width="324" height="59"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="324" id="Ine-T7-65S"/>
                                     <constraint firstAttribute="height" constant="59" id="MQl-df-S1o"/>
@@ -1107,14 +1113,14 @@ Effective as of May 1, 2019</string>
             <objects>
                 <viewController storyboardIdentifier="OnboardDoneVC" modalPresentationStyle="fullScreen" id="tD9-ES-f7j" customClass="OnboardDoneVC" customModule="GlympsApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="T5Y-sn-9c4">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="blue-confetti" translatesAutoresizingMaskIntoConstraints="NO" id="JCz-XV-yhA">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="736.00000000000023"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Yay you're done! Welcome to Glymps!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dr6-RW-OXz">
-                                <rect key="frame" x="75" y="100" width="264" height="83"/>
+                                <rect key="frame" x="75" y="144" width="264" height="83"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="83" id="Btw-yU-dro"/>
                                     <constraint firstAttribute="width" constant="264" id="j3J-Ue-ERy"/>
@@ -1124,14 +1130,14 @@ Effective as of May 1, 2019</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="verify icon" translatesAutoresizingMaskIntoConstraints="NO" id="qV4-s6-lI4">
-                                <rect key="frame" x="167" y="328" width="80" height="80"/>
+                                <rect key="frame" x="167" y="408" width="80" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="bYp-h5-v5j"/>
                                     <constraint firstAttribute="width" constant="80" id="iZl-Z3-RPL"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="518-Fx-fCk">
-                                <rect key="frame" x="45" y="632" width="324" height="59"/>
+                                <rect key="frame" x="45" y="758" width="324" height="59"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="59" id="1Bc-Ig-7g3"/>
                                     <constraint firstAttribute="width" constant="324" id="e2N-Z2-qAG"/>

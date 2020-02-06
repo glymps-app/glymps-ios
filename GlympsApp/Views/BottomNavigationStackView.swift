@@ -31,7 +31,6 @@ class BottomNavigationStackView: UIStackView {
         
         isLayoutMarginsRelativeArrangement = true
         layoutMargins = .init(top: 0, left: 25, bottom: 0, right: 25)
-        
     }
     
     // default view encoder

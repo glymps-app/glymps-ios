@@ -440,7 +440,7 @@ class ChatVC: UIViewController {
     func messageUser(toUser: String, message: String) {
         let notificationsURL = URL(string: "https://glymps-pusher-notifications.herokuapp.com/pusher/send-message")!
         var request = URLRequest(url: notificationsURL)
-        request.httpBody = "user_id=\(toUser)&content=\(message) ".data(using: String.Encoding.utf8)
+        request.httpBody = "user_id=\(toUser)&content=\(message)".data(using: String.Encoding.utf8)
         request.httpMethod = "POST"
         
         URLSession.shared.dataTask(with: request) { (data, response, error) -> Void in

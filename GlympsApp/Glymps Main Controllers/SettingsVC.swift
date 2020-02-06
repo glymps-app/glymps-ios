@@ -263,10 +263,11 @@ class SettingsVC: UITableViewController {
         hud.textLabel.text = "Logging you out..."
         hud.show(in: view)
         
+        beamsClient.clearAllState {
+          print("Successfully cleared all state")
+        }
+        
         AuthService.logout(onSuccess: {
-            beamsClient.clearAllState {
-              print("Successfully cleared all state")
-            }
             
             let storyboard = UIStoryboard(name: "Welcome", bundle: nil)
             let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginVC")
@@ -299,6 +300,7 @@ class SettingsVC: UITableViewController {
                 // Account deleted.
             Database.database().reference().child("users").child(API.User.CURRENT_USER!.uid).removeValue()
                 
+                self.deletePusherUser(userToDelete: API.User.CURRENT_USER!.uid)
                 
                 hud.textLabel.text = "Done."
                 hud.dismiss(afterDelay: 4.0)
@@ -308,6 +310,23 @@ class SettingsVC: UITableViewController {
                 self.present(loginVC, animated: true, completion: nil)
             }
         }
+    }
+    
+    // delete user from Pusher
+    func deletePusherUser(userToDelete: String) {
+        let notificationsURL = URL(string: "https://glymps-pusher-notifications.herokuapp.com/pusher/delete-user")!
+        var request = URLRequest(url: notificationsURL)
+        request.httpBody = "user_id=\(userToDelete)".data(using: String.Encoding.utf8)
+        request.httpMethod = "POST"
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) -> Void in
+            // TODO: Handle success or failure
+            if (error != nil) {
+                print("Error: \(error?.localizedDescription ?? "")")
+            } else {
+                print("Successfully deleted Pusher user.")
+            }
+            }.resume()
     }
     
     
