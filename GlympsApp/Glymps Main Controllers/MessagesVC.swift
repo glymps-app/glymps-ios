@@ -20,6 +20,8 @@ class MessagesVC: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
+    let bottomNavBar = BottomNavigationStackView()
+    
     var userId: String?
     
     var newMessages: [User] = []
@@ -27,10 +29,24 @@ class MessagesVC: UIViewController {
     var matches: [User] = []
     
     var matchedMessages: [Message] = []
+    
+    var currentUsername: String?
+    
+    var currentUser: User?
 
     // setup UI
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupCurrentUser()
+        
+        view.addSubview(bottomNavBar)
+        bottomNavBar.heightAnchor.constraint(equalToConstant: 70).isActive = true
+        bottomNavBar.anchor(top: nil, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor)
+        
+        bottomNavBar.messagesButton.tintColor = #colorLiteral(red: 0, green: 0.7123068571, blue: 1, alpha: 1)
+        bottomNavBar.settingsButton.tintColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+        bottomNavBar.glympsImage.tintColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
         
         newMessages = []
         matches = []
@@ -47,30 +63,68 @@ class MessagesVC: UIViewController {
         
         navBar.setupShadow(opacity: 0.2, radius: 8, offset: .init(width: 0, height: 10), color: .init(white: 0, alpha: 0.3))
         
+        bottomNavBar.settingsButton.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
+        bottomNavBar.glympsImage.addTarget(self, action: #selector(handleDeck), for: .touchUpInside)
+        
     }
     
     // setup UI beforehand, go to chat if coming to this view after tapping message button in "card deck"
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            
-            if let id = self.userId {
-                let transition = CATransition()
-                transition.duration = 0.3
-                transition.type = CATransitionType.push
-                transition.subtype = CATransitionSubtype.fromRight
-                transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
-                self.view.window!.layer.add(transition, forKey: kCATransition)
-                
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let chatVC = storyboard.instantiateViewController(withIdentifier: "ChatVC") as! ChatVC
-                chatVC.userId = id
-                chatVC.messagesVC = self
-                self.present(chatVC, animated: true, completion: nil)
-                self.userId = nil
-            }
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//        
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+//            
+//            if let id = self.userId {
+//                let transition = CATransition()
+//                transition.duration = 0.3
+//                transition.type = CATransitionType.push
+//                transition.subtype = CATransitionSubtype.fromRight
+//                transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
+//                self.view.window!.layer.add(transition, forKey: kCATransition)
+//                
+//                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//                let chatVC = storyboard.instantiateViewController(withIdentifier: "ChatVC") as! ChatVC
+//                chatVC.userId = id
+//                chatVC.messagesVC = self
+//                self.present(chatVC, animated: true, completion: nil)
+//                self.userId = nil
+//            }
+//        }
+//    }
+    
+    // get current user
+    func setupCurrentUser() {
+        API.User.observeCurrentUser { (user) in
+            self.currentUser = user
+            self.currentUsername = user.name!
+            print("Current user: \(self.currentUser!)")
         }
+    }
+    
+    // go to main profile screen
+    @objc func handleSettings() {
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = CATransitionType.push
+        transition.subtype = CATransitionSubtype.fromLeft
+        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
+        view.window!.layer.add(transition, forKey: kCATransition)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let profileVC = storyboard.instantiateViewController(withIdentifier: "ProfileVC")
+        self.present(profileVC, animated: true, completion: nil)
+    }
+    
+    // go to main deck screen
+    @objc func handleDeck() {
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = CATransitionType.push
+        transition.subtype = CATransitionSubtype.fromLeft
+        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
+        view.window!.layer.add(transition, forKey: kCATransition)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let deckVC = storyboard.instantiateViewController(withIdentifier: "DeckVC")
+        self.present(deckVC, animated: true, completion: nil)
     }
     
     func loadNewMessages() {
@@ -126,6 +180,8 @@ class MessagesVC: UIViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let chatVC = storyboard.instantiateViewController(withIdentifier: "ChatVC") as! ChatVC
         chatVC.userId = userId
+        chatVC.currentUsername = self.currentUsername
+        chatVC.currentUser = self.currentUser
         chatVC.messagesVC = self
         self.present(chatVC, animated: true, completion: nil)
     }
@@ -174,6 +230,8 @@ extension MessagesVC: UITableViewDataSource, UITableViewDelegate {
         chatVC.messagesVC = self
         chatVC.cardView = cell.cardView
         chatVC.userId = cell.user?.id
+        chatVC.currentUsername = self.currentUsername
+        chatVC.currentUser = self.currentUser
         self.present(chatVC, animated: true, completion: nil)
     }
     
@@ -225,6 +283,8 @@ extension MessagesVC: UICollectionViewDataSource, UICollectionViewDelegate {
         chatVC.messagesVC = self
         chatVC.cardView = cell.cardView
         chatVC.userId = cell.user?.id
+        chatVC.currentUsername = self.currentUsername
+        chatVC.currentUser = self.currentUser
         self.present(chatVC, animated: true, completion: nil)
     }
 }

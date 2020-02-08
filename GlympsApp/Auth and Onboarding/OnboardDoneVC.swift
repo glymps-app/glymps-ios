@@ -12,9 +12,15 @@ import UIKit
 class OnboardDoneVC: UIViewController {
     
     @IBOutlet weak var enterBtn: UIButton!
+    
+    var refUID: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        refUID = referringUser
+        
+        print("Referring User: \(refUID ?? ""). Press enter to reward them 3 coins...")
         
         enterBtn.layer.borderColor = #colorLiteral(red: 0.08732911403, green: 0.7221731267, blue: 1, alpha: 1)
         enterBtn.layer.borderWidth = 1
@@ -29,7 +35,8 @@ class OnboardDoneVC: UIViewController {
         transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
         view.window!.layer.add(transition, forKey: kCATransition)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let initial = storyboard.instantiateInitialViewController()!
+        let initial = storyboard.instantiateInitialViewController()! as! DeckVC
+        initial.currentUserReferredBy = refUID ?? ""
         self.present(initial, animated: true, completion: nil)
     }
     

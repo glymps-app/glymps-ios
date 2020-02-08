@@ -47,6 +47,20 @@ class BirthdayVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        monthTextfield.delegate = self
+        dayTextfield.delegate = self
+        yearTextfield.delegate = self
+        
+        monthTextfield.tag = 0
+        dayTextfield.tag = 1
+        yearTextfield.tag = 2
+        
+        monthTextfield.attributedPlaceholder = NSAttributedString(string: "MM", attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
+        
+        dayTextfield.attributedPlaceholder = NSAttributedString(string: "DD", attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
+        
+        yearTextfield.attributedPlaceholder = NSAttributedString(string: "YYYY", attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
+        
         let date = Date()
         let calendar = Calendar.current
         currentYear = calendar.component(.year, from: date)
@@ -162,6 +176,22 @@ class BirthdayVC: UIViewController {
     }
     
 
+}
+
+// go to next textfield
+
+extension BirthdayVC: UITextFieldDelegate {
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        let nextTag = textField.tag + 1
+
+        if let nextResponder = textField.superview?.viewWithTag(nextTag) {
+            nextResponder.becomeFirstResponder()
+        } else {
+            textField.resignFirstResponder()
+        }
+    }
+    
 }
 
 // setup picker for birthday

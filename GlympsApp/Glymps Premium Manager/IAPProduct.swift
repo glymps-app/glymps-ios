@@ -11,15 +11,15 @@ import Foundation
 // list of Glymps Premium's subscription products
 enum IAPProduct: String {
     
-    case coinPurchase5 = "JamesBMorris.GlympsApp.CoinPurchase5"
-    case coinPurchase30 = "JamesBMorris.GlympsApp.CoinPurchase30"
-    case coinPurchase75 = "JamesBMorris.GlympsApp.CoinPurchase75"
+    case coinPurchase5 = "com.glymps.Glymps.5Coins"
+    case coinPurchase30 = "com.glymps.Glymps.30Coins"
+    case coinPurchase75 = "com.glymps.Glymps.75Coins"
     
-    case coinSubscription1Month = "JamesBMorris.GlympsApp.CoinSubscription1Month"
-    case coinSubscription6Month = "JamesBMorris.GlympsApp.CoinSubscription6Month"
-    case coinSubscription12Month = "JamesBMorris.GlympsApp.CoinSubscription12Month"
+    case coinSubscription1Month = "com.glymps.Glymps.1MonthCoinSubscription"
+    case coinSubscription6Month = "com.glymps.Glymps.6MonthCoinSubscription"
+    case coinSubscription12Month = "com.glymps.Glymps.12MonthCoinSubscription"
     
-    case usdSubscription1Month = "JamesBMorris.GlympsApp.USDSubscription1Month"
-    case usdSubscription6Month = "JamesBMorris.GlympsApp.USDSubscription6Month"
-    case usdSubscription12Month = "JamesBMorris.GlympsApp.USDSubscription12Month"
+    case usdSubscription1Month = "com.glymps.Glymps.1MonthUSDSubscription"
+    case usdSubscription6Month = "com.glymps.Glymps.6MonthUSDSubscription"
+    case usdSubscription12Month = "com.glymps.Glymps.12MonthUSDSubscription"
 }

@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import AVFoundation
+import MobileCoreServices
 import FirebaseCore
 import FirebaseAuth
 import FirebaseDatabase
@@ -35,10 +37,14 @@ class ProfileImageVC: UIViewController {
     var geoFire: GeoFire!
     var geoFireRef: DatabaseReference!
     
+    var picker = UIImagePickerController()
+    
     var selectedProfileImage: UIImage?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        picker.delegate = self
         
         print(userEmail)
         print(userPassword)
@@ -59,10 +65,33 @@ class ProfileImageVC: UIViewController {
     
     // handle tap of profileImage
     @objc func handleSelectProfileImageView() {
-        print("Tapped!")
-        let pickerController = UIImagePickerController()
-        pickerController.delegate = self
-        present(pickerController, animated: true, completion: nil)
+        let alert = UIAlertController(title: "Glymps", message: "Please select a source:", preferredStyle: UIAlertController.Style.actionSheet)
+        let camera = UIAlertAction(title: "Take a selfie", style: UIAlertAction.Style.default) { (_) in
+            
+            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera) {
+                self.picker.sourceType = .camera
+                self.present(self.picker, animated: true, completion: nil)
+            } else {
+                print("Option unavailable.")
+            }
+        }
+        let library = UIAlertAction(title: "Choose an image", style: UIAlertAction.Style.default) { (_) in
+            
+            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.photoLibrary) {
+                self.picker.sourceType = .photoLibrary
+                self.picker.mediaTypes = [String(kUTTypeImage)]
+                self.present(self.picker, animated: true, completion: nil)
+            } else {
+                print("Option unavailable.")
+            }
+        }
+        let cancel = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler: nil)
+        
+        alert.addAction(camera)
+        alert.addAction(library)
+        alert.addAction(cancel)
+        
+        self.present(alert, animated: true, completion: nil)
     }
     
     // move to next view controller and pass necessary data

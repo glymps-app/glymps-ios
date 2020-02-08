@@ -15,6 +15,7 @@ import FirebaseDatabase
 import FirebaseStorage
 import FirebaseAnalytics
 import LBTATools
+import PushNotifications
 
 // chat screen for current user to message another user
 class ChatVC: UIViewController {
@@ -22,7 +23,7 @@ class ChatVC: UIViewController {
     var userId: String?
     var username: String?
     var currentUsername: String?
-    var deviceToken: String?
+    var currentUser: User?
     
     @IBOutlet weak var backBtn: UIButton!
     
@@ -60,24 +61,21 @@ class ChatVC: UIViewController {
     
     var messagesVC: MessagesVC?
     
-    var currentUser: User?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print(currentUser ?? "NO CURRENT USER")
+        print(currentUsername ?? "NO CURRENT USERNAME")
         
         sendBtn.isEnabled = true
         
         picker.delegate = self
-        
-        setupCurrentUser()
         
         setupUI()
         setupBottomBar()
         setupTableView()
         observeMessages()
         setupUserView()
-        
-        setupUserDeviceToken()
         
         let dismissKeyboard = UITapGestureRecognizer(target: self, action: #selector(keyboardDismiss))
         view.addGestureRecognizer(dismissKeyboard)
@@ -133,22 +131,6 @@ class ChatVC: UIViewController {
         }
         if inputTextView.text == "" {
             placeholderLabel.isHidden = false
-        }
-    }
-    
-    // get current user
-    func setupCurrentUser() {
-        API.User.observeCurrentUser { (user) in
-            self.currentUser = user
-            self.currentUsername = user.name!
-            print("Current user: \(self.currentUser!)")
-        }
-    }
-    
-    // get other user's deviceToken for push notifications
-    func setupUserDeviceToken() {
-        API.Inbox.loadUserDeviceToken(uid: self.userId!) { (deviceToken) in
-            self.deviceToken = deviceToken
         }
     }
     
@@ -378,7 +360,7 @@ class ChatVC: UIViewController {
                 self.textViewDidChange(inputTextView)
                 sendToFirebase(dict: ["text" : text as Any])
                 
-                sendMessageNotification(message: "\(self.currentUsername!) messaged you.", deviceToken: self.deviceToken!)
+                sendMessageNotification(message: "\(self.currentUsername!) messaged you.")
             }
         } else {
             mediaBtn.isEnabled = true
@@ -420,37 +402,55 @@ class ChatVC: UIViewController {
         view.addSubview(matchView)
         matchView.fillSuperview()
         
-        sendMatchNotification(message: "\(self.currentUsername!) matched with you!", deviceToken: self.deviceToken!)
+        sendMatchNotification(message: "\(self.currentUsername!) matched with you!")
         
         UserDefaults.standard.set(true, forKey: "\(self.userId!)")
     }
     
     // send new request to message push notification
-    func sendRequestNotification(message: String, deviceToken: String) {
+    func sendRequestNotification(message: String) {
         
-        UserDefaults.standard.set(true, forKey: "\(deviceToken):request")
+        UserDefaults.standard.set(true, forKey: "\(self.userId!):request")
         
-        let notification = Notify(deviceToken: deviceToken, message: message)
-        notification.SendAPNS()
+        // send Pusher Notification for Message Request
+        messageUser(toUser: self.userId!, message: message)
         
     }
     
     // send new match push notification
-    func sendMatchNotification(message: String, deviceToken: String) {
+    func sendMatchNotification(message: String) {
         
-        UserDefaults.standard.set(true, forKey: "\(deviceToken):match")
+        UserDefaults.standard.set(true, forKey: "\(self.userId!):match")
         
-        let notification = Notify(deviceToken: deviceToken, message: message)
-        notification.SendAPNS()
+        // send Pusher Notification for Match
+        messageUser(toUser: self.userId!, message: message)
         
     }
     
     // send new message push notification
-    func sendMessageNotification(message: String, deviceToken: String) {
+    func sendMessageNotification(message: String) {
         
-        let notification = Notify(deviceToken: deviceToken, message: message)
-        notification.SendAPNS()
+        // send Pusher Notification for Messages
+        messageUser(toUser: self.userId!, message: message)
         
+    }
+    
+    
+    // send a notification
+    func messageUser(toUser: String, message: String) {
+        let notificationsURL = URL(string: "https://glymps-pusher-notifications.herokuapp.com/pusher/send-message")!
+        var request = URLRequest(url: notificationsURL)
+        request.httpBody = "user_id=\(toUser)&content=\(message)".data(using: String.Encoding.utf8)
+        request.httpMethod = "POST"
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) -> Void in
+            // TODO: Handle success or failure
+            if (error != nil) {
+                print("Error: \(error?.localizedDescription ?? "")")
+            } else {
+                print("Success!")
+            }
+            }.resume()
     }
     
 }
@@ -471,7 +471,6 @@ extension ChatVC: UITextViewDelegate {
             placeholderLabel.isHidden = false
         }
     }
-    
 }
 
 // setup image picker for selecting photos/videos to send
@@ -541,10 +540,10 @@ extension ChatVC: UITableViewDataSource, UITableViewDelegate {
             // disable sending until other user messages back and matches
         } else if messages.count == 1 && messages.first?.from == API.User.CURRENT_USER!.uid {
             tableView.setEmptyView(title: "Message request sent.", message: "If they reply, you'll be matched!", image: UIImage())
-            if !UserDefaults.standard.bool(forKey: "\(self.deviceToken!):request") {
+            if !UserDefaults.standard.bool(forKey: "\(self.userId!):request") {
                 API.Inbox.saveRequest(uid: self.userId!)
                 // send a notification
-                sendRequestNotification(message: "\(self.currentUsername!) requested to message you!", deviceToken: self.deviceToken!)
+                sendRequestNotification(message: "\(self.currentUsername!) requested to message you.")
             }
             self.mediaBtn.isEnabled = false
             self.sendBtn.isEnabled = false
