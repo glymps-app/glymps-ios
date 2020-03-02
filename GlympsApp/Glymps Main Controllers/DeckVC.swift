@@ -36,7 +36,7 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
     
     let headerView = UIView() // top view (Glymps + heatmap)
     
-    @IBOutlet weak var cardsDeckView: iCarousel!
+    @IBOutlet weak var cardsDeckView: UpSwipableCarousel!
     
     let menuView = BottomNavigationStackView() // bottom navigation bar
     
@@ -65,7 +65,7 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
     var currentUser: User?
     
     let hud = JGProgressHUD(style: .extraLight)
-    
+
     let mapBtn: UIButton = {
        let button = UIButton(type: .system)
         button.titleLabel?.text = ""
@@ -167,7 +167,11 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
         
         menuView.settingsButton.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
         menuView.messagesButton.addTarget(self, action: #selector(handleMessages), for: .touchUpInside)
-        
+
+        let deleteGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanGestureRecognizer(_:)))
+        (cardsDeckView.value(forKey: "contentView") as! UIView).addGestureRecognizer(deleteGestureRecognizer)
+        deleteGestureRecognizer.accessibilityLabel = "foo"
+        deleteGestureRecognizer.delegate = cardsDeckView
 //        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
 //            self.setupAds()
 //        }
@@ -344,7 +348,6 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
                         !strongSelf.permanentlyBlockedUsers.contains(user.id!) &&
                         !strongSelf.ghostModeUsers.contains(user.id!) {
                         strongSelf.cachedUsers.append(user)
-                        strongSelf.noUsersView.isHidden = true
                     } else if (user.id != API.User.CURRENT_USER?.uid) && (currentUser.preferedGender == "Both") &&
                         (currentUser.gender == user.preferedGender) &&
                         (currentUser.minAge!...currentUser.maxAge! ~= user.age!) &&
@@ -353,9 +356,6 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
                         !strongSelf.permanentlyBlockedUsers.contains(user.id!) &&
                         !strongSelf.ghostModeUsers.contains(user.id!) {
                         strongSelf.cachedUsers.append(user)
-                        strongSelf.noUsersView.isHidden = true
-//                    } else if strongSelf.bannerAds != [] {
-//                        strongSelf.noUsersView.isHidden = true
                     } else if (user.id != API.User.CURRENT_USER?.uid) &&
                         (user.preferedGender == "Both") &&
                         (currentUser.preferedGender == user.gender) &&
@@ -365,7 +365,6 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
                         !strongSelf.permanentlyBlockedUsers.contains(user.id!) &&
                         !strongSelf.ghostModeUsers.contains(user.id!) {
                         strongSelf.cachedUsers.append(user)
-                        strongSelf.noUsersView.isHidden = true
                     } else if (user.id != API.User.CURRENT_USER?.uid) &&
                         ((currentUser.preferedGender == "Both") && (user.preferedGender == "Both")) &&
                         (currentUser.minAge!...currentUser.maxAge! ~= user.age!) &&
@@ -374,40 +373,39 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
                         !strongSelf.permanentlyBlockedUsers.contains(user.id!) &&
                         !strongSelf.ghostModeUsers.contains(user.id!) {
                         strongSelf.cachedUsers.append(user)
-                        strongSelf.noUsersView.isHidden = true
                     }
                 }
                 
                 strongSelf.hud.dismiss()
-                if (strongSelf.cachedUsers.isEmpty) {
-                    strongSelf.noUsersView.isHidden = false
-                }
-
-                if strongSelf.users.isEmpty {
-                    strongSelf.users = strongSelf.cachedUsers
-                    strongSelf.setupCards()
-                    strongSelf.cardsDeckView.reloadData()
-                } else {
-                   // Show refresh button
-                    
-                    strongSelf.refreshUsersImage.isHidden = false
-                    
-                    strongSelf.refreshUsersBtn.isHidden = false
-                    
-                    strongSelf.refreshUsersBtn.isEnabled = true
-                }
+                strongSelf.updateDeckAndRefreshButtonState()
             }
         }.add(to: connectionGroup)
     }
+
+    func updateDeckAndRefreshButtonState() {
+        if users.isEmpty {
+            users = cachedUsers
+            cachedUsers = []
+            setupCards()
+            cardsDeckView.reloadData()
+        } else if cachedDeckMatchesCurrentDeck() {
+            cachedUsers = []
+        }
+
+        refreshUsersBtn.isHidden = cachedUsers.isEmpty
+        refreshUsersImage.isHidden = cachedUsers.isEmpty
+        refreshUsersBtn.isEnabled = !cachedUsers.isEmpty
+
+        noUsersView.isHidden = !users.isEmpty
+    }
+
+    func cachedDeckMatchesCurrentDeck() -> Bool {
+        return Set(users.compactMap { $0.id }) == Set(cachedUsers.compactMap { $0.id })
+    }
     
     @IBAction func refreshUsersBtnWasPressed(_ sender: Any) {
-        
-        self.users = self.cachedUsers
-        self.cardsDeckView.reloadData()
-        
-        self.refreshUsersImage.isHidden = true
-        self.refreshUsersBtn.isHidden = true
-        self.refreshUsersBtn.isEnabled = false
+        users = []
+        updateDeckAndRefreshButtonState()
     }
         
     func loadRequests() {
@@ -543,6 +541,8 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
     var indexForCards = 0
     
     func setupCards() {
+        cardViews = []
+
         for user in users {
             var cardView = CardView()
             if UIDevice.modelName == "Simulator iPhone 6" || UIDevice.modelName == "Simulator iPhone 6s" || UIDevice.modelName == "Simulator iPhone 7" || UIDevice.modelName == "Simulator iPhone 8" || UIDevice.modelName == "iPhone 6" || UIDevice.modelName == "iPhone 6s" || UIDevice.modelName == "iPhone 7" || UIDevice.modelName == "iPhone 8" {
@@ -689,7 +689,55 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
         
         return cardViews[index]
     }
-    
+
+    @objc func handlePanGestureRecognizer(_ sender: UIPanGestureRecognizer) {
+        guard let currentCard = cardsDeckView.currentItemView else { return }
+        let translation = sender.translation(in: view)
+
+        switch sender.state {
+        case .began:
+            break
+        case .ended, .cancelled, .failed:
+            if -translation.y > currentCard.frame.height / 2 {
+                UIView.animate(withDuration: 0.3, animations: {
+                    currentCard.alpha = 0.0
+                    currentCard.transform = currentCard.transform.translatedBy(x: 0.0, y: -400)
+                }, completion: { _ in
+                    self.blockCurrentCard()
+                })
+            } else {
+                UIView.animate(withDuration: 0.3) {
+                    currentCard.alpha = 1.0
+                    currentCard.transform = CGAffineTransform.identity
+                }
+            }
+        case .changed:
+            if translation.y < 0 {
+                currentCard.alpha = 1 + (translation.y / currentCard.frame.height / 2)
+                currentCard.transform = CGAffineTransform.identity.translatedBy(x: 0.0, y: translation.y)
+            } else {
+                currentCard.transform = CGAffineTransform.identity
+            }
+        default:
+            break
+        }
+    }
+
+    func blockCurrentCard() {
+        let index = cardsDeckView.currentItemIndex
+        let card = cardViews[index]
+
+        guard let uid = card.userId else { return }
+
+        cardViews.remove(at: index)
+        users = users.filter { $0.id != uid }
+        cachedUsers = cachedUsers.filter { $0.id != uid }
+        API.Inbox.blockUser(uid: uid)
+        cardsDeckView.removeItem(at: index, animated: true)
+
+        updateDeckAndRefreshButtonState()
+    }
+
     // setup mobile ad cards
 //    func setupBannerAdCards() {
 //
@@ -816,4 +864,22 @@ extension Array {
             }
         }
     }
+}
+
+class UpSwipableCarousel: iCarousel, UIGestureRecognizerDelegate {
+
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+
+    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        if gestureRecognizer.accessibilityLabel == "foo", let panGR = gestureRecognizer as? UIPanGestureRecognizer {
+            let translation = panGR.translation(in: self)
+            return -translation.y > abs(translation.x)
+        } else {
+            return super.gestureRecognizerShouldBegin(gestureRecognizer)
+        }
+    }
+
+
 }

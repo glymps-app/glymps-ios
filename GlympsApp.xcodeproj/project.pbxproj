@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		096F07F323F10EB200C44428 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096F07F223F10EB200C44428 /* Constants.swift */; };
 		15DA3E06234E9D7100A0FB8E /* APIType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DA3E05234E9D7100A0FB8E /* APIType.swift */; };
 		15DA3E09234E9D7B00A0FB8E /* DeckService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DA3E07234E9D7B00A0FB8E /* DeckService.swift */; };
 		15DA3E0A234E9D7B00A0FB8E /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DA3E08234E9D7B00A0FB8E /* Connection.swift */; };
@@ -45,7 +46,6 @@
 		C32FE660229388BD00E9BA1D /* EmailValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32FE65F229388BD00E9BA1D /* EmailValidator.swift */; };
 		C32FE6622293891500E9BA1D /* ButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32FE6612293891500E9BA1D /* ButtonExtension.swift */; };
 		C32FE66622938A0000E9BA1D /* Welcome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C32FE66522938A0000E9BA1D /* Welcome.storyboard */; };
-		C3317045231346A400280FAD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3317044231346A400280FAD /* Constants.swift */; };
 		C331704723138F1C00280FAD /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C331704623138F1C00280FAD /* MapVC.swift */; };
 		C33170492321439D00280FAD /* OnboardingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33170482321439D00280FAD /* OnboardingVC.swift */; };
 		C331704B232147FB00280FAD /* OnboardingContentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C331704A232147FB00280FAD /* OnboardingContentVC.swift */; };
@@ -83,6 +83,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		096F07F223F10EB200C44428 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		15DA3E05234E9D7100A0FB8E /* APIType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIType.swift; sourceTree = "<group>"; };
 		15DA3E07234E9D7B00A0FB8E /* DeckService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckService.swift; sourceTree = "<group>"; };
 		15DA3E08234E9D7B00A0FB8E /* Connection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
@@ -125,7 +126,6 @@
 		C32FE65F229388BD00E9BA1D /* EmailValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailValidator.swift; sourceTree = "<group>"; };
 		C32FE6612293891500E9BA1D /* ButtonExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonExtension.swift; sourceTree = "<group>"; };
 		C32FE66522938A0000E9BA1D /* Welcome.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Welcome.storyboard; sourceTree = "<group>"; };
-		C3317044231346A400280FAD /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C331704623138F1C00280FAD /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 		C33170482321439D00280FAD /* OnboardingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingVC.swift; sourceTree = "<group>"; };
 		C331704A232147FB00280FAD /* OnboardingContentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContentVC.swift; sourceTree = "<group>"; };
@@ -310,7 +310,7 @@
 		C33170412313436A00280FAD /* Constants */ = {
 			isa = PBXGroup;
 			children = (
-				C3317044231346A400280FAD /* Constants.swift */,
+				096F07F223F10EB200C44428 /* Constants.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -519,6 +519,7 @@
 				C32FE647229381C300E9BA1D /* BirthdayVC.swift in Sources */,
 				C3130FE522DA5DF6001DE9A8 /* SwipingPhotosController.swift in Sources */,
 				C385587922F736FA006DB712 /* UIViewExt.swift in Sources */,
+				096F07F323F10EB200C44428 /* Constants.swift in Sources */,
 				C385587D22FB1619006DB712 /* Message.swift in Sources */,
 				C32FE642229381C300E9BA1D /* OnboardDoneVC.swift in Sources */,
 				C32FE644229381C300E9BA1D /* EmailVC.swift in Sources */,
@@ -559,7 +560,6 @@
 				C35D469F2341A51A0019FE35 /* ShareGlympsVC.swift in Sources */,
 				15DA3E0C234EAE0200A0FB8E /* FeedAPI.swift in Sources */,
 				C3C3416922DE0CF9000B1F02 /* AdvertiserView.swift in Sources */,
-				C3317045231346A400280FAD /* Constants.swift in Sources */,
 				15DA3E0E234EB12500A0FB8E /* LocationAPI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
