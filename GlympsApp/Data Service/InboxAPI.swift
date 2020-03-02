@@ -37,9 +37,9 @@ class InboxAPI {
         removeMatch(uid: uid)
         removeMessages(uid: uid)
         Database.database().reference().child("blocking").child(API.User.CURRENT_USER!.uid).updateChildValues([uid:Int(Date().timeIntervalSince1970)])
-        
+
         Database.database().reference().child("blocking").child(uid).updateChildValues([API.User.CURRENT_USER!.uid:Int(Date().timeIntervalSince1970)])
-        
+
     }
     
     // go into "Ghost Mode": where no one can see your profile for 24 hours. Can be turned off and on

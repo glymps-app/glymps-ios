@@ -123,9 +123,9 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
         loadPermanentlyBlockedUsers()
         loadGhostModeUsers()
         
-        cardsDeckView.type = .linear
-        cardsDeckView.bounceDistance = 3.00
-        cardsDeckView.decelerationRate = 3.00
+        cardsDeckView.type = .rotary
+        cardsDeckView.bounceDistance = 0.35
+        cardsDeckView.decelerationRate = 0.50
         
         refreshUsersBtn.isEnabled = false
         
@@ -386,6 +386,7 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
         if users.isEmpty {
             users = cachedUsers
             cachedUsers = []
+
             setupCards()
             cardsDeckView.reloadData()
         } else if cachedDeckMatchesCurrentDeck() {
@@ -671,22 +672,29 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
     func numberOfItems(in carousel: iCarousel) -> Int {
         users.count
     }
-    
+
     func carousel(_ carousel: iCarousel, valueFor option: iCarouselOption, withDefault value: CGFloat) -> CGFloat {
-        if (option == .spacing) {
-            return value * 1.01
+        switch option {
+        case .spacing:
+            return value * 1.05
+        case .arc:
+            return CGFloat(Double.pi / 2)
+        case .visibleItems:
+            return 3.0
+        case .showBackfaces:
+            return 0.0
+        case .count:
+            return 4.0
+        case .wrap:
+            return carousel.numberOfItems > 2 ? 1.0 : 0.0
+        case .angle:
+            return value
+        default:
+            return value
         }
-        return value
     }
     
     func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: UIView?) -> UIView {
-        
-//        let tempView = UIView(frame: CGRect(x: 0, y: 0, width: 370, height: 570))
-//        tempView.layer.cornerRadius = 15
-//        tempView.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
-//
-//        return tempView
-        
         return cardViews[index]
     }
 
