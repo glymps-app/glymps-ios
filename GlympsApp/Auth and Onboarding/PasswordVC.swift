@@ -15,6 +15,8 @@ class PasswordVC: UIViewController {
     
     @IBOutlet weak var nextBtn: UIButton!
     
+    @IBOutlet weak var backBtn: UIButton!
+    
     var userEmail = ""
     
     override func viewDidLoad() {
@@ -60,24 +62,18 @@ class PasswordVC: UIViewController {
         view.endEditing(true)
     }
     
-    // prep data for next view controller
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destination = segue.destination as! NameVC
-        destination.userEmail = userEmail
-        destination.userPassword = passwordTextfield.text!
+    @IBAction func backBtnWasPressed(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
     }
     
     // move to next view controller
     @IBAction func nextBtnWasPressed(_ sender: Any) {
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = CATransitionType.push
-        transition.subtype = CATransitionSubtype.fromRight
-        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-        
         if passwordTextfield.text != "" {
-            performSegue(withIdentifier: "passwordToName", sender: self)
+            let storyboard = UIStoryboard(name: "Welcome", bundle: nil)
+            let nameVC = storyboard.instantiateViewController(withIdentifier: "NameVC") as! NameVC
+            nameVC.userEmail = userEmail
+            nameVC.userPassword = passwordTextfield.text!
+            self.navigationController?.pushViewController(nameVC, animated: true)
         }
     }
     

@@ -56,12 +56,9 @@ class LoginVC: UIViewController {
         let hasViewedWalkthrough = defaults.bool(forKey: "hasViewedWalkthrough")
         if !hasViewedWalkthrough {
             if let onboardingVC = storyboard?.instantiateViewController(withIdentifier: "OnboardingVC") as? OnboardingVC {
+                onboardingVC.presenter = self
                 present(onboardingVC, animated: true, completion: nil)
             }
-        }
-        
-        if Auth.auth().currentUser != nil {
-            self.goToMain()
         }
     }
     
@@ -119,28 +116,16 @@ class LoginVC: UIViewController {
     
     // go to sign-up. This should already be done though...
     @IBAction func toSignUpBtnWasPressed(_ sender: Any) {
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = CATransitionType.push
-        transition.subtype = CATransitionSubtype.fromRight
-        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
         let storyboard = UIStoryboard(name: "Welcome", bundle: nil)
         let signUpVC = storyboard.instantiateViewController(withIdentifier: "SignUpVC")
-        self.present(signUpVC, animated: true, completion: nil)
+        self.navigationController?.pushViewController(signUpVC, animated: true)
     }
     
     // enter app and go to "card deck"
     func goToMain(){
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = CATransitionType.push
-        transition.subtype = CATransitionSubtype.fromRight
-        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let initial = storyboard.instantiateInitialViewController()!
-        self.present(initial, animated: true, completion: nil)
+        self.navigationController?.pushViewController(initial, animated: true)
     }
 }
 

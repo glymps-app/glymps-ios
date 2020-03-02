@@ -31,28 +31,14 @@ class SignUpVC: UIViewController {
     
     // move to next view controller to begin onboarding
     @IBAction func startOnboardBtnWasPressed(_ sender: Any) {
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = CATransitionType.push
-        transition.subtype = CATransitionSubtype.fromRight
-        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
         let storyboard = UIStoryboard(name: "Welcome", bundle: nil)
         let emailVC = storyboard.instantiateViewController(withIdentifier: "EmailVC")
-        self.present(emailVC, animated: true, completion: nil)
+        self.navigationController?.pushViewController(emailVC, animated: true)
     }
     
     // sign-up later :(
     @IBAction func cancelOnboardBtnWasPressed(_ sender: Any) {
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = CATransitionType.push
-        transition.subtype = CATransitionSubtype.fromLeft
-        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-        let storyboard = UIStoryboard(name: "Welcome", bundle: nil)
-        let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginVC")
-        self.present(loginVC, animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
     
     // check out Glymps's official terms of service that is agreed upon already

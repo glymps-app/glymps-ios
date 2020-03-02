@@ -27,6 +27,8 @@ class BuyCoinsVC: UIViewController {
     
     @IBOutlet weak var dismissBtn: UIButton!
     
+    @IBOutlet weak var dropView: UIView!
+    
     var coinsToSend: Int?
     
     var chosenCoins = ["30 Coins"] {
@@ -50,6 +52,8 @@ class BuyCoinsVC: UIViewController {
     // setup UI
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        dropView.dropShadow(color: .darkGray, opacity: 1, offSet: CGSize(width: -1, height: 1), radius: 20, scale: true)
         
         GlympsPremiumService.instance.getProducts()
 

@@ -17,6 +17,8 @@ class GenderVC: UIViewController {
     
     @IBOutlet weak var nextBtn: UIButton!
     
+    @IBOutlet weak var backBtn: UIButton!
+    
     var userEmail = ""
     var userPassword = ""
     var userName = ""
@@ -107,28 +109,21 @@ class GenderVC: UIViewController {
         }
     }
     
-    // prep for segue to next view controller
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destination = segue.destination as! ProfileImageVC
-        destination.userEmail = userEmail
-        destination.userPassword = userPassword
-        destination.userName = userName
-        destination.userAge = userAge
-        destination.userGender = chosenGender.joined(separator: "")
+    @IBAction func backBtnWasPressed(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
     }
     
     // move to next view controller
     @IBAction func nextBtnWasPressed(_ sender: Any) {
-        
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = CATransitionType.push
-        transition.subtype = CATransitionSubtype.fromRight
-        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-        
         if !chosenGender.isEmpty {
-            performSegue(withIdentifier: "genderToProfileImage", sender: self)
+            let storyboard = UIStoryboard(name: "Welcome", bundle: nil)
+            let profileImageVC = storyboard.instantiateViewController(withIdentifier: "ProfileImageVC") as! ProfileImageVC
+            profileImageVC.userEmail = userEmail
+            profileImageVC.userPassword = userPassword
+            profileImageVC.userName = userName
+            profileImageVC.userAge = userAge
+            profileImageVC.userGender = chosenGender.joined(separator: "")
+            self.navigationController?.pushViewController(profileImageVC, animated: true)
         }
     }
     

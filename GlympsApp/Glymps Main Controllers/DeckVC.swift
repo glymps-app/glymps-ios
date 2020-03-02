@@ -38,8 +38,6 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
     
     @IBOutlet weak var cardsDeckView: iCarousel!
     
-    let menuView = BottomNavigationStackView() // bottom navigation bar
-    
     var users: [User] = []
     
     var cachedUsers: [User] = []
@@ -112,10 +110,6 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
         
         setupPusher()
         
-        menuView.glympsImage.tintColor = #colorLiteral(red: 0, green: 0.7123068571, blue: 1, alpha: 1)
-        menuView.settingsButton.tintColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
-        menuView.messagesButton.tintColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
-        
         setupCurrentUser()
         loadRequests()
         loadMatches()
@@ -124,8 +118,9 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
         loadGhostModeUsers()
         
         cardsDeckView.type = .linear
-        cardsDeckView.bounceDistance = 3.00
-        cardsDeckView.decelerationRate = 3.00
+        cardsDeckView.bounceDistance = 1.00
+        cardsDeckView.decelerationRate = 1000.00
+        cardsDeckView.scrollSpeed = 0.01
         
         refreshUsersBtn.isEnabled = false
         
@@ -152,11 +147,10 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
         hud.show(in: view)
         
         headerView.heightAnchor.constraint(equalToConstant: 70).isActive = true
-        menuView.heightAnchor.constraint(equalToConstant: 70).isActive = true
         
         // setup views
          
-        let stackView = UIStackView(arrangedSubviews: [headerView, cardsDeckView, menuView])
+        let stackView = UIStackView(arrangedSubviews: [headerView, cardsDeckView])
         stackView.axis = .vertical
         view.addSubview(stackView)
         stackView.frame = .init(x: 0, y: 0, width: 300, height: 200)
@@ -164,9 +158,6 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.layoutMargins = .init(top: 0, left: 12, bottom: 0, right: 12)
         stackView.bringSubviewToFront(cardsDeckView)
-        
-        menuView.settingsButton.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
-        menuView.messagesButton.addTarget(self, action: #selector(handleMessages), for: .touchUpInside)
         
 //        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
 //            self.setupAds()
@@ -412,6 +403,8 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
         
     func loadRequests() {
         
+        self.requests = []
+        
         // load new message requests
         
         API.Inbox.loadMessageRequestsDeck { (user) in
@@ -427,6 +420,8 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
         
         // load matched users
         
+        self.matches = []
+        
         API.Inbox.loadMatchesDeck { (user) in
             if user.id != API.User.CURRENT_USER?.uid {
                 self.matches.insert(user.id!, at: 0)
@@ -436,6 +431,8 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
     }
     
     func loadBlockedUsers() {
+        
+        self.blockedUsers = []
         
         // load blocked users (only blocked for 24 hours)
         
@@ -450,6 +447,8 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
     
     func loadPermanentlyBlockedUsers() {
         
+        self.permanentlyBlockedUsers = []
+        
         // load permanently blocked users (blocked indefinitely)
         
         API.Inbox.loadPermanentlyBlockedUsersDeck { (user) in
@@ -463,6 +462,8 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
     
     func loadGhostModeUsers() {
         
+        self.ghostModeUsers = []
+        
         // load ghost mode users (users that want to go inactive for 24 hours max)
         
         API.Inbox.loadUsersInGhostMode { (user) in
@@ -473,33 +474,6 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
         }
     }
     
-    // go to main profile screen
-    @objc func handleSettings() {
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = CATransitionType.push
-        transition.subtype = CATransitionSubtype.fromLeft
-        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let profileVC = storyboard.instantiateViewController(withIdentifier: "ProfileVC")
-        self.present(profileVC, animated: true, completion: nil)
-    }
-    
-    // go to inbox
-    @objc func handleMessages() {
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = CATransitionType.push
-        transition.subtype = CATransitionSubtype.fromRight
-        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let messagesVC = storyboard.instantiateViewController(withIdentifier: "MessagesVC") as! MessagesVC
-        self.present(messagesVC, animated: true, completion: nil)
-    }
-    
     // go to user details screen
     @objc func moreInfoTapped(sender: UIButton) {
         let data = cardViews[sender.tag].userId
@@ -507,6 +481,7 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
         let userDetailsController = UserDetailsVC()
         userDetailsController.userId = data
         userDetailsController.cardView = cv
+        userDetailsController.presenter = self
         present(userDetailsController, animated: true, completion: nil)
     }
     
@@ -517,25 +492,20 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
         let userDetailsController = UserDetailsVC()
         userDetailsController.userId = data
         userDetailsController.cardView = cv
+        userDetailsController.presenter = self
         present(userDetailsController, animated: true, completion: nil)
     }
 
     // go to chat to message a user
     @objc func messageUserTapped(sender: UIButton) {
         let data = cardViews[sender.tag].userId
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = CATransitionType.push
-        transition.subtype = CATransitionSubtype.fromRight
-        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let chatVC = storyboard.instantiateViewController(withIdentifier: "ChatVC") as! ChatVC
         chatVC.userId = data
         chatVC.currentUsername = self.currentUsername
         chatVC.currentUser = self.currentUser
-        self.present(chatVC, animated: true, completion: nil)
+        chatVC.deckVC = self
+        self.navigationController?.pushViewController(chatVC, animated: true)
         
         // go to specific user chat after this transition
     }
@@ -634,6 +604,7 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
             cardView.cycleRightButton?.tag = indexForCards
             cardView.cycleLeftButton?.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
             cardView.cycleRightButton?.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            cardView.tag = indexForCards
             moreInfoButton.anchor(top: nil, leading: nil, bottom: cardView.bottomAnchor, trailing: cardView.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 20, right: 20), size: .init(width: 40, height: 40))
             messageUserButton.anchor(top: cardView.topAnchor, leading: nil, bottom: nil, trailing: cardView.trailingAnchor, padding: .init(top: 25, left: 0, bottom: 0, right: 20), size: .init(width: 40, height: 40))
             cycleLeftButton.anchor(top: nil, leading: cardView.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 0, left: 8, bottom: 0, right: 0), size: .init(width: 50, height: 50))
@@ -669,7 +640,7 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
     
     // setup nearby user cards
     func numberOfItems(in carousel: iCarousel) -> Int {
-        users.count
+        cardViews.count
     }
     
     func carousel(_ carousel: iCarousel, valueFor option: iCarouselOption, withDefault value: CGFloat) -> CGFloat {

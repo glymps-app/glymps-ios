@@ -61,8 +61,16 @@ class ChatVC: UIViewController {
     
     var messagesVC: MessagesVC?
     
+    var deckVC: UIViewController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if deckVC == nil {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let dv = storyboard.instantiateViewController(withIdentifier: "DeckVC") as! DeckVC
+            self.deckVC = dv
+        }
         
         print(currentUser ?? "NO CURRENT USER")
         print(currentUsername ?? "NO CURRENT USERNAME")
@@ -175,7 +183,6 @@ class ChatVC: UIViewController {
             }
             
             cardView.informationLabel.attributedText = attributedText
-            
             cardView.addSubview(gradientView)
             cardView.addSubview(barsStackView)
             cardView.stackView = barsStackView
@@ -254,15 +261,7 @@ class ChatVC: UIViewController {
 
     // go back to inbox
     @IBAction func backBtnWasPressed(_ sender: Any) {
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = CATransitionType.push
-        transition.subtype = CATransitionSubtype.fromLeft
-        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let messagesVC = storyboard.instantiateViewController(withIdentifier: "MessagesVC")
-        self.present(messagesVC, animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
     
     // go to user detail view to see other user's information
@@ -270,6 +269,11 @@ class ChatVC: UIViewController {
         let userDetailsController = UserDetailsVC()
         userDetailsController.userId = self.userId
         userDetailsController.cardView = self.cardView
+        userDetailsController.presenter = self
+        userDetailsController.messageUserButton.isEnabled = false
+        userDetailsController.messageUserButton.isHidden = true
+        userDetailsController.blockUserButton.isEnabled = false
+        userDetailsController.blockUserButton.isHidden = true
         self.present(userDetailsController, animated: true, completion: nil)
     }
     
@@ -280,6 +284,8 @@ class ChatVC: UIViewController {
         let blockOptionsVC = storyboard.instantiateViewController(withIdentifier: "BlockOptionsVC") as! BlockOptionsVC
         blockOptionsVC.userId = self.userId
         blockOptionsVC.chatVC = self
+        blockOptionsVC.deckVC = self.deckVC
+        blockOptionsVC.cardView = self.cardView
         self.present(blockOptionsVC, animated: true, completion: nil)
     }
     
@@ -533,13 +539,13 @@ extension ChatVC: UITableViewDataSource, UITableViewDelegate {
         
         // motivate user to send a message :)
         if messages.count == 0 {
-            tableView.setEmptyView(title: "No messages yet.", message: "Don't be shy! Type something and press that send button!", image: UIImage())
+            tableView.setEmptyView(title: "No messages yet.", message: "Don't be shy! Type something and press that send button! You've got one shot!", image: UIImage())
             self.sendBtn.isEnabled = true
             self.mediaBtn.isEnabled = true
             tableView.separatorStyle = .none
             // disable sending until other user messages back and matches
         } else if messages.count == 1 && messages.first?.from == API.User.CURRENT_USER!.uid {
-            tableView.setEmptyView(title: "Message request sent.", message: "If they reply, you'll be matched!", image: UIImage())
+            tableView.setEmptyView(title: "Message request sent.", message: "If they reply, you'll be matched, and will be able to send more messages!", image: UIImage())
             if !UserDefaults.standard.bool(forKey: "\(self.userId!):request") {
                 API.Inbox.saveRequest(uid: self.userId!)
                 // send a notification

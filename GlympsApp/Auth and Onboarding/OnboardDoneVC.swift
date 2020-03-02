@@ -28,16 +28,10 @@ class OnboardDoneVC: UIViewController {
     
     // enter the app and go to the "card deck"
     @IBAction func enterBtnWasPressed(_ sender: Any) {
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = CATransitionType.push
-        transition.subtype = CATransitionSubtype.fromRight
-        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let initial = storyboard.instantiateInitialViewController()! as! DeckVC
         initial.currentUserReferredBy = refUID ?? ""
-        self.present(initial, animated: true, completion: nil)
+        self.navigationController?.pushViewController(initial, animated: true)
     }
     
 
