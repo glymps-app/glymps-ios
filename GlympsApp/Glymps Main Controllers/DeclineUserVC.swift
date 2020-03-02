@@ -39,12 +39,6 @@ class DeclineUserVC: UIViewController {
     
     // decline and block other user for 24 hours, and remove them as request, match as accordingly, also remove any existing conversations
     func declineUser() {
-        
-        UserDefaults.standard.removeObject(forKey: "\(self.userId!)")
-        UserDefaults.standard.removeObject(forKey: "\(self.userId!):match")
-        API.Inbox.removeMessageRequest(uid: self.userId!)
-        API.Inbox.removeMatch(uid: self.userId!)
-        API.Inbox.removeMessages(uid: self.userId!)
         API.Inbox.blockUser(uid: self.userId!)
         
         dismiss(animated: true, completion: nil)

@@ -31,11 +31,15 @@ class InboxAPI {
     
     // block current user from seeing another User's profile for 24 hours
     func blockUser(uid: String) {
-        
+        UserDefaults.standard.removeObject(forKey: "\(uid)")
+        UserDefaults.standard.removeObject(forKey: "\(uid):match")
+        removeMessageRequest(uid: uid)
+        removeMatch(uid: uid)
+        removeMessages(uid: uid)
         Database.database().reference().child("blocking").child(API.User.CURRENT_USER!.uid).updateChildValues([uid:Int(Date().timeIntervalSince1970)])
-        
+
         Database.database().reference().child("blocking").child(uid).updateChildValues([API.User.CURRENT_USER!.uid:Int(Date().timeIntervalSince1970)])
-        
+
     }
     
     // go into "Ghost Mode": where no one can see your profile for 24 hours. Can be turned off and on
@@ -50,7 +54,11 @@ class InboxAPI {
     
     // block another user forever
     func permanentlyBlockUser(uid: String) {
-        
+        UserDefaults.standard.removeObject(forKey: "\(uid)")
+        UserDefaults.standard.removeObject(forKey: "\(uid):match")
+        removeMessageRequest(uid: uid)
+        removeMatch(uid: uid)
+        removeMessages(uid: uid)
         Database.database().reference().child("permanent-blocks").child(API.User.CURRENT_USER!.uid).updateChildValues([uid:true])
         
         Database.database().reference().child("permanent-blocks").child(uid).updateChildValues([API.User.CURRENT_USER!.uid:true])
