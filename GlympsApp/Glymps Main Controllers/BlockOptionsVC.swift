@@ -47,11 +47,6 @@ class BlockOptionsVC: UIViewController {
     }
     
     func blockAction() {
-        UserDefaults.standard.removeObject(forKey: "\(self.userId!)")
-        UserDefaults.standard.removeObject(forKey: "\(self.userId!):match")
-        API.Inbox.removeMessageRequest(uid: self.userId!)
-        API.Inbox.removeMatch(uid: self.userId!)
-        API.Inbox.removeMessages(uid: self.userId!)
         API.Inbox.permanentlyBlockUser(uid: self.userId!)
         
         if self.userDetailsVC != nil {
