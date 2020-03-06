@@ -15,6 +15,8 @@ class NameVC: UIViewController {
     
     @IBOutlet weak var nextBtn: UIButton!
     
+    @IBOutlet weak var backBtn: UIButton!
+    
     var userEmail = ""
     var userPassword = ""
 
@@ -60,25 +62,19 @@ class NameVC: UIViewController {
         view.endEditing(true)
     }
     
-    // prep data for next view controller
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destination = segue.destination as! BirthdayVC
-        destination.userEmail = userEmail
-        destination.userPassword = userPassword
-        destination.userName = nameTextfield.text!
+    @IBAction func backBtnWasPressed(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
     }
     
     // move to next view controller
     @IBAction func nextBtnWasPressed(_ sender: Any) {
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = CATransitionType.push
-        transition.subtype = CATransitionSubtype.fromRight
-        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-        
         if nameTextfield.text != "" {
-            performSegue(withIdentifier: "nameToBirthday", sender: self)
+            let storyboard = UIStoryboard(name: "Welcome", bundle: nil)
+            let birthdayVC = storyboard.instantiateViewController(withIdentifier: "BirthdayVC") as! BirthdayVC
+            birthdayVC.userEmail = userEmail
+            birthdayVC.userPassword = userPassword
+            birthdayVC.userName = nameTextfield.text!
+            self.navigationController?.pushViewController(birthdayVC, animated: true)
         }
     }
 

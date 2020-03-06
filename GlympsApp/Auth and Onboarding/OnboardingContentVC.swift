@@ -33,6 +33,8 @@ class OnboardingContentVC: UIViewController, UNUserNotificationCenterDelegate, U
     var contentTitle = ""
     
     let manager = CLLocationManager()
+    
+    var presenter: LoginVC?
 
     // setup UI
     override func viewDidLoad() {
@@ -95,15 +97,9 @@ class OnboardingContentVC: UIViewController, UNUserNotificationCenterDelegate, U
             defaults.set(true, forKey: "hasViewedWalkthrough")
             dismiss(animated: true, completion: nil)
             
-            let transition = CATransition()
-            transition.duration = 0.3
-            transition.type = CATransitionType.push
-            transition.subtype = CATransitionSubtype.fromRight
-            transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
-            view.window!.layer.add(transition, forKey: kCATransition)
             let storyboard = UIStoryboard(name: "Welcome", bundle: nil)
             let signUpVC = storyboard.instantiateViewController(withIdentifier: "SignUpVC")
-            self.presentingViewController!.present(signUpVC, animated: true, completion: nil)
+            self.presenter?.navigationController?.pushViewController(signUpVC, animated: true)
             
         default:
             print("")

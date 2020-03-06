@@ -21,6 +21,8 @@ In order to get potential matches in your deck, to get messaged by others, and t
     
     var pageImage = [#imageLiteral(resourceName: "glymps_logo_with_title"), #imageLiteral(resourceName: "swipe"), #imageLiteral(resourceName: "message-icon1"), #imageLiteral(resourceName: "heat-map"), #imageLiteral(resourceName: "notification"), #imageLiteral(resourceName: "location"), #imageLiteral(resourceName: "rocket")] // background images for each page
     
+    var presenter: LoginVC?
+    
     // setup UI
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,6 +61,7 @@ In order to get potential matches in your deck, to get messaged by others, and t
             pageContentVC.content = pageContent[index]
             pageContentVC.index = index
             pageContentVC.imageForPage = pageImage[index]
+            pageContentVC.presenter = self.presenter
             
             return pageContentVC
         }

@@ -25,6 +25,8 @@ class ProfileImageVC: UIViewController {
     
     @IBOutlet weak var nextBtn: UIButton!
     
+    @IBOutlet weak var backBtn: UIButton!
+    
     var userEmail = ""
     var userPassword = ""
     var userName = ""
@@ -94,6 +96,10 @@ class ProfileImageVC: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    @IBAction func backBtnWasPressed(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     // move to next view controller and pass necessary data
     @IBAction func nextBtnWasPressed(_ sender: Any) {
     
@@ -130,15 +136,9 @@ class ProfileImageVC: UIViewController {
                 hud.textLabel.text = "Welcome to Glymps! \u{1F389}"
                 hud.dismiss(afterDelay: 4.0)
                 
-                let transition = CATransition()
-                transition.duration = 0.3
-                transition.type = CATransitionType.push
-                transition.subtype = CATransitionSubtype.fromLeft
-                transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
-                self.view.window!.layer.add(transition, forKey: kCATransition)
                 let storyboard = UIStoryboard(name: "Welcome", bundle: nil)
-                let onboardDoneVC = storyboard.instantiateViewController(withIdentifier: "OnboardDoneVC")
-                self.present(onboardDoneVC, animated: true, completion: nil)
+                let onboardDoneVC = storyboard.instantiateViewController(withIdentifier: "OnboardDoneVC") as! OnboardDoneVC
+                self.navigationController?.pushViewController(onboardDoneVC, animated: true)
             }) {
                 hud.textLabel.text = "Whoops, something's not right. \u{1F615}"
                 hud.dismiss(afterDelay: 4.0)

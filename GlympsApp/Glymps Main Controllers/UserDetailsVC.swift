@@ -16,6 +16,8 @@ class UserDetailsVC: UIViewController, UIScrollViewDelegate {
     
     var currentUser: User?
     
+    var presenter: UIViewController?
+    
     lazy var scrollView: UIScrollView = {
        let sv = UIScrollView()
         sv.alwaysBounceVertical = true
@@ -195,19 +197,16 @@ class UserDetailsVC: UIViewController, UIScrollViewDelegate {
     
     // go to chat view controller and send other user a message
     @objc func handleMessage() {
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = CATransitionType.push
-        transition.subtype = CATransitionSubtype.fromRight
-        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
+        
+        dismiss(animated: true, completion: nil)
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let chatVC = storyboard.instantiateViewController(withIdentifier: "ChatVC") as! ChatVC
         chatVC.userId = self.userId
         chatVC.currentUsername = self.currentUsername
         chatVC.currentUser = self.currentUser
-        self.present(chatVC, animated: true, completion: nil)
+        chatVC.deckVC = presenter
+        self.presenter!.navigationController?.pushViewController(chatVC, animated: true)
         
         // go to specific user chat after this transition
     }

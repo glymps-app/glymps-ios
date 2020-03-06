@@ -291,7 +291,7 @@ class EditProfileVC: UITableViewController {
     
     // listener for textfield editing tracker
     @objc func textFieldDidChange() {
-        guard let gender = genderTextfield.text, !gender.isEmpty, let name = nameTextfield.text, !name.isEmpty, let email = emailTextfield.text, !email.isEmpty, email.isValidEmail(), let age = ageTextfield.text, !age.isEmpty, (Int(age)! >= 18) != false else {
+        guard let gender = genderTextfield.text, !gender.isEmpty, let name = nameTextfield.text, !name.isEmpty, let email = emailTextfield.text, !email.isEmpty, isValidEmail(email), let age = ageTextfield.text, !age.isEmpty, (Int(age)! >= 18) != false else {
             saveBtn.setTitleColor(#colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1), for: .normal)
             saveBtn.layer.backgroundColor = #colorLiteral(red: 0.6140708327, green: 0.7837085724, blue: 0.8509241939, alpha: 1)
             saveBtn.isEnabled = false
@@ -302,6 +302,13 @@ class EditProfileVC: UITableViewController {
         saveBtn.isEnabled = true
     }
     
+    func isValidEmail(_ email: String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+
+        let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailPred.evaluate(with: email)
+    }
+    
     // dismiss keyboard
     @objc func keyboardDismiss() {
         textFieldDidChange()
@@ -310,15 +317,8 @@ class EditProfileVC: UITableViewController {
     
     // go back to main profile screen
     @IBAction func backBtnWasPressed(_ sender: Any) {
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = CATransitionType.push
-        transition.subtype = CATransitionSubtype.fromLeft
-        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let profileVC = storyboard.instantiateViewController(withIdentifier: "ProfileVC")
-        self.present(profileVC, animated: true, completion: nil)
+        self.tabBarController?.tabBar.isHidden = false
+        self.navigationController?.popViewController(animated: true)
     }
     
     // remove second profile image

@@ -14,6 +14,7 @@ target 'GlympsApp' do
   pod 'Firebase/Messaging'
   pod 'Firebase/Functions'
   pod 'Firebase/Analytics'
+  pod 'Firebase/Crashlytics'
   pod 'JGProgressHUD'
   pod 'SDWebImage'
   pod 'SLCarouselView', :git => 'https://github.com/liusally/SLCarouselView.git'

@@ -19,12 +19,16 @@ class BlockUserVC: UIViewController {
     
     @IBOutlet weak var closeBtn: UIButton!
     
+    @IBOutlet weak var dropView: UIView!
+    
     var userId: String?
     
     var userDetailsVC: UserDetailsVC?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        dropView.dropShadow(color: .darkGray, opacity: 1, offSet: CGSize(width: -1, height: 1), radius: 20, scale: true)
         
         usernameLabel.text = ""
         setupLabel()
@@ -42,16 +46,20 @@ class BlockUserVC: UIViewController {
         API.Inbox.blockUser(uid: self.userId!)
         
         dismiss(animated: true, completion: nil)
-        
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = CATransitionType.push
-        transition.subtype = CATransitionSubtype.fromTop
-        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let deckVC = storyboard.instantiateViewController(withIdentifier: "DeckVC")
-        self.userDetailsVC!.present(deckVC, animated: true, completion: nil)
+        if let p = self.userDetailsVC!.presenter as? DeckVC {
+            // TODO: reload and refresh card deck below
+            p.cardViews.remove(at: (userDetailsVC?.cardView.tag)!)
+            p.cardsDeckView.reloadData()
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let messagesVC = storyboard.instantiateViewController(withIdentifier: "MessagesVC") as! MessagesVC
+            messagesVC.loadNewMessages()
+            messagesVC.loadMatches()
+        }
+        self.userDetailsVC!.dismiss(animated: true, completion: nil)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25, execute: {
+            self.tabBarController?.selectedIndex = 1
+        })
     }
     
     // decline and block other user for 24 hours, and remove them as request, match as accordingly, also remove any existing conversations

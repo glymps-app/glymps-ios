@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="tax-kI-zzY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="LHl-Os-V23">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -8,6 +8,25 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="OcV-yS-GkZ">
+            <objects>
+                <navigationController storyboardIdentifier="ProfileTab" navigationBarHidden="YES" id="3Lq-DM-yhd" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" image="top_left_profile" id="7Ys-0e-je1">
+                        <inset key="imageInsets" minX="-5" minY="0.0" maxX="-5" maxY="-5"/>
+                    </tabBarItem>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="LwG-yK-mIT">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="biy-qD-9yB" kind="relationship" relationship="rootViewController" id="mQl-h6-99D"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="357-FI-0Ep" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="143" y="-785"/>
+        </scene>
         <!--ProfileVC-->
         <scene sceneID="VpU-dX-WbF">
             <objects>
@@ -16,17 +35,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oOB-a4-khs">
-                                <rect key="frame" x="354" y="56" width="40" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="lEj-W2-3mD"/>
-                                    <constraint firstAttribute="width" constant="40" id="uk8-lx-Mx6"/>
-                                </constraints>
-                                <state key="normal" image="glymps_logo"/>
-                                <connections>
-                                    <action selector="backToDeckBtnWasPressed:" destination="biy-qD-9yB" eventType="touchUpInside" id="9Ke-B6-Aw3"/>
-                                </connections>
-                            </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7jW-2X-iMb">
                                 <rect key="frame" x="132" y="134" width="150" height="150"/>
                                 <constraints>
@@ -191,10 +199,16 @@
                                     </view>
                                 </subviews>
                             </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap Me :)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qUf-qu-nic">
+                                <rect key="frame" x="271" y="626.66666666666663" width="71" height="22"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="16"/>
+                                <color key="textColor" red="0.92734152079999999" green="0.6863881946" blue="0.14069607849999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="nfW-5m-n7z" firstAttribute="centerY" secondItem="oOB-a4-khs" secondAttribute="centerY" id="Cd0-To-X4u"/>
+                            <constraint firstItem="qUf-qu-nic" firstAttribute="leading" secondItem="lU5-JL-YM2" secondAttribute="trailing" constant="8" id="5Qn-Y5-T8b"/>
                             <constraint firstItem="loY-yF-GgF" firstAttribute="leading" secondItem="JpU-bJ-JI6" secondAttribute="leading" constant="15" id="ElR-0c-ln1"/>
                             <constraint firstItem="1ju-Gx-0To" firstAttribute="centerX" secondItem="jXn-bg-dRe" secondAttribute="centerX" id="JCv-e8-lDq"/>
                             <constraint firstItem="BN0-e4-Xni" firstAttribute="top" secondItem="7jW-2X-iMb" secondAttribute="bottom" constant="8" id="KL9-d7-4Ql"/>
@@ -205,21 +219,22 @@
                             <constraint firstItem="JpU-bJ-JI6" firstAttribute="centerX" secondItem="jXn-bg-dRe" secondAttribute="centerX" id="SBG-AY-zNM"/>
                             <constraint firstItem="2EK-uS-SsU" firstAttribute="centerX" secondItem="jXn-bg-dRe" secondAttribute="centerX" id="VVf-e0-wrv"/>
                             <constraint firstItem="nfW-5m-n7z" firstAttribute="leading" secondItem="8XN-PA-HBG" secondAttribute="leading" constant="20" id="daQ-t2-kJi"/>
-                            <constraint firstItem="oOB-a4-khs" firstAttribute="top" secondItem="8XN-PA-HBG" secondAttribute="top" constant="12" id="eGm-27-sC5"/>
                             <constraint firstItem="2EK-uS-SsU" firstAttribute="top" secondItem="JpU-bJ-JI6" secondAttribute="bottom" constant="35" id="eux-nq-HzM"/>
+                            <constraint firstItem="nfW-5m-n7z" firstAttribute="top" secondItem="8XN-PA-HBG" secondAttribute="top" constant="16" id="ibD-bm-X3X"/>
                             <constraint firstItem="BN0-e4-Xni" firstAttribute="centerX" secondItem="jXn-bg-dRe" secondAttribute="centerX" id="lAE-Bh-RfC"/>
                             <constraint firstItem="7jW-2X-iMb" firstAttribute="centerX" secondItem="jXn-bg-dRe" secondAttribute="centerX" id="ldA-LL-ILX"/>
                             <constraint firstItem="lU5-JL-YM2" firstAttribute="centerX" secondItem="jXn-bg-dRe" secondAttribute="centerX" id="oOx-PD-b9g"/>
                             <constraint firstItem="lU5-JL-YM2" firstAttribute="top" secondItem="2EK-uS-SsU" secondAttribute="bottom" constant="20" id="oY1-SM-Rky"/>
-                            <constraint firstItem="8XN-PA-HBG" firstAttribute="trailing" secondItem="oOB-a4-khs" secondAttribute="trailing" constant="20" id="rjW-8R-S48"/>
+                            <constraint firstItem="qUf-qu-nic" firstAttribute="centerY" secondItem="hcw-Gv-BhB" secondAttribute="centerY" id="rwD-4N-pls"/>
                             <constraint firstItem="1ju-Gx-0To" firstAttribute="top" secondItem="BN0-e4-Xni" secondAttribute="bottom" constant="25" id="ukV-zG-AF5"/>
                             <constraint firstItem="bHf-sq-krw" firstAttribute="centerY" secondItem="1ju-Gx-0To" secondAttribute="centerY" id="vx0-Rx-bXN"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="8XN-PA-HBG"/>
                     </view>
+                    <navigationItem key="navigationItem" id="fEv-1c-pTa"/>
+                    <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="activatePremiumBtn" destination="2EK-uS-SsU" id="xKt-0i-YbH"/>
-                        <outlet property="backToDeckBtn" destination="oOB-a4-khs" id="oD0-7M-AdQ"/>
                         <outlet property="coinAnimateView" destination="hcw-Gv-BhB" id="j5u-vN-RUQ"/>
                         <outlet property="coinsView" destination="A7k-vt-BKN" id="sJe-eL-gm9"/>
                         <outlet property="coinsViewLabel" destination="8nB-yW-IOh" id="y5K-cd-KMB"/>
@@ -228,6 +243,9 @@
                         <outlet property="profileImageView" destination="7jW-2X-iMb" id="ihK-Wt-iG4"/>
                         <outlet property="settingsBtn" destination="JpU-bJ-JI6" id="gdn-DW-39R"/>
                         <outlet property="shareGlympsBtn" destination="nfW-5m-n7z" id="QIn-7o-Jw6"/>
+                        <outlet property="tapLabel" destination="qUf-qu-nic" id="Xps-Zn-ubj"/>
+                        <segue destination="FrD-Dm-MiV" kind="show" id="VnD-Dv-q1A"/>
+                        <segue destination="jMh-wt-iP6" kind="show" id="X4O-vf-B5b"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yxc-dj-LLe" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -237,7 +255,7 @@
         <!--Edit ProfileVC-->
         <scene sceneID="u9C-G1-TTy">
             <objects>
-                <tableViewController storyboardIdentifier="EditProfileVC" modalPresentationStyle="fullScreen" id="FrD-Dm-MiV" customClass="EditProfileVC" customModule="GlympsApp" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="EditProfileVC" modalPresentationStyle="fullScreen" hidesBottomBarWhenPushed="YES" id="FrD-Dm-MiV" customClass="EditProfileVC" customModule="GlympsApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="n50-TQ-mc7">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -643,6 +661,9 @@
                             <outlet property="delegate" destination="FrD-Dm-MiV" id="8Va-YS-1Mr"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="QAo-Iv-ubb"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="ageTextfield" destination="S9f-OE-jfA" id="n8i-un-e8Y"/>
                         <outlet property="backBtn" destination="I31-Ye-4sf" id="R3O-h5-38j"/>
@@ -667,7 +688,7 @@
         <!--SettingsVC-->
         <scene sceneID="0s1-Zr-BdY">
             <objects>
-                <tableViewController storyboardIdentifier="SettingsVC" modalPresentationStyle="fullScreen" id="jMh-wt-iP6" customClass="SettingsVC" customModule="GlympsApp" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SettingsVC" modalPresentationStyle="fullScreen" hidesBottomBarWhenPushed="YES" id="jMh-wt-iP6" customClass="SettingsVC" customModule="GlympsApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="i8w-Gb-oSK">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1016,6 +1037,9 @@
                             <outlet property="delegate" destination="jMh-wt-iP6" id="50J-v9-d3V"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="ytH-DO-hno"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="backBtn" destination="SS5-Dy-kNw" id="h8u-gY-jV9"/>
                         <outlet property="bothBtn" destination="txl-Bj-i9d" id="HBy-ol-JwW"/>
@@ -1192,6 +1216,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="hvc-mu-5jz"/>
                     </view>
+                    <navigationItem key="navigationItem" id="hYh-5I-4xM"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="activatePremiumBtn" destination="oSS-Cz-HyC" id="Ohc-nF-LpT"/>
                         <outlet property="dismissBtn" destination="L55-QQ-8Gu" id="qDn-vl-zfO"/>
@@ -1620,9 +1647,12 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="uTT-nn-zwD"/>
                     </view>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="continueBtn" destination="y00-cB-jOG" id="2WO-w6-7Dq"/>
                         <outlet property="dismissBtn" destination="z4w-1e-fjO" id="hTW-7P-CU4"/>
+                        <outlet property="dropView" destination="nPD-CE-c1n" id="wQw-Tp-sbJ"/>
                         <outlet property="oneMonthCoinBtn" destination="Ctq-hG-Ikn" id="IQY-U1-jdr"/>
                         <outlet property="oneMonthCoinLabel" destination="fql-0E-xnL" id="R7Z-N7-2Wg"/>
                         <outlet property="oneMonthUSDBtn" destination="GnU-em-cku" id="iaf-ke-CSP"/>
@@ -1852,9 +1882,11 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Dc3-qh-Jgw"/>
                     </view>
+                    <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="continueBtn" destination="qyn-B9-l6r" id="ilr-2b-emT"/>
                         <outlet property="dismissBtn" destination="Ffq-cv-AuV" id="8F1-b9-bmI"/>
+                        <outlet property="dropView" destination="0bd-f4-8hZ" id="HFM-w5-bhF"/>
                         <outlet property="fiveCoinsBtn" destination="fmM-qx-9hW" id="Sai-bI-77n"/>
                         <outlet property="fiveCoinsLabel" destination="Pnv-Su-H3D" id="Adm-Ze-CzZ"/>
                         <outlet property="seventyFiveCoinsBtn" destination="nHl-QR-wrk" id="JVS-ZD-s1H"/>
@@ -2018,6 +2050,8 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="4qD-1I-N2Q"/>
                     </view>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="ambassadorSignupBtn" destination="fXH-ge-8lB" id="Fy8-0L-Ocb"/>
                         <outlet property="dismissBtn" destination="cvs-OC-a2c" id="d9x-my-aky"/>
@@ -2111,6 +2145,8 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="9Vp-wK-JNb"/>
                     </view>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="closeBtn" destination="0HJ-mG-HmW" id="6JE-31-0Ps"/>
                         <outlet property="navBar" destination="y7d-wt-Y3E" id="wo8-fn-GSm"/>
@@ -2236,6 +2272,8 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="1JN-zF-ETQ"/>
                     </view>
+                    <navigationItem key="navigationItem" id="52w-0Z-EcS"/>
+                    <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="cardsDeckView" destination="6KT-cF-cdE" id="Oq8-A8-nKf"/>
                         <outlet property="noUsersView" destination="UIl-RT-3gT" id="I7X-hf-VUr"/>
@@ -2343,10 +2381,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="gZ0-pI-s4G"/>
                     </view>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="closeBtn" destination="UGd-Ow-Ouw" id="xzR-zI-H9n"/>
                         <outlet property="declineUserBtn" destination="k2i-eQ-HqD" id="ENO-a7-lvs"/>
                         <outlet property="dismissBtn" destination="Q5L-PC-tcr" id="eNh-Ko-v0w"/>
+                        <outlet property="dropView" destination="c7u-Uy-vYW" id="VUz-w5-Oob"/>
                         <outlet property="usernameLabel" destination="aVC-zz-d0s" id="5BM-QF-4jU"/>
                     </connections>
                 </viewController>
@@ -2374,7 +2415,7 @@
                                                     <constraint firstAttribute="height" constant="30" id="Nqn-jZ-fMl"/>
                                                     <constraint firstAttribute="width" constant="30" id="si5-Du-yxJ"/>
                                                 </constraints>
-                                                <state key="normal" image="backIcon"/>
+                                                <state key="normal" image="close-1"/>
                                                 <connections>
                                                     <action selector="backBtnWasPressed:" destination="FrD-Dm-MiV" eventType="touchUpInside" id="AcJ-Vz-APL"/>
                                                     <action selector="dismissBtnWasPressed:" destination="94h-2x-4dG" eventType="touchUpInside" id="RiZ-wg-DHE"/>
@@ -2417,6 +2458,8 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="F3w-sQ-gFu"/>
                     </view>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="dismissBtn" destination="cQs-Lm-yp7" id="Th1-q4-enS"/>
                         <outlet property="mapView" destination="BR7-RJ-CCv" id="FPM-2C-6hL"/>
@@ -2426,6 +2469,65 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tqA-Ca-SHX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2873.913043478261" y="-118.20652173913044"/>
+        </scene>
+        <!--tabBarController-->
+        <scene sceneID="pfP-xC-cau">
+            <objects>
+                <tabBarController storyboardIdentifier="TabVC" title="tabBarController" id="LHl-Os-V23" customClass="TabVC" customModule="GlympsApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <nil key="simulatedTopBarMetrics"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="bUd-rb-Svg">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="selectedImageTintColor" red="0.0" green="0.71230685709999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="3Lq-DM-yhd" kind="relationship" relationship="viewControllers" id="3Ba-UN-M30"/>
+                        <segue destination="QWG-Gn-k00" kind="relationship" relationship="viewControllers" id="l3f-lS-Ce3"/>
+                        <segue destination="7no-GT-TMJ" kind="relationship" relationship="viewControllers" id="jh3-ix-XkP"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sTp-k1-WiO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-988" y="-119"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="AFb-F9-Owy">
+            <objects>
+                <navigationController storyboardIdentifier="GlympsTab" navigationBarHidden="YES" id="QWG-Gn-k00" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" image="glymps_logo" id="kcx-Cp-NzE">
+                        <inset key="imageInsets" minX="-5" minY="0.0" maxX="-5" maxY="-5"/>
+                    </tabBarItem>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="fcH-uJ-VbJ">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="tax-kI-zzY" kind="relationship" relationship="rootViewController" id="3XJ-5P-pgq"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dJr-9F-FAb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="142" y="-119"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="25X-qI-vTF">
+            <objects>
+                <navigationController storyboardIdentifier="MessagesTab" navigationBarHidden="YES" id="7no-GT-TMJ" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" image="top_right_messages" id="rQm-wU-0wK">
+                        <inset key="imageInsets" minX="-5" minY="0.0" maxX="-5" maxY="-5"/>
+                    </tabBarItem>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="48V-qn-4sA">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="i2y-Oi-HH9" kind="relationship" relationship="rootViewController" id="HAD-SC-hnE"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bi4-uS-AYD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="142" y="554"/>
         </scene>
         <!--MessagesVC-->
         <scene sceneID="j5p-C7-0SK">
@@ -2438,21 +2540,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UqI-Vm-STx">
                                 <rect key="frame" x="0.0" y="44" width="414" height="58"/>
                                 <subviews>
-                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hRw-cY-Shd">
-                                        <rect key="frame" x="16" y="8" width="40" height="40"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="40" id="UDs-fX-aLF"/>
-                                            <constraint firstAttribute="height" constant="40" id="pMc-Rs-Cn7"/>
-                                        </constraints>
-                                        <state key="normal" image="glymps_logo"/>
-                                        <connections>
-                                            <action selector="backBtnWasPressed:" destination="FrD-Dm-MiV" eventType="touchUpInside" id="BGF-0d-Mw3"/>
-                                            <action selector="backToDeckBtnWasPressed:" destination="i2y-Oi-HH9" eventType="touchUpInside" id="mgs-Mm-VB8"/>
-                                            <action selector="dismissBtnWasPressed:" destination="Emn-bT-0ib" eventType="touchUpInside" id="v9T-CV-5Lm"/>
-                                        </connections>
-                                    </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Messages" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y7z-u9-ymW">
-                                        <rect key="frame" x="107" y="14" width="200" height="28"/>
+                                        <rect key="frame" x="107" y="15" width="200" height="28"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="200" id="UGN-bD-lJM"/>
                                         </constraints>
@@ -2463,11 +2552,9 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="hRw-cY-Shd" firstAttribute="top" secondItem="UqI-Vm-STx" secondAttribute="top" constant="8" id="V6O-tN-Dwn"/>
-                                    <constraint firstItem="Y7z-u9-ymW" firstAttribute="centerY" secondItem="hRw-cY-Shd" secondAttribute="centerY" id="YFM-2C-X7q"/>
                                     <constraint firstItem="Y7z-u9-ymW" firstAttribute="centerX" secondItem="UqI-Vm-STx" secondAttribute="centerX" id="ZzT-oh-FQh"/>
                                     <constraint firstAttribute="height" constant="58" id="kyC-Db-6Ep"/>
-                                    <constraint firstItem="hRw-cY-Shd" firstAttribute="leading" secondItem="UqI-Vm-STx" secondAttribute="leading" constant="16" id="wNd-4i-DOd"/>
+                                    <constraint firstItem="Y7z-u9-ymW" firstAttribute="centerY" secondItem="UqI-Vm-STx" secondAttribute="centerY" id="tZI-cM-KAL"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Match Requests" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JaY-U0-XCi">
@@ -2541,7 +2628,7 @@
                                 </connections>
                             </collectionView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fgI-yt-9lW">
-                                <rect key="frame" x="8" y="382" width="398" height="410"/>
+                                <rect key="frame" x="8" y="382" width="398" height="361"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
@@ -2630,11 +2717,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="3QS-LZ-KGQ"/>
                     </view>
+                    <navigationItem key="navigationItem" id="xvW-FA-PeM"/>
+                    <nil key="simulatedTopBarMetrics"/>
                     <connections>
-                        <outlet property="backToDeckBtn" destination="hRw-cY-Shd" id="elj-iq-zha"/>
                         <outlet property="collectionView" destination="SN6-ek-TyY" id="hUd-P1-w5n"/>
                         <outlet property="navBar" destination="UqI-Vm-STx" id="vxo-7w-Kbx"/>
                         <outlet property="tableView" destination="fgI-yt-9lW" id="9Xx-kY-oMp"/>
+                        <segue destination="Ybr-mt-cKS" kind="show" id="spj-5c-yrV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eJ4-wu-WSH" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2644,7 +2733,7 @@
         <!--ChatVC-->
         <scene sceneID="R09-5S-bTp">
             <objects>
-                <viewController storyboardIdentifier="ChatVC" modalPresentationStyle="fullScreen" id="Ybr-mt-cKS" customClass="ChatVC" customModule="GlympsApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ChatVC" modalPresentationStyle="fullScreen" hidesBottomBarWhenPushed="YES" id="Ybr-mt-cKS" customClass="ChatVC" customModule="GlympsApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="F7n-CA-Au2">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2747,7 +2836,7 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="314" height="105"/>
                                                         </imageView>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SWk-pA-JwP">
-                                                            <rect key="frame" x="284" y="5" width="25" height="25"/>
+                                                            <rect key="frame" x="259" y="5" width="50" height="50"/>
                                                             <state key="normal" image="play"/>
                                                             <connections>
                                                                 <action selector="videoMessageButtonWasPressed:" destination="DNZ-N0-lVq" eventType="touchUpInside" id="UHk-Eb-izc"/>
@@ -2874,6 +2963,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ATf-B5-lji"/>
                     </view>
+                    <navigationItem key="navigationItem" id="6Ky-Tv-t3D"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="backBtn" destination="B7Z-y2-hJ2" id="34e-7f-hl8"/>
                         <outlet property="bottomView" destination="Pn0-Im-Ld8" id="raP-YO-dRT"/>
@@ -2990,10 +3082,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="UoA-zC-DTD"/>
                     </view>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="closeBtn" destination="EBg-MP-V1f" id="o2k-IO-MY6"/>
                         <outlet property="declineUserBtn" destination="Cre-ws-oea" id="4I3-iV-C4P"/>
                         <outlet property="dismissBtn" destination="qG1-hE-yuZ" id="rCQ-9H-pfg"/>
+                        <outlet property="dropView" destination="BfQ-sg-KDY" id="83v-Lp-xpC"/>
                         <outlet property="usernameLabel" destination="sCG-Sd-jZL" id="I7x-7T-n18"/>
                     </connections>
                 </viewController>
@@ -3097,10 +3192,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="d4W-9j-y2I"/>
                     </view>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="blockForeverBtn" destination="GBE-s9-6oU" id="dXD-rg-b04"/>
                         <outlet property="blockTemporarilyBtn" destination="tge-qf-eX8" id="PzC-3f-Na5"/>
                         <outlet property="closeBtn" destination="1FH-Us-Tlg" id="QEf-FU-3Js"/>
+                        <outlet property="dropView" destination="Mwy-fg-VnG" id="LMM-5P-BVw"/>
                         <outlet property="usernameLabel" destination="thr-Nq-QIZ" id="wNo-vR-T0g"/>
                     </connections>
                 </viewController>
@@ -3129,6 +3227,8 @@
         <image name="profile" width="21" height="23"/>
         <image name="refresh-users" width="238.33332824707031" height="238.33332824707031"/>
         <image name="remove-user" width="85.333335876464844" height="85.333335876464844"/>
+        <image name="top_left_profile" width="17.333333969116211" height="22.333333969116211"/>
+        <image name="top_right_messages" width="23" height="20.333333969116211"/>
         <image name="users-icon" width="200" height="188"/>
         <image name="x-close-icon-white" width="85.333335876464844" height="85.333335876464844"/>
     </resources>
