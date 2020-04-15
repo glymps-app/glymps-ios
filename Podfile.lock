@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (4.9.1)
+  - CropViewController (2.5.2)
   - Firebase/Analytics (6.15.0):
     - Firebase/Core
   - Firebase/Auth (6.15.0):
@@ -152,6 +153,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
+  - CropViewController
   - Firebase/Analytics
   - Firebase/Auth
   - Firebase/Core
@@ -175,6 +177,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
+    - CropViewController
     - Firebase
     - FirebaseAnalytics
     - FirebaseAnalyticsInterop
@@ -223,6 +226,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
+  CropViewController: 1aac40093c5739e60d992b04724a55d12a689a4c
   Firebase: 5d77105d9740a07ca6b16927ca971db7e860faaf
   FirebaseAnalytics: e83e64b1231dedcd9ddd4bdecd9bcfd6ba341679
   FirebaseAnalyticsInterop: 3f86269c38ae41f47afeb43ebf32a001f58fcdae
@@ -261,6 +265,6 @@ SPEC CHECKSUMS:
   SLCarouselView: fa0dd6e4cdeca88f8fc43ae19f16d33e8d11d643
   SwiftRangeSlider: f86e3b637c961120158fa1a89277c8343845cbe4
 
-PODFILE CHECKSUM: 0949ed209ad9ef56423fff93e22b3c0821cfb542
+PODFILE CHECKSUM: da006400c25e04be244af43dfdcafcc0df74cf60
 
 COCOAPODS: 1.8.4

@@ -44,6 +44,8 @@ class PremiumVC: UIViewController {
     
     var coinsToSend: Int?
     
+    var currentUserCoins: Int?
+    
     // subscription products (USD)
     var glympsMonthly: Purchases.Package?
     var glympsSemiAnnually: Purchases.Package?
@@ -76,6 +78,8 @@ class PremiumVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupUserCoins()
+        
         dropView.dropShadow(color: .darkGray, opacity: 1, offSet: CGSize(width: -1, height: 1), radius: 20, scale: true)
         
         setupPurchases()
@@ -89,6 +93,13 @@ class PremiumVC: UIViewController {
         sixMonthUSDLabel.textColor = #colorLiteral(red: 0.08732911403, green: 0.7221731267, blue: 1, alpha: 1)
     }
     
+    // get number of coins that the current user has
+    func setupUserCoins() {
+        API.User.observeCurrentUser { (user) in
+            self.currentUserCoins = user.coins!
+        }
+    }
+    
     // setup products from RevenueCat
     func setupPurchases() {
         
@@ -97,22 +108,22 @@ class PremiumVC: UIViewController {
                 // Display packages for sale
                 
                 for package in packages {
-                    if package.product.productIdentifier == "com.glymps.Glymps.1MonthCoinSubscription" {
+                    if package.product.productIdentifier == "com.glymps.Glymps.1MonthCoin" {
                         self.glympsMonthlyCoin = package
                     }
-                    if package.product.productIdentifier == "com.glymps.Glymps.6MonthCoinSubscription" {
+                    if package.product.productIdentifier == "com.glymps.Glymps.6MonthCoin" {
                         self.glympsSemiAnnuallyCoin = package
                     }
-                    if package.product.productIdentifier == "com.glymps.Glymps.12MonthCoinSubscription" {
+                    if package.product.productIdentifier == "com.glymps.Glymps.12MonthCoin" {
                         self.glympsYearlyCoin = package
                     }
-                    if package.product.productIdentifier == "com.glymps.Glymps.1MonthUSDSubscription" {
+                    if package.product.productIdentifier == "com.glymps.Glymps.1MonthUSD" {
                         self.glympsMonthly = package
                     }
-                    if package.product.productIdentifier == "com.glymps.Glymps.6MonthUSDSubscription" {
+                    if package.product.productIdentifier == "com.glymps.Glymps.6MonthUSD" {
                         self.glympsSemiAnnually = package
                     }
-                    if package.product.productIdentifier == "com.glymps.Glymps.12MonthUSDSubscription" {
+                    if package.product.productIdentifier == "com.glymps.Glymps.12MonthUSD" {
                         self.glympsYearly = package
                     }
                 }
@@ -398,13 +409,41 @@ class PremiumVC: UIViewController {
         } else if chosenPayment[0] == "12 Month USD" {
             buyGlympsYearly()
         } else if chosenPayment[0] == "1 Month COIN" {
-            buyGlympsMonthlyCoin()
+            if self.currentUserCoins! >= 13 {
+                buyGlympsMonthlyCoin()
+            } else {
+                showInsufficientCoinsToast(controller: self, requiredCoins: 13)
+            }
         } else if chosenPayment[0] == "6 Month COIN" {
-            buyGlympsSemiAnnualCoin()
+            if self.currentUserCoins! >= 37 {
+                buyGlympsSemiAnnualCoin()
+            } else {
+                showInsufficientCoinsToast(controller: self, requiredCoins: 37)
+            }
         } else if chosenPayment[0] == "12 Month COIN" {
-            buyGlympsYearlyCoin()
+            if self.currentUserCoins! >= 83 {
+                buyGlympsYearlyCoin()
+            } else {
+                showInsufficientCoinsToast(controller: self, requiredCoins: 83)
+            }
         } else {
             return
+        }
+    }
+    
+    func showInsufficientCoinsToast(controller: UIViewController, requiredCoins: Int) {
+        
+        let coinsNeeded = requiredCoins - self.currentUserCoins!
+        
+        let alert = UIAlertController(title: "Not enough coins...\u{1F615}", message: "You need \(coinsNeeded) more coins to choose this option. Earn more coins by referring your friends and family!", preferredStyle: .alert)
+        alert.view.backgroundColor = .black
+        alert.view.alpha = 0.6
+        alert.view.layer.cornerRadius = 15
+        
+        controller.present(alert, animated: true, completion: nil)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            alert.dismiss(animated: true, completion: nil)
         }
     }
     

@@ -22,6 +22,8 @@ class MatchConversationCell: UITableViewCell {
     
     @IBOutlet weak var messageLabel: UILabel!
     
+    @IBOutlet weak var photoImage: UIImageView!
+    
     var cardView: CardView!
 
     // setup matched user
@@ -122,8 +124,15 @@ class MatchConversationCell: UITableViewCell {
     func updateMessage() {
         if let lastMessage = messages.last?.text {
             if lastMessage == "" {
-                messageLabel.text = "[MEDIA]"
+                photoImage.isHidden = false
+                messageLabel.isHidden = true
+                if let photoImageString = messages.last?.imageUrl {
+                    let photoUrl = URL(string: photoImageString)
+                    self.photoImage.sd_setImage(with: photoUrl)
+                }
             } else {
+                messageLabel.isHidden = false
+                photoImage.isHidden = true
                 messageLabel.text = lastMessage
             }
         }

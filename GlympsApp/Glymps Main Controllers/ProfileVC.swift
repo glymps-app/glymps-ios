@@ -29,18 +29,18 @@ class ProfileVC: UIViewController {
     
     @IBOutlet weak var coinsViewLabel: UILabel!
     
-    @IBOutlet weak var tapLabel: UILabel!
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        setupUI()
+        viewDidLayoutSubviews()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tapLabel.text = "\u{2190} Tap Me :)"
-        
         self.coinsView.layer.zPosition = 10
         self.coinsViewLabel.layer.zPosition = 15
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleCoins))
-        coinAnimateView.addGestureRecognizer(tapGesture)
 
         editProfileBtn.layer.borderColor = #colorLiteral(red: 0.08732911403, green: 0.7221731267, blue: 1, alpha: 1)
         editProfileBtn.layer.borderWidth = 1
@@ -100,17 +100,10 @@ class ProfileVC: UIViewController {
         }
     }
     
-    // go to view controller to buy more coins
-    @objc func handleCoins() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let buyCoinsVC = storyboard.instantiateViewController(withIdentifier: "BuyCoinsVC")
-        self.present(buyCoinsVC, animated: true, completion: nil)
-    }
-    
     // share Glymps!
     @IBAction func shareGlympsBtnWasPressed(_ sender: Any) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let shareGlympsVC = storyboard.instantiateViewController(withIdentifier: "ShareGlympsVC")
+        let shareGlympsVC = storyboard.instantiateViewController(withIdentifier: "ShareGlympsVC") as! ShareGlympsVC
         self.present(shareGlympsVC, animated: true, completion: nil)
     }
     
@@ -132,9 +125,8 @@ class ProfileVC: UIViewController {
     // go become a Glymps Premium User
     @IBAction func activatePremiumBtnWasPressed(_ sender: Any) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let activatePremiumVC = storyboard.instantiateViewController(withIdentifier: "ActivatePremiumVC")
+        let activatePremiumVC = storyboard.instantiateViewController(withIdentifier: "ActivatePremiumVC") as! ActivatePremiumVC
         self.present(activatePremiumVC, animated: true, completion: nil)
     }
-    
 
 }

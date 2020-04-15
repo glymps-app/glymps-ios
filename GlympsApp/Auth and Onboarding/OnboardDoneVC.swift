@@ -29,8 +29,9 @@ class OnboardDoneVC: UIViewController {
     // enter the app and go to the "card deck"
     @IBAction func enterBtnWasPressed(_ sender: Any) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let initial = storyboard.instantiateInitialViewController()! as! DeckVC
-        initial.currentUserReferredBy = refUID ?? ""
+        let initial = storyboard.instantiateInitialViewController()! as! TabVC
+        let deckVC = initial.children[1].children[0] as! DeckVC
+        deckVC.currentUserReferredBy = refUID ?? ""
         self.navigationController?.pushViewController(initial, animated: true)
     }
     

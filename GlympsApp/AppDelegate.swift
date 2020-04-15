@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         // initialize RevenueCat iOS SDK
         Purchases.debugLogsEnabled = true
-        Purchases.configure(withAPIKey: "CfiZTEdVKAjzcufUcFsVfYuuEWdHjuYm", appUserID: nil)
+        Purchases.configure(withAPIKey: "EEQPqlAIaJUkdxWjqhkqvprTQmKSbHEZ", appUserID: nil)
 //        
 //        // initialize Smaato iOS SDK
 //        guard let config = SMAConfiguration(publisherId: "0") else {

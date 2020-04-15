@@ -48,13 +48,7 @@ class BlockUserVC: UIViewController {
         dismiss(animated: true, completion: nil)
         if let p = self.userDetailsVC!.presenter as? DeckVC {
             // TODO: reload and refresh card deck below
-            p.cardViews.remove(at: (userDetailsVC?.cardView.tag)!)
-            p.cardsDeckView.reloadData()
-            
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let messagesVC = storyboard.instantiateViewController(withIdentifier: "MessagesVC") as! MessagesVC
-            messagesVC.loadNewMessages()
-            messagesVC.loadMatches()
+            p.blockFromOtherVC()
         }
         self.userDetailsVC!.dismiss(animated: true, completion: nil)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25, execute: {

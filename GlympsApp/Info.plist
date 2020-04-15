@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -32,7 +32,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-8903504332568566~5560972423</string>
 	<key>LSRequiresIPhoneOS</key>
@@ -44,11 +44,11 @@
 	<key>NSContactsUsageDescription</key>
 	<string>Glymps allows you to send your shareable link to your friends.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Glymps needs your location at all times so others can see and message you from the main deck.</string>
+	<string>Glymps needs your location at all times so others can see and message you from the main deck, and so others can find what locations are most popular on the Heat Map.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Glymps needs your location at all times so others can see and message you from the main deck.</string>
+	<string>Glymps needs your location at all times so others can see and message you from the main deck, and so others can find what locations are most popular on the Heat Map.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Glymps needs your location at all times so others can see and message you from the main deck.</string>
+	<string>Glymps needs your location at all times so others can see and message you from the main deck, and so others can find what locations are most popular on the Heat Map.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Glymps allows you to take videos and share them with others.</string>
 	<key>NSPhotoLibraryUsageDescription</key>

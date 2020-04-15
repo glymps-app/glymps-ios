@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="KIG-1N-5mJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="KIG-1N-5mJ">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -432,10 +432,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Terms of Service" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RdH-NB-pSG">
-                                <rect key="frame" x="107" y="94" width="200" height="30.666666666666671"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Terms of Service and Privacy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RdH-NB-pSG">
+                                <rect key="frame" x="52" y="94" width="310" height="30.666666666666671"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="200" id="CCw-Oi-dew"/>
+                                    <constraint firstAttribute="width" constant="310" id="CCw-Oi-dew"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="22"/>
                                 <color key="textColor" red="0.087329114030000002" green="0.7221731267" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -444,7 +444,7 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bku-Hu-rR4">
                                 <rect key="frame" x="20" y="132.66666666666669" width="374" height="729.33333333333326"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <string key="text">This End-User License Agreement ("EULA") is a legal agreement between you and Glymps LLC.
+                                <mutableString key="text">This End-User License Agreement ("EULA") is a legal agreement between you and Glymps LLC.
 
 This EULA agreement governs your acquisition and use of our Glymps software ("Software") directly from Glymps LLC or indirectly through a Glymps LLC authorized reseller or distributor ("Reseller").
 
@@ -516,6 +516,52 @@ We encourage our users to be aware when they leave our site and to read the priv
 Children Under 18
 Individuals under eighteen years of age may not use Glymps. If it is discovered that a user is under these age limitations, their account shall be terminated and they shall be banned from using Glymps permantently.
 
+Prohibited and Objectionable Content and Behavior
+There is a zero tolerance policy for any and all prohibited and objectionable content and behavior on Glymps or anywhere within the Glymps community, including but not limited to any form of abuse, nudity, pornography, harassment, and stalking. Flagged users will be thoroughly investigated within 24 hours and will be removed and banned from using Glymps permanently, at the sole descretion of Glymps.
+
+Glymps Premium
+Through a monthly, semi-annual, or yearly subscription, users can enjoy premium content through its application, known as Glymps Premium. With Glymps Premium you enjoy:
+
+ - Unlimited Messaging
+ - Meet Groups (coming soon)
+ - Date Recommendations
+    (coming soon)
+ - No Ads
+
+Option 1: Glymps Premium for Non-Referring Users
+
+1 Month of Glymps Premium
+$4.99 a month, auto-renewing
+Access to all of Glymps Premium
+
+6 Months of Glymps Premium
+$21.99 for 6 months, auto-renewing
+Access to all of Glymps Premium
+
+12 Months of Glymps Premium
+$38.99 for 1 year, auto-renewing
+Access to all of Glymps Premium
+
+Users who refer other users earn coins, and have the opportunity to enjoy the Glymps Premium options above, but at a lower price, depending on the number of coins they have:
+
+Option 2: Glymps Premium for Referring Users:
+
+1 Month of Glymps Premium
+$3.99 a month, non-renewing
+Access to all of Glymps Premium
+
+6 Months of Glymps Premium
+$19.99 for 6 months, non-renewing
+Access to all of Glymps Premium
+
+12 Months of Glymps Premium
+$36.99 for 1 year, non-renewing
+Access to all of Glymps Premium
+
+Auto-renewing subscriptions for Glymps Premium will make recurring charges to the user every subscription period, and can be terminated from the user's Apple account at any time. 
+
+Non-renewing subscriptions for Glymps Premium will end at the conclusion of the subscription period, and can be reactivated again.
+
 E-mail Communications
 From time to time, Glymps may contact you via email for the purpose of providing announcements, promotional offers, alerts, confirmations, surveys, and/or other general communication.
 
@@ -524,7 +570,7 @@ If you would like to stop receiving marketing or promotional communications via 
 Changes to this Statement
 Glymps reserves the right to change this Privacy Policy from time to time. We will notify you about significant changes in the way we treat personal information by sending a notice to the primary email address specified in your account, by placing a prominent notice on our site, and/or by updating any privacy information on this page. Your continued use of the app and/or Services available through this app after such modifications will constitute your: (a) acknowledgment of the modified Privacy Policy; and (b) agreement to abide and be bound by that Policy.
 
-Effective as of May 1, 2019</string>
+Effective as of April 7, 2020</mutableString>
                                 <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>

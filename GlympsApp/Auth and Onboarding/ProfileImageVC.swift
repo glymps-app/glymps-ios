@@ -17,6 +17,7 @@ import FirebaseAnalytics
 import JGProgressHUD
 import CoreLocation
 import GeoFire
+import CropViewController
 
 // view controller to set up new user profile image during onboarding
 class ProfileImageVC: UIViewController {
@@ -152,21 +153,32 @@ class ProfileImageVC: UIViewController {
 }
 
 // image picker for user to choose profile image
-extension ProfileImageVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension ProfileImageVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate, CropViewControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         // Local variable inserted by Swift 4.2 migrator.
         let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
         
         if let image = info["UIImagePickerControllerOriginalImage"] as? UIImage {
             selectedProfileImage = image
-            profileImageView.image = image
         }
         dismiss(animated: true, completion: nil)
+        
+        let image: UIImage = selectedProfileImage! //Load an image
+        
+        let cropViewController = CropViewController(image: image)
+        cropViewController.delegate = self
+        present(cropViewController, animated: true, completion: nil)
         
         nextBtn.isEnabled = true
         nextBtn.setTitleColor(#colorLiteral(red: 0.08732911403, green: 0.7221731267, blue: 1, alpha: 1), for: .normal)
         nextBtn.layer.borderColor = #colorLiteral(red: 0.08732911403, green: 0.7221731267, blue: 1, alpha: 1)
         nextBtn.layer.borderWidth = 1
+    }
+    
+    func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
+        // 'image' is the newly cropped version of the original image
+        profileImageView.image = image
+        cropViewController.dismiss(animated: true, completion: nil)
     }
 }
 

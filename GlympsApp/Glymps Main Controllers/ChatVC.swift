@@ -66,11 +66,11 @@ class ChatVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if deckVC == nil {
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let dv = storyboard.instantiateViewController(withIdentifier: "DeckVC") as! DeckVC
-            self.deckVC = dv
-        }
+//        if deckVC == nil {
+//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//            let dv = storyboard.instantiateViewController(withIdentifier: "DeckVC") as! DeckVC
+//            self.deckVC = dv
+//        }
         
         print(currentUser ?? "NO CURRENT USER")
         print(currentUsername ?? "NO CURRENT USERNAME")
@@ -249,6 +249,8 @@ class ChatVC: UIViewController {
             self.messages.append(message)
             self.sortMessages()
         }
+        
+        self.tableView.reloadData()
     }
     
     // sort messages by date
@@ -285,6 +287,7 @@ class ChatVC: UIViewController {
         blockOptionsVC.userId = self.userId
         blockOptionsVC.chatVC = self
         blockOptionsVC.deckVC = self.deckVC
+        blockOptionsVC.messagesVC = self.messagesVC
         blockOptionsVC.cardView = self.cardView
         self.present(blockOptionsVC, animated: true, completion: nil)
     }
@@ -338,6 +341,7 @@ class ChatVC: UIViewController {
         if messages.count == 1 && messages.first?.from == API.User.CURRENT_USER!.uid {
             mediaBtn.isEnabled = false
             sendBtn.isEnabled = false
+            self.tableView.reloadData()
         } else if messages.count == 2 && messages.last?.from == API.User.CURRENT_USER!.uid {
             mediaBtn.isEnabled = true
             sendBtn.isEnabled = true
@@ -345,6 +349,7 @@ class ChatVC: UIViewController {
                 inputTextView.text = ""
                 self.textViewDidChange(inputTextView)
                 sendToFirebase(dict: ["text" : text as Any])
+                self.tableView.reloadData()
             }
         } else if messages.count == 2 && messages.last?.from == self.userId {
             mediaBtn.isEnabled = true
@@ -353,20 +358,22 @@ class ChatVC: UIViewController {
                 inputTextView.text = ""
                 self.textViewDidChange(inputTextView)
                 sendToFirebase(dict: ["text" : text as Any])
+                self.tableView.reloadData()
             }
         } else if messages.count >= 2 {
             // continued messaging enabled (depends on premium status)
             mediaBtn.isEnabled = true
             sendBtn.isEnabled = true
             if messages.filter({ $0.from == API.User.CURRENT_USER!.uid }).count >= 5 && self.currentUser?.isPremium == false {
-                mediaBtn.isEnabled = false
-                sendBtn.isEnabled = false
+//                mediaBtn.isEnabled = false
+//                sendBtn.isEnabled = false
+                self.tableView.reloadData()
             }else if let text = inputTextView.text, text != "" {
                 inputTextView.text = ""
                 self.textViewDidChange(inputTextView)
                 sendToFirebase(dict: ["text" : text as Any])
-                
                 sendMessageNotification(message: "\(self.currentUsername!) messaged you.")
+                self.tableView.reloadData()
             }
         } else {
             mediaBtn.isEnabled = true
@@ -375,6 +382,7 @@ class ChatVC: UIViewController {
                 inputTextView.text = ""
                 self.textViewDidChange(inputTextView)
                 sendToFirebase(dict: ["text" : text as Any])
+                self.tableView.reloadData()
             }
         }
     }
@@ -402,13 +410,15 @@ class ChatVC: UIViewController {
         
         API.Inbox.saveMatch(uid: uid)
         
-        matchView.userId = uid
-        matchView.chatVC = self
-        matchView.username = self.username
-        view.addSubview(matchView)
-        matchView.fillSuperview()
-        
-        sendMatchNotification(message: "\(self.currentUsername!) matched with you!")
+        if messages.last?.from != API.User.CURRENT_USER?.uid {
+            matchView.userId = uid
+            matchView.chatVC = self
+            matchView.username = self.username
+            view.addSubview(matchView)
+            matchView.fillSuperview()
+        } else {
+            sendMatchNotification(message: "\(self.currentUsername!) matched with you!")
+        }
         
         UserDefaults.standard.set(true, forKey: "\(self.userId!)")
     }
@@ -528,6 +538,7 @@ extension ChatVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
         }
         
         self.picker.dismiss(animated: true, completion: nil)
+        self.tableView.reloadData()
     }
     
 }
@@ -555,19 +566,24 @@ extension ChatVC: UITableViewDataSource, UITableViewDelegate {
             self.sendBtn.isEnabled = false
             tableView.separatorStyle = .none
             // present match view!
-        } else if (messages.count == 2) || (messages.count >= 2 && messages.filter({ $0.from == API.User.CURRENT_USER?.uid }).count == 1) {
+        } else if (messages.count >= 2) {
+            
+            tableView.setEmptyView(title: "", message: "", image: UIImage())
+            
            if !UserDefaults.standard.bool(forKey: "\(self.userId!)") {
                 self.view.endEditing(true)
                 self.presentMatchView(uid: self.userId!)
             }
             tableView.separatorStyle = .none
-        } else if messages.filter({ $0.from == API.User.CURRENT_USER!.uid }).count >= 5 && self.currentUser?.isPremium == false {
-            // disable messaging until current user becomes Premium user
-            tableView.setEmptyView(title: "Messaging limit reached.", message: "Activate Glymps Premium to continue.", image: UIImage())
-            self.mediaBtn.isEnabled = false
-            self.sendBtn.isEnabled = false
-            tableView.separatorStyle = .none
-        } else {
+        } //else if messages.filter({ $0.from == API.User.CURRENT_USER!.uid }).count >= 5 && self.currentUser?.isPremium == false {
+//            // disable messaging until current user becomes Premium user
+//            tableView.setEmptyView(title: "Messaging limit reached.", message: "Activate Glymps Premium to continue.", image: UIImage())
+//            self.mediaBtn.isEnabled = false
+//            self.sendBtn.isEnabled = false
+//            tableView.separatorStyle = .none
+//        }
+            else {
+            tableView.setEmptyView(title: "", message: "", image: UIImage())
             tableView.separatorStyle = .none
             tableView.restore()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {

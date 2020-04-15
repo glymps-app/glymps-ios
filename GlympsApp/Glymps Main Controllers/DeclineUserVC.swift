@@ -27,6 +27,8 @@ class DeclineUserVC: UIViewController {
     
     var deckVC: UIViewController?
     
+    var messagesVC: UIViewController?
+    
     var cardView: CardView?
 
     override func viewDidLoad() {
@@ -52,17 +54,21 @@ class DeclineUserVC: UIViewController {
         dismiss(animated: true, completion: nil)
         if let d = self.deckVC as? DeckVC {
             // TODO: reload and refresh card deck below
-            d.cardViews.remove(at: (self.cardView?.tag)!)
-            d.cardsDeckView.reloadData()
-            
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let messagesVC = storyboard.instantiateViewController(withIdentifier: "MessagesVC") as! MessagesVC
-            messagesVC.loadNewMessages()
-            messagesVC.loadMatches()
+            d.blockFromOtherVC()
             
             self.chatVC!.navigationController?.popToViewController(d, animated: true)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.25, execute: {
                 self.tabBarController?.selectedIndex = 1
+            })
+        } else if let m = self.messagesVC as? MessagesVC {
+            m.loadNewMessages()
+            m.loadMatches()
+            m.tableView.reloadData()
+            m.collectionView.reloadData()
+            
+            self.chatVC!.navigationController?.popToViewController(m, animated: true)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25, execute: {
+                self.tabBarController?.selectedIndex = 2
             })
         }
     }

@@ -20,9 +20,6 @@ import Purchases
 import CoreLocation
 import GeoFire
 import PushNotifications
-//import SmaatoSDKCore
-//import SmaatoSDKBanner
-//import SmaatoSDKInterstitial
 
 class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfoDelegate {
     
@@ -70,7 +67,6 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
         button.setBackgroundImage(#imageLiteral(resourceName: "globe"), for: .normal)
         button.setImage(#imageLiteral(resourceName: "heat-map").withRenderingMode(.alwaysOriginal), for: .normal)
         button.imageView?.contentMode = .scaleAspectFit
-        //button.imageView?.alpha = 0.6
         button.imageView?.image?.withAlignmentRectInsets(UIEdgeInsets(top: -2, left: -4, bottom: 2, right: 0))
         button.clipsToBounds = true
         button.addTarget(self, action: #selector(handleMap), for: .touchUpInside)
@@ -93,62 +89,65 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         setupCurrentUser()
         loadRequests()
         loadMatches()
         loadBlockedUsers()
         loadPermanentlyBlockedUsers()
         loadGhostModeUsers()
-        
+
+        observeDeck()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
         observeDeck()
     }
 
     // setup UI and backend systems (Geolocation – GeoFire, Premium, Firebase)
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupPusher()
-        
+
         setupCurrentUser()
         loadRequests()
         loadMatches()
         loadBlockedUsers()
         loadPermanentlyBlockedUsers()
         loadGhostModeUsers()
-        
+
         cardsDeckView.type = .rotary
         cardsDeckView.bounceDistance = 0.35
         cardsDeckView.decelerationRate = 0.50
-        
+
         refreshUsersBtn.isEnabled = false
-        
+
         refreshUsersImage.isHidden = true
-        
+
         refreshUsersBtn.isHidden = true
-        
+
         configureLocationManager()
         observeDeck()
-        
+
         mapBtn.layer.zPosition = 30
         headerView.addSubview(mapBtn)
         headerView.bringSubviewToFront(mapBtn)
         mapBtn.anchor(top: nil, leading: headerView.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 0, left: 35, bottom: 0, right: 0), size: .init(width: 50, height: 50))
         mapBtn.centerYToSuperview()
         mapBtn.isUserInteractionEnabled = true
-        
+
         checkIfPremium()
-        
+
         noUsersView.isHidden = true
-        
+
         hud.textLabel.text = "Loading nearby users..."
         hud.layer.zPosition = 50
         hud.show(in: view)
-        
+
         headerView.heightAnchor.constraint(equalToConstant: 70).isActive = true
-        
+
         // setup views
-         
         let stackView = UIStackView(arrangedSubviews: [headerView, cardsDeckView])
         stackView.axis = .vertical
         view.addSubview(stackView)
@@ -157,9 +156,6 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.layoutMargins = .init(top: 0, left: 12, bottom: 0, right: 12)
         stackView.bringSubviewToFront(cardsDeckView)
-        
-        menuView.settingsButton.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
-        menuView.messagesButton.addTarget(self, action: #selector(handleMessages), for: .touchUpInside)
 
         let deleteGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanGestureRecognizer(_:)))
         (cardsDeckView.value(forKey: "contentView") as! UIView).addGestureRecognizer(deleteGestureRecognizer)
@@ -168,18 +164,18 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
 //        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
 //            self.setupAds()
 //        }
-        
+
         self.view.bringSubviewToFront(refreshUsersBtn)
         self.view.bringSubviewToFront(refreshUsersImage)
-        
+
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             print("Users in Ghost Mode: \(self.ghostModeUsers)")
         }
-        
+
         if currentUserReferredBy != "" {
             rewardReferralUser(refUser: currentUserReferredBy, coinAmount: 3)
         }
-        
+
         viewDidLayoutSubviews()
     }
     
@@ -274,27 +270,27 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
                 }
 
 //                // Option 2: Check if user has active subscription (from App Store Connect or Play Store)
-                if purchaserInfo.activeSubscriptions.contains("com.glymps.Glymps.1MonthUSDSubscription") {
+                if purchaserInfo.activeSubscriptions.contains("com.glymps.Glymps.1MonthUSD") {
                     // Grant user "pro" access
                     print("User has Glymps Premium (1 month subscription)")
                     AuthService.subscribe()
-                } else if purchaserInfo.activeSubscriptions.contains("com.glymps.Glymps.6MonthUSDSubscription") {
+                } else if purchaserInfo.activeSubscriptions.contains("com.glymps.Glymps.6MonthUSD") {
                     // Grant user "pro" access
                     print("User has Glymps Premium (6 month subscription)")
                     AuthService.subscribe()
-                } else if purchaserInfo.activeSubscriptions.contains("com.glymps.Glymps.12MonthUSDSubscription") {
+                } else if purchaserInfo.activeSubscriptions.contains("com.glymps.Glymps.12MonthUSD") {
                     // Grant user "pro" access
                     print("User has Glymps Premium (1 year subscription)")
                     AuthService.subscribe()
-                } else if purchaserInfo.activeSubscriptions.contains("com.glymps.Glymps.1MonthCoinSubscription") {
+                } else if purchaserInfo.activeSubscriptions.contains("com.glymps.Glymps.1MonthCoin") {
                     // Grant user "pro" access
                     print("User has Glymps Premium (1 month subscription, coin)")
                     AuthService.subscribe()
-                } else if purchaserInfo.activeSubscriptions.contains("com.glymps.Glymps.6MonthCoinSubscription") {
+                } else if purchaserInfo.activeSubscriptions.contains("com.glymps.Glymps.6MonthCoin") {
                     // Grant user "pro" access
                     print("User has Glymps Premium (6 month subscription, coin)")
                     AuthService.subscribe()
-                } else if purchaserInfo.activeSubscriptions.contains("com.glymps.Glymps.12MonthCoinSubscription") {
+                } else if purchaserInfo.activeSubscriptions.contains("com.glymps.Glymps.12MonthCoin") {
                     // Grant user "pro" access
                     print("User has Glymps Premium (1 year subscription, coin)")
                     AuthService.subscribe()
@@ -379,7 +375,6 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
         if users.isEmpty {
             users = cachedUsers
             cachedUsers = []
-
             setupCards()
             cardsDeckView.reloadData()
         } else if cachedDeckMatchesCurrentDeck() {
@@ -392,7 +387,7 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
 
         noUsersView.isHidden = !users.isEmpty
     }
-
+    
     func cachedDeckMatchesCurrentDeck() -> Bool {
         return Set(users.compactMap { $0.id }) == Set(cachedUsers.compactMap { $0.id })
     }
@@ -515,7 +510,7 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
     
     func setupCards() {
         cardViews = []
-
+        indexForCards = 0
         for user in users {
             var cardView = CardView()
             if UIDevice.modelName == "Simulator iPhone 6" || UIDevice.modelName == "Simulator iPhone 6s" || UIDevice.modelName == "Simulator iPhone 7" || UIDevice.modelName == "Simulator iPhone 8" || UIDevice.modelName == "iPhone 6" || UIDevice.modelName == "iPhone 6s" || UIDevice.modelName == "iPhone 7" || UIDevice.modelName == "iPhone 8" {
@@ -714,6 +709,20 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
         users = users.filter { $0.id != uid }
         cachedUsers = cachedUsers.filter { $0.id != uid }
         API.Inbox.blockUser(uid: uid)
+        cardsDeckView.removeItem(at: index, animated: true)
+
+        updateDeckAndRefreshButtonState()
+    }
+    
+    func blockFromOtherVC() {
+        let index = cardsDeckView.currentItemIndex
+        let card = cardViews[index]
+
+        guard let uid = card.userId else { return }
+
+        cardViews.remove(at: index)
+        users = users.filter { $0.id != uid }
+        cachedUsers = cachedUsers.filter { $0.id != uid }
         cardsDeckView.removeItem(at: index, animated: true)
 
         updateDeckAndRefreshButtonState()

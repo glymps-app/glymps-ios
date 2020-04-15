@@ -42,6 +42,10 @@ class InboxAPI {
 
     }
     
+    func flagUser(uid: String, reason: String) {
+        Database.database().reference().child("flagged-users").child(uid).setValue(["userId" : uid, "flaggedBecause" : reason])
+    }
+    
     // go into "Ghost Mode": where no one can see your profile for 24 hours. Can be turned off and on
     func goIntoGhostMode(competion: @escaping () -> Void) {
         Database.database().reference().child("ghost-mode").child(API.User.CURRENT_USER!.uid).updateChildValues([API.User.CURRENT_USER!.uid:Int(Date().timeIntervalSince1970)])

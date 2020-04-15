@@ -36,6 +36,8 @@ class SettingsVC: UITableViewController {
     
     @IBOutlet weak var deleteAccountBtn: UIButton!
     
+    @IBOutlet weak var tosPrivacyBtn: UIButton!
+    
     var genderToQuery = ""
     
     var chosenGender = ["Male"] {
@@ -305,6 +307,13 @@ class SettingsVC: UITableViewController {
             }
         }
     }
+    
+    @IBAction func tosPrivacyBtnWasPressed(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let termsOfServiceVC = storyboard.instantiateViewController(withIdentifier: "TermsOfServiceVC")
+        self.present(termsOfServiceVC, animated: true, completion: nil)
+    }
+    
     
     // delete user from Pusher
     func deletePusherUser(userToDelete: String) {

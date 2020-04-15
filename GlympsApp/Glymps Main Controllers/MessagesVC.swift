@@ -29,6 +29,13 @@ class MessagesVC: UIViewController {
     var currentUsername: String?
     
     var currentUser: User?
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        loadNewMessages()
+        loadMatches()
+    }
 
     // setup UI
     override func viewDidLoad() {

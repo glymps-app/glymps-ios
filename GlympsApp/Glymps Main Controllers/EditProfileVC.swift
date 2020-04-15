@@ -15,6 +15,7 @@ import FirebaseDatabase
 import FirebaseStorage
 import FirebaseAnalytics
 import JGProgressHUD
+import CropViewController
 
 // screen for user to edit their Glymps profile
 class EditProfileVC: UITableViewController {
@@ -123,7 +124,7 @@ class EditProfileVC: UITableViewController {
     func fetchCurrentUser() {
         API.User.observeCurrentUser { (user) in
             if let photoUrlString = user.profileImages {
-                if let photoUrl1 = URL(string: photoUrlString.first ?? "") {
+                if let photoUrl1 = URL(string: photoUrlString[0] ?? "") {
                     self.profileImage1.sd_setImage(with: photoUrl1)
                 }
                 let index1 = 1
@@ -317,7 +318,6 @@ class EditProfileVC: UITableViewController {
     
     // go back to main profile screen
     @IBAction func backBtnWasPressed(_ sender: Any) {
-        self.tabBarController?.tabBar.isHidden = false
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -346,14 +346,16 @@ class EditProfileVC: UITableViewController {
         var imageDatas: [Data] = []
         
         if let profileImg1 = self.profileImage1.image, let imageData1 = profileImg1.jpegData(compressionQuality: 0.1) {
-            
-            imageDatas.append(imageData1)
+
+            imageDatas.insert(imageData1, at: 0)
             
             if let imageData2 = profileImage2.image?.jpegData(compressionQuality: 0.1) {
-                imageDatas.append(imageData2)
+
+                imageDatas.insert(imageData2, at: 1)
             }
             if let imageData3 = profileImage3.image?.jpegData(compressionQuality: 0.1) {
-                imageDatas.append(imageData3)
+
+                imageDatas.insert(imageData3, at: 2)
             }
             
             // update current user's information on Firebase
@@ -379,7 +381,7 @@ class EditProfileVC: UITableViewController {
 }
 
 // setup image pickers so user can select profile images
-extension EditProfileVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension EditProfileVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate, CropViewControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         // Local variable inserted by Swift 4.2 migrator.
         let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
@@ -387,23 +389,44 @@ extension EditProfileVC: UIImagePickerControllerDelegate, UINavigationController
         if let image = info["UIImagePickerControllerOriginalImage"] as? UIImage {
             if flag1 {
                 selectedProfileImage = image
-                profileImage1.image = image
+                //profileImage1.image = image
             } else if flag2 {
                 selectedProfileImage = image
-                profileImage2.image = image
+                //profileImage2.image = image
                 
-                removeProfileImage2Btn.isEnabled = true
-                removeProfileImage2Btn.isHidden = false
+                //removeProfileImage2Btn.isEnabled = true
+                //removeProfileImage2Btn.isHidden = false
             } else if flag3 {
                 selectedProfileImage = image
-                profileImage3.image = image
+                //profileImage3.image = image
                 
-                removeProfileImage3Btn.isEnabled = true
-                removeProfileImage3Btn.isHidden = false
+                //removeProfileImage3Btn.isEnabled = true
+                //removeProfileImage3Btn.isHidden = false
             }
         }
-        dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
         
+        let image: UIImage = selectedProfileImage! //Load an image
+        
+        let cropViewController = CropViewController(image: image)
+        cropViewController.delegate = self
+        self.present(cropViewController, animated: true, completion: nil)
+    }
+    
+    func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
+        // 'image' is the newly cropped version of the original image
+        if flag1 {
+            profileImage1.image = image
+        } else if flag2 {
+            profileImage2.image = image
+            removeProfileImage2Btn.isEnabled = true
+            removeProfileImage2Btn.isHidden = false
+        } else if flag3 {
+            profileImage3.image = image
+            removeProfileImage3Btn.isEnabled = true
+            removeProfileImage3Btn.isHidden = false
+        }
+        cropViewController.dismiss(animated: true, completion: nil)
     }
 }
 

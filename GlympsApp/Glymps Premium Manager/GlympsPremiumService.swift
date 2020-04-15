@@ -32,10 +32,7 @@ class GlympsPremiumService: NSObject {
     // retrieve all subscription options
     func getProducts() {
         
-        let products: Set = [IAPProduct.coinPurchase5.rawValue,
-                             IAPProduct.coinPurchase30.rawValue,
-                             IAPProduct.coinPurchase75.rawValue,
-                             IAPProduct.coinSubscription1Month.rawValue,
+        let products: Set = [IAPProduct.coinSubscription1Month.rawValue,
                              IAPProduct.coinSubscription6Month.rawValue,
                              IAPProduct.coinSubscription12Month.rawValue,
                              IAPProduct.usdSubscription1Month.rawValue,
@@ -70,7 +67,7 @@ class GlympsPremiumService: NSObject {
         
     }
     
-    // increase current User's coins if they buy more coins
+    // increase current User's coins if they successfully referred and onboarded a new user
     func increaseCoins(coinAmount: Int) {
         
         var newCoins = coinAmount
@@ -84,7 +81,7 @@ class GlympsPremiumService: NSObject {
         }
     }
     
-    // decrease coins if they choose to purchase a subscription option that requires coins as payment method
+    // decrease coins if they choose to purchase a subscription option and uses their coins
     func decreaseCoins(coinAmount: Int) {
         
         var newCoins = 0
@@ -145,19 +142,7 @@ extension SKPaymentTransactionState {
         case .purchased:
             
             API.User.observeCurrentUser { (user) in
-                if GlympsPremiumService.instance.productToBuy == "5 Coins" {
-                    
-                    GlympsPremiumService.instance.increaseCoins(coinAmount: 5)
-                    
-                } else if GlympsPremiumService.instance.productToBuy == "30 Coins" {
-                    
-                    GlympsPremiumService.instance.increaseCoins(coinAmount: 30)
-                    
-                } else if GlympsPremiumService.instance.productToBuy == "75 Coins" {
-                    
-                    GlympsPremiumService.instance.increaseCoins(coinAmount: 75)
-                    
-                } else if GlympsPremiumService.instance.productToBuy == "1 Month COIN" {
+                if GlympsPremiumService.instance.productToBuy == "1 Month COIN" {
                     
                     GlympsPremiumService.instance.decreaseCoins(coinAmount: 13)
                     
