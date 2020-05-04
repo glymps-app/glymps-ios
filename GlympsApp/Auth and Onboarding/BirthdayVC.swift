@@ -26,6 +26,9 @@ class BirthdayVC: UIViewController {
     var userEmail = ""
     var userPassword = ""
     var userName = ""
+    var userBio = ""
+    var userProfession = ""
+    var userCompany = ""
     
     var currentMonth: Int?
     var currentDay: Int?
@@ -167,6 +170,9 @@ class BirthdayVC: UIViewController {
             genderVC.userEmail = userEmail
             genderVC.userPassword = userPassword
             genderVC.userName = userName
+            genderVC.userBio = userBio
+            genderVC.userProfession = userProfession
+            genderVC.userCompany = userCompany
             genderVC.userAge = userAge!
             self.navigationController?.pushViewController(genderVC, animated: true)
         }

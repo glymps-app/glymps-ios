@@ -18,14 +18,14 @@ class InboxAPI {
     
     // save message requests to Firebase
     func saveRequest(uid: String) {
-    Database.database().reference().child("messageRequests").child(uid).updateChildValues([API.User.CURRENT_USER!.uid:1])
+        Database.database().reference().child("messageRequests").child(uid).updateChildValues([API.User.CURRENT_USER!.uid:1])
         
     }
     
     // save matches to Firebase
     func saveMatch(uid: String) {
-    Database.database().reference().child("matches").child(API.User.CURRENT_USER!.uid).updateChildValues([uid:1])
-    Database.database().reference().child("matches").child(uid).updateChildValues([API.User.CURRENT_USER!.uid:1])
+        Database.database().reference().child("matches").child(API.User.CURRENT_USER!.uid).updateChildValues([uid:1])
+        Database.database().reference().child("matches").child(uid).updateChildValues([API.User.CURRENT_USER!.uid:1])
 
     }
     
@@ -101,7 +101,7 @@ class InboxAPI {
     
     // load blocks on card deck controller
     func loadBlockedUsersDeck(completion: @escaping (Any) -> Void) {
-    Database.database().reference().child("blocking").child(API.User.CURRENT_USER!.uid).observe(.value) { (snapshot) in
+        Database.database().reference().child("blocking").child(API.User.CURRENT_USER!.uid).observe(.value) { (snapshot) in
             if (snapshot.value as? [String : Any]) != nil {
                 if let dict = snapshot.value as? Dictionary<String,Any> {
                     for date in dict.values {
@@ -178,7 +178,7 @@ class InboxAPI {
     
     // load permanent blocks on card deck controller
     func loadPermanentlyBlockedUsersDeck(completion: @escaping (Any) -> Void) {
-    Database.database().reference().child("permanent-blocks").child(API.User.CURRENT_USER!.uid).observe(.value) { (snapshot) in
+        Database.database().reference().child("permanent-blocks").child(API.User.CURRENT_USER!.uid).observe(.value) { (snapshot) in
             if (snapshot.value as? [String : Any]) != nil {
                 if let dict = snapshot.value as? Dictionary<String,Any> {
                     for userId in dict.keys {

@@ -477,7 +477,7 @@ extension ChatVC: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         let spacing = CharacterSet.whitespacesAndNewlines
         if !textView.text.trimmingCharacters(in: spacing).isEmpty {
-            let text = textView.text.trimmingCharacters(in: spacing)
+            _ = textView.text.trimmingCharacters(in: spacing)
             sendBtn.isEnabled = true
             sendBtn.setTitleColor(#colorLiteral(red: 0.08732911403, green: 0.7221731267, blue: 1, alpha: 1), for: .normal)
             placeholderLabel.isHidden = true

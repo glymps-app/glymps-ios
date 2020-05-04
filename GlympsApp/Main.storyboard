@@ -785,7 +785,7 @@
                                         <constraint firstAttribute="width" constant="70" id="Avj-4T-DGM"/>
                                     </constraints>
                                 </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version 1.4" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LKK-cN-DqM">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version 1.6" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LKK-cN-DqM">
                                     <rect key="frame" x="156.66666666666666" y="509.33333333333331" width="61.666666666666657" height="16.666666666666686"/>
                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="12"/>
                                     <nil key="highlightedColor"/>
@@ -1732,6 +1732,7 @@
                                     <constraint firstItem="uGJ-TZ-iQr" firstAttribute="centerX" secondItem="9wD-Gy-XDn" secondAttribute="centerX" id="dtp-Bd-ah4"/>
                                     <constraint firstItem="uGJ-TZ-iQr" firstAttribute="centerY" secondItem="cvs-OC-a2c" secondAttribute="centerY" id="iyC-PM-LBW"/>
                                     <constraint firstItem="cvs-OC-a2c" firstAttribute="top" secondItem="9wD-Gy-XDn" secondAttribute="top" constant="8" id="qmw-wY-QfW"/>
+                                    <constraint firstItem="uGJ-TZ-iQr" firstAttribute="leading" secondItem="cvs-OC-a2c" secondAttribute="trailing" constant="18" id="uWz-wo-9ja"/>
                                 </constraints>
                             </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="friends" translatesAutoresizingMaskIntoConstraints="NO" id="9my-bk-S6X">

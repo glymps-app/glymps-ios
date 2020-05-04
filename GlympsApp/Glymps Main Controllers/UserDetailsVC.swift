@@ -143,8 +143,11 @@ class UserDetailsVC: UIViewController, UIScrollViewDelegate {
         scrollView.addSubview(infoLabel)
         infoLabel.anchor(top: imageView.bottomAnchor, leading: scrollView.leadingAnchor, bottom: nil, trailing: imageView.trailingAnchor, padding: .init(top: 16, left: 16, bottom: 0, right: 16))
         
+        scrollView.addSubview(buttonStack)
+        buttonStack.anchor(top: nil, leading: scrollView.leadingAnchor, bottom: scrollView.bottomAnchor, trailing: scrollView.trailingAnchor, padding: .init(top: 0, left: 80, bottom: 20, right: 80))
+        
         scrollView.addSubview(bioLabel)
-        bioLabel.anchor(top: infoLabel.bottomAnchor, leading: scrollView.leadingAnchor, bottom: nil, trailing: imageView.trailingAnchor, padding: .init(top: 25, left: 16, bottom: 0, right: 16))
+        bioLabel.anchor(top: infoLabel.bottomAnchor, leading: scrollView.leadingAnchor, bottom: buttonStack.topAnchor, trailing: imageView.trailingAnchor, padding: .init(top: 25, left: 16, bottom: 10, right: 16))
         
         scrollView.addSubview(dismissButton)
         dismissButton.anchor(top: imageView.bottomAnchor, leading: nil, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: -25, left: 0, bottom: 0, right: 25), size: .init(width: 50, height: 50))
@@ -157,8 +160,8 @@ class UserDetailsVC: UIViewController, UIScrollViewDelegate {
         blockUserButton.withHeight(50)
         blockUserButton.withWidth(50)
         
-        scrollView.addSubview(buttonStack)
-        buttonStack.anchor(top: nil, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 80, bottom: 20, right: 80))
+        buttonStack.centerXToSuperview()
+        
     }
     
     // prep to setup up profile image layout

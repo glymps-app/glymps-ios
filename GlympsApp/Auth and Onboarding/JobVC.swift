@@ -1,38 +1,43 @@
 //
-//  NameVC.swift
-//  Glymps
+//  JobVC.swift
+//  GlympsApp
 //
-//  Created by James B Morris on 5/7/19.
-//  Copyright © 2019 James B Morris. All rights reserved.
+//  Created by James B Morris on 5/2/20.
+//  Copyright © 2020 James B Morris. All rights reserved.
 //
 
 import UIKit
 
-// view controller to set up new user name during onboarding
-class NameVC: UIViewController {
-    
-    @IBOutlet weak var nameTextfield: UITextField!
-    
-    @IBOutlet weak var nextBtn: UIButton!
+class JobVC: UIViewController {
     
     @IBOutlet weak var backBtn: UIButton!
     
+    @IBOutlet weak var professionTextfield: UITextField!
+    
+    @IBOutlet weak var companyTextfield: UITextField!
+    
+    @IBOutlet weak var nextBtn: UIButton!
+    
     var userEmail = ""
     var userPassword = ""
+    var userName = ""
+    var userBio = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        professionTextfield.delegate = self
+        companyTextfield.delegate = self
         
-        nameTextfield.delegate = self
-        
-        nameTextfield.returnKeyType = UIReturnKeyType.done
+        professionTextfield.returnKeyType = UIReturnKeyType.done
+        companyTextfield.returnKeyType = UIReturnKeyType.done
 
         nextBtn.isEnabled = false
         nextBtn.setTitleColor(#colorLiteral(red: 0.6140708327, green: 0.7837085724, blue: 0.8509241939, alpha: 1), for: .normal)
         nextBtn.layer.borderColor = #colorLiteral(red: 0.6140708327, green: 0.7837085724, blue: 0.8509241939, alpha: 1)
         nextBtn.layer.borderWidth = 1
         
-        let dismissKeyboard = UITapGestureRecognizer(target: self, action: #selector(NameVC.keyboardDismiss))
+        let dismissKeyboard = UITapGestureRecognizer(target: self, action: #selector(JobVC.keyboardDismiss))
         view.addGestureRecognizer(dismissKeyboard)
         
         handleTextField()
@@ -40,12 +45,13 @@ class NameVC: UIViewController {
     
     // track textfield editing
     func handleTextField() {
-        nameTextfield.addTarget(self, action: #selector(NameVC.textFieldDidChange), for: UIControl.Event.editingChanged)
+        professionTextfield.addTarget(self, action: #selector(JobVC.textFieldDidChange), for: UIControl.Event.editingChanged)
+        companyTextfield.addTarget(self, action: #selector(JobVC.textFieldDidChange), for: UIControl.Event.editingChanged)
     }
     
     // listener for textfield editing tracker
     @objc func textFieldDidChange() {
-        guard let name = nameTextfield.text, !name.isEmpty else {
+        guard let profession = professionTextfield.text, !profession.isEmpty, let company = companyTextfield.text, !company.isEmpty else {
             nextBtn.setTitleColor(#colorLiteral(red: 0.6140708327, green: 0.7837085724, blue: 0.8509241939, alpha: 1), for: .normal)
             nextBtn.layer.borderColor = #colorLiteral(red: 0.6140708327, green: 0.7837085724, blue: 0.8509241939, alpha: 1)
             nextBtn.isEnabled = false
@@ -66,21 +72,22 @@ class NameVC: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
-    // move to next view controller
     @IBAction func nextBtnWasPressed(_ sender: Any) {
-        if nameTextfield.text != "" {
+        if professionTextfield.text != "" && companyTextfield.text != "" {
             let storyboard = UIStoryboard(name: "Welcome", bundle: nil)
-            let bioVC = storyboard.instantiateViewController(withIdentifier: "BioVC") as! BioVC
-            bioVC.userEmail = userEmail
-            bioVC.userPassword = userPassword
-            bioVC.userName = nameTextfield.text!
-            self.navigationController?.pushViewController(bioVC, animated: true)
+            let birthdayVC = storyboard.instantiateViewController(withIdentifier: "BirthdayVC") as! BirthdayVC
+            birthdayVC.userEmail = userEmail
+            birthdayVC.userPassword = userPassword
+            birthdayVC.userName = userName
+            birthdayVC.userBio = userBio
+            birthdayVC.userProfession = professionTextfield.text!
+            birthdayVC.userCompany = companyTextfield.text!
+            self.navigationController?.pushViewController(birthdayVC, animated: true)
         }
     }
-
 }
 
-extension NameVC: UITextFieldDelegate {
+extension JobVC: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool
     {

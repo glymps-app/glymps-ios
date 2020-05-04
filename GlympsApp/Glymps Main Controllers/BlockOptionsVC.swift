@@ -43,7 +43,6 @@ class BlockOptionsVC: UIViewController {
 
         usernameLabel.text = ""
         setupLabel()
-        print(chatVC)
     }
     
     func setupLabel() {

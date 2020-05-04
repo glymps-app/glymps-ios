@@ -22,6 +22,9 @@ class GenderVC: UIViewController {
     var userEmail = ""
     var userPassword = ""
     var userName = ""
+    var userBio = ""
+    var userProfession = ""
+    var userCompany = ""
     var userAge = Int()
     var chosenGender = ["Male"] {
         willSet {
@@ -117,13 +120,16 @@ class GenderVC: UIViewController {
     @IBAction func nextBtnWasPressed(_ sender: Any) {
         if !chosenGender.isEmpty {
             let storyboard = UIStoryboard(name: "Welcome", bundle: nil)
-            let profileImageVC = storyboard.instantiateViewController(withIdentifier: "ProfileImageVC") as! ProfileImageVC
-            profileImageVC.userEmail = userEmail
-            profileImageVC.userPassword = userPassword
-            profileImageVC.userName = userName
-            profileImageVC.userAge = userAge
-            profileImageVC.userGender = chosenGender.joined(separator: "")
-            self.navigationController?.pushViewController(profileImageVC, animated: true)
+            let sexPreferenceVC = storyboard.instantiateViewController(withIdentifier: "SexPreferenceVC") as! SexPreferenceVC
+            sexPreferenceVC.userEmail = userEmail
+            sexPreferenceVC.userPassword = userPassword
+            sexPreferenceVC.userName = userName
+            sexPreferenceVC.userBio = userBio
+            sexPreferenceVC.userProfession = userProfession
+            sexPreferenceVC.userCompany = userCompany
+            sexPreferenceVC.userAge = userAge
+            sexPreferenceVC.userGender = chosenGender.joined(separator: "")
+            self.navigationController?.pushViewController(sexPreferenceVC, animated: true)
         }
     }
     

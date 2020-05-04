@@ -28,8 +28,6 @@ class NewMessageCell: UICollectionViewCell {
     // setup profile image and username within cell, and setup CardView to pass to chat controller so current user can view requesting user's details
     func updateViews() {
         
-        print("USER CAUSING CRASH: \(self.user?.id)")
-        
         if let photoUrlString = user?.profileImages?.first {
             let photoUrl = URL(string: photoUrlString)
             profileImage.sd_setImage(with: photoUrl)

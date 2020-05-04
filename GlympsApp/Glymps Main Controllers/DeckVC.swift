@@ -199,8 +199,7 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
     func setupCurrentUser() {
         API.User.observeCurrentUser { (user) in
             self.currentUser = user
-            self.currentUsername = user.name!
-            print("Current user: \(self.currentUser!)")
+            self.currentUsername = user.name ?? ""
         }
     }
     

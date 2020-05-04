@@ -31,8 +31,12 @@ class ProfileImageVC: UIViewController {
     var userEmail = ""
     var userPassword = ""
     var userName = ""
+    var userBio = ""
+    var userProfession =  ""
+    var userCompany = ""
     var userAge = Int()
     var userGender = ""
+    var userGenderPreference = ""
     
     // setup GeoFire
     var userLat = ""
@@ -52,8 +56,12 @@ class ProfileImageVC: UIViewController {
         print(userEmail)
         print(userPassword)
         print(userName)
+        print(userBio)
+        print(userProfession)
+        print(userCompany)
         print(userAge)
         print(userGender)
+        print(userGenderPreference)
     
         nextBtn.isEnabled = false
         nextBtn.setTitleColor(#colorLiteral(red: 0.6140708327, green: 0.7837085724, blue: 0.8509241939, alpha: 1), for: .normal)
@@ -109,14 +117,14 @@ class ProfileImageVC: UIViewController {
         let age = userAge
         let email = userEmail
         let password = userPassword
-        let bio = ""
-        let profession = ""
-        let company = ""
+        let bio = userBio
+        let profession = userProfession
+        let company = userCompany
+        let preferredGender = userGenderPreference
         let coins = 10
         let isPremium = false
         let minAge = 18
         let maxAge = 80
-        var preferedGender: String?
         
         let hud = JGProgressHUD(style: .extraLight)
         hud.textLabel.text = "Signing you up..."
@@ -125,14 +133,8 @@ class ProfileImageVC: UIViewController {
         // set preferred gender
         if let profileImg = self.selectedProfileImage, let imageData = profileImg.jpegData(compressionQuality: 0.1) {
             
-            if gender == "Male" {
-                preferedGender = "Female"
-            } else if gender == "Female" {
-                preferedGender = "Male"
-            }
-            
             // sign up new Glymps user! then go to OnboardDoneVC to celebrate :)
-            AuthService.signUp(name: name, gender: gender, email: email, password: password, age: age, bio: bio, profession: profession, company: company, coins: coins, isPremium: isPremium, minAge: minAge, maxAge: maxAge, preferedGender: preferedGender!, imageData: imageData, onSuccess: {
+            AuthService.signUp(name: name, gender: gender, email: email, password: password, age: age, bio: bio, profession: profession, company: company, coins: coins, isPremium: isPremium, minAge: minAge, maxAge: maxAge, preferedGender: preferredGender, imageData: imageData, onSuccess: {
                 
                 hud.textLabel.text = "Welcome to Glymps! \u{1F389}"
                 hud.dismiss(afterDelay: 4.0)
