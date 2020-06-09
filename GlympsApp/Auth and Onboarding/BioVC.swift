@@ -1,38 +1,41 @@
 //
-//  NameVC.swift
-//  Glymps
+//  BioVC.swift
+//  GlympsApp
 //
-//  Created by James B Morris on 5/7/19.
-//  Copyright © 2019 James B Morris. All rights reserved.
+//  Created by James B Morris on 5/2/20.
+//  Copyright © 2020 James B Morris. All rights reserved.
 //
 
 import UIKit
 
-// view controller to set up new user name during onboarding
-class NameVC: UIViewController {
-    
-    @IBOutlet weak var nameTextfield: UITextField!
-    
-    @IBOutlet weak var nextBtn: UIButton!
+class BioVC: UIViewController {
     
     @IBOutlet weak var backBtn: UIButton!
     
+    @IBOutlet weak var bioTextfield: UITextField!
+    
+    @IBOutlet weak var nextBtn: UIButton!
+    
     var userEmail = ""
     var userPassword = ""
+    var userName = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        bioTextfield.delegate = self
         
-        nameTextfield.delegate = self
-        
-        nameTextfield.returnKeyType = UIReturnKeyType.done
+        bioTextfield.returnKeyType = UIReturnKeyType.done
 
         nextBtn.isEnabled = false
         nextBtn.setTitleColor(#colorLiteral(red: 0.6140708327, green: 0.7837085724, blue: 0.8509241939, alpha: 1), for: .normal)
         nextBtn.layer.borderColor = #colorLiteral(red: 0.6140708327, green: 0.7837085724, blue: 0.8509241939, alpha: 1)
         nextBtn.layer.borderWidth = 1
         
-        let dismissKeyboard = UITapGestureRecognizer(target: self, action: #selector(NameVC.keyboardDismiss))
+        bioTextfield.layer.borderColor = #colorLiteral(red: 0, green: 0.7123068571, blue: 1, alpha: 1)
+        nextBtn.layer.borderWidth = 1
+        
+        let dismissKeyboard = UITapGestureRecognizer(target: self, action: #selector(BioVC.keyboardDismiss))
         view.addGestureRecognizer(dismissKeyboard)
         
         handleTextField()
@@ -40,12 +43,12 @@ class NameVC: UIViewController {
     
     // track textfield editing
     func handleTextField() {
-        nameTextfield.addTarget(self, action: #selector(NameVC.textFieldDidChange), for: UIControl.Event.editingChanged)
+        bioTextfield.addTarget(self, action: #selector(BioVC.textFieldDidChange), for: UIControl.Event.editingChanged)
     }
     
     // listener for textfield editing tracker
     @objc func textFieldDidChange() {
-        guard let name = nameTextfield.text, !name.isEmpty else {
+        guard let bio = bioTextfield.text, !bio.isEmpty else {
             nextBtn.setTitleColor(#colorLiteral(red: 0.6140708327, green: 0.7837085724, blue: 0.8509241939, alpha: 1), for: .normal)
             nextBtn.layer.borderColor = #colorLiteral(red: 0.6140708327, green: 0.7837085724, blue: 0.8509241939, alpha: 1)
             nextBtn.isEnabled = false
@@ -66,21 +69,21 @@ class NameVC: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
-    // move to next view controller
     @IBAction func nextBtnWasPressed(_ sender: Any) {
-        if nameTextfield.text != "" {
+        if bioTextfield.text != "" {
             let storyboard = UIStoryboard(name: "Welcome", bundle: nil)
-            let bioVC = storyboard.instantiateViewController(withIdentifier: "BioVC") as! BioVC
-            bioVC.userEmail = userEmail
-            bioVC.userPassword = userPassword
-            bioVC.userName = nameTextfield.text!
-            self.navigationController?.pushViewController(bioVC, animated: true)
+            let jobVC = storyboard.instantiateViewController(withIdentifier: "JobVC") as! JobVC
+            jobVC.userEmail = userEmail
+            jobVC.userPassword = userPassword
+            jobVC.userName = userName
+            jobVC.userBio = bioTextfield.text!
+            self.navigationController?.pushViewController(jobVC, animated: true)
         }
     }
 
 }
 
-extension NameVC: UITextFieldDelegate {
+extension BioVC: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool
     {

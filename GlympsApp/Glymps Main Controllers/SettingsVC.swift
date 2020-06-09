@@ -36,6 +36,8 @@ class SettingsVC: UITableViewController {
     
     @IBOutlet weak var deleteAccountBtn: UIButton!
     
+    @IBOutlet weak var tosPrivacyBtn: UIButton!
+    
     var genderToQuery = ""
     
     var chosenGender = ["Male"] {
@@ -59,6 +61,8 @@ class SettingsVC: UITableViewController {
     // setup UI
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.tabBarController?.tabBar.isHidden = true
         
         self.saveBtn.setTitle("SAVE", for: .normal)
         
@@ -128,15 +132,7 @@ class SettingsVC: UITableViewController {
 
     // go back to main profile screen
     @IBAction func backBtnWasPressed(_ sender: Any) {
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = CATransitionType.push
-        transition.subtype = CATransitionSubtype.fromLeft
-        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let profileVC = storyboard.instantiateViewController(withIdentifier: "ProfileVC")
-        self.present(profileVC, animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
     
     // setup UI if male selected
@@ -270,8 +266,8 @@ class SettingsVC: UITableViewController {
         AuthService.logout(onSuccess: {
             
             let storyboard = UIStoryboard(name: "Welcome", bundle: nil)
-            let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginVC")
-            self.present(loginVC, animated: true, completion: nil)
+            let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
+            self.navigationController?.pushViewController(loginVC, animated: true)
             
             hud.textLabel.text = "All done! \u{1F389}"
             hud.dismiss(afterDelay: 4.0)
@@ -306,11 +302,18 @@ class SettingsVC: UITableViewController {
                 hud.dismiss(afterDelay: 4.0)
                 
                 let storyboard = UIStoryboard(name: "Welcome", bundle: nil)
-                let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginVC")
-                self.present(loginVC, animated: true, completion: nil)
+                let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
+                self.navigationController?.pushViewController(loginVC, animated: true)
             }
         }
     }
+    
+    @IBAction func tosPrivacyBtnWasPressed(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let termsOfServiceVC = storyboard.instantiateViewController(withIdentifier: "TermsOfServiceVC")
+        self.present(termsOfServiceVC, animated: true, completion: nil)
+    }
+    
     
     // delete user from Pusher
     func deletePusherUser(userToDelete: String) {

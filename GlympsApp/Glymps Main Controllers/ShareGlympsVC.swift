@@ -62,7 +62,7 @@ class ShareGlympsVC: UIViewController {
             referralLink.iOSParameters = DynamicLinkIOSParameters(bundleID: "com.glymps.glymps-date")
             referralLink.iOSParameters?.minimumAppVersion = "1.0.0"
             // set app store id. Glymps' is 1493810382, but for now we are using Tinder's
-            referralLink.iOSParameters?.appStoreID = "547702041"
+            referralLink.iOSParameters?.appStoreID = "1493810382"
             
             referralLink.socialMetaTagParameters = DynamicLinkSocialMetaTagParameters()
             referralLink.socialMetaTagParameters?.title = "\(user.name!) wants you to come sign up for Glymps!"
@@ -82,7 +82,7 @@ class ShareGlympsVC: UIViewController {
     }
     
     @IBAction func dismissBtnWasPressed(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     @IBAction func shareWithCodeBtnWasPressed(_ sender: Any) {
         let promoText = "Date naturally! Come join Glymps Dating, this dating app I found that is changing the game."

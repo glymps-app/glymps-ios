@@ -19,12 +19,22 @@ class DeclineUserVC: UIViewController {
     
     @IBOutlet weak var closeBtn: UIButton!
     
+    @IBOutlet weak var dropView: UIView!
+    
     var userId: String?
     
     var chatVC: ChatVC?
+    
+    var deckVC: UIViewController?
+    
+    var messagesVC: UIViewController?
+    
+    var cardView: CardView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        dropView.dropShadow(color: .darkGray, opacity: 1, offSet: CGSize(width: -1, height: 1), radius: 20, scale: true)
 
         usernameLabel.text = ""
         setupLabel()
@@ -42,16 +52,25 @@ class DeclineUserVC: UIViewController {
         API.Inbox.blockUser(uid: self.userId!)
         
         dismiss(animated: true, completion: nil)
-        
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = CATransitionType.push
-        transition.subtype = CATransitionSubtype.fromLeft
-        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let messagesVC = storyboard.instantiateViewController(withIdentifier: "MessagesVC")
-        self.chatVC!.present(messagesVC, animated: true, completion: nil)
+        if let d = self.deckVC as? DeckVC {
+            // TODO: reload and refresh card deck below
+            d.blockFromOtherVC()
+            
+            self.chatVC!.navigationController?.popToViewController(d, animated: true)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25, execute: {
+                self.tabBarController?.selectedIndex = 1
+            })
+        } else if let m = self.messagesVC as? MessagesVC {
+            m.loadNewMessages()
+            m.loadMatches()
+            m.tableView.reloadData()
+            m.collectionView.reloadData()
+            
+            self.chatVC!.navigationController?.popToViewController(m, animated: true)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25, execute: {
+                self.tabBarController?.selectedIndex = 2
+            })
+        }
     }
     
     // decline and block other user for 24 hours, and remove them as request, match as accordingly, also remove any existing conversations

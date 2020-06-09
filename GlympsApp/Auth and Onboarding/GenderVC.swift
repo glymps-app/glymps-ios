@@ -17,9 +17,14 @@ class GenderVC: UIViewController {
     
     @IBOutlet weak var nextBtn: UIButton!
     
+    @IBOutlet weak var backBtn: UIButton!
+    
     var userEmail = ""
     var userPassword = ""
     var userName = ""
+    var userBio = ""
+    var userProfession = ""
+    var userCompany = ""
     var userAge = Int()
     var chosenGender = ["Male"] {
         willSet {
@@ -107,28 +112,24 @@ class GenderVC: UIViewController {
         }
     }
     
-    // prep for segue to next view controller
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destination = segue.destination as! ProfileImageVC
-        destination.userEmail = userEmail
-        destination.userPassword = userPassword
-        destination.userName = userName
-        destination.userAge = userAge
-        destination.userGender = chosenGender.joined(separator: "")
+    @IBAction func backBtnWasPressed(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
     }
     
     // move to next view controller
     @IBAction func nextBtnWasPressed(_ sender: Any) {
-        
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = CATransitionType.push
-        transition.subtype = CATransitionSubtype.fromRight
-        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-        
         if !chosenGender.isEmpty {
-            performSegue(withIdentifier: "genderToProfileImage", sender: self)
+            let storyboard = UIStoryboard(name: "Welcome", bundle: nil)
+            let sexPreferenceVC = storyboard.instantiateViewController(withIdentifier: "SexPreferenceVC") as! SexPreferenceVC
+            sexPreferenceVC.userEmail = userEmail
+            sexPreferenceVC.userPassword = userPassword
+            sexPreferenceVC.userName = userName
+            sexPreferenceVC.userBio = userBio
+            sexPreferenceVC.userProfession = userProfession
+            sexPreferenceVC.userCompany = userCompany
+            sexPreferenceVC.userAge = userAge
+            sexPreferenceVC.userGender = chosenGender.joined(separator: "")
+            self.navigationController?.pushViewController(sexPreferenceVC, animated: true)
         }
     }
     

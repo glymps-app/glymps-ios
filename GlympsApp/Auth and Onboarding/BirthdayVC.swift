@@ -21,9 +21,14 @@ class BirthdayVC: UIViewController {
     
     @IBOutlet weak var nextBtn: UIButton!
     
+    @IBOutlet weak var backBtn: UIButton!
+    
     var userEmail = ""
     var userPassword = ""
     var userName = ""
+    var userBio = ""
+    var userProfession = ""
+    var userCompany = ""
     
     var currentMonth: Int?
     var currentDay: Int?
@@ -105,6 +110,8 @@ class BirthdayVC: UIViewController {
         toolbar.tintColor = .white
         
         let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(BirthdayVC.keyboardDismiss))
+        let doneGesture = UITapGestureRecognizer(target: self, action: #selector(BirthdayVC.keyboardDismiss))
+        toolbar.addGestureRecognizer(doneGesture)
         
         toolbar.setItems([doneButton], animated: false)
         toolbar.isUserInteractionEnabled = true
@@ -151,27 +158,23 @@ class BirthdayVC: UIViewController {
         view.endEditing(true)
     }
     
-    // prep data for segue to next view controller
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destination = segue.destination as! GenderVC
-        destination.userEmail = userEmail
-        destination.userPassword = userPassword
-        destination.userName = userName
-        destination.userAge = userAge!
+    @IBAction func backBtnWasPressed(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
     }
     
     // move to next view controller
     @IBAction func nextBtnWasPressed(_ sender: Any) {
-        
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = CATransitionType.push
-        transition.subtype = CATransitionSubtype.fromRight
-        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-
         if userAge != nil {
-            performSegue(withIdentifier: "birthdayToGender", sender: self)
+            let storyboard = UIStoryboard(name: "Welcome", bundle: nil)
+            let genderVC = storyboard.instantiateViewController(withIdentifier: "GenderVC") as! GenderVC
+            genderVC.userEmail = userEmail
+            genderVC.userPassword = userPassword
+            genderVC.userName = userName
+            genderVC.userBio = userBio
+            genderVC.userProfession = userProfession
+            genderVC.userCompany = userCompany
+            genderVC.userAge = userAge!
+            self.navigationController?.pushViewController(genderVC, animated: true)
         }
     }
     

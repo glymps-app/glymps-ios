@@ -13,13 +13,15 @@ class OnboardingVC: UIPageViewController, UIPageViewControllerDataSource {
     
     var pageTitles = ["Welcome to Glymps!", "How it Works", "Messaging", "Heat Map", "Enable Notifications", "Enable Location", "Good Luck!"] // titles for each page
     
-    var pageContent = ["Hi there!\nGlymps allows you to date naturally and make genuine in-person connections by matching with others in your immediate vicinity, especially when you're having a night out!", "You can discover those around you by swiping through the deck. The first people in your feed are closest to you, and the further you swipe, the further they get! Tap the info button to learn more about them. If you like someone, tap the message button to send them a message!", """
+    var pageContent = ["Hi there!\nGlymps allows you to date naturally and make genuine in-person connections by matching with others in your immediate vicinity, especially when you're having a night out!", "You can discover those around you by swiping through the deck. The first people in your feed are closest to you, and the further you swipe, the further they get! Tap the info button to learn more about them. If you like someone, send them a message! If you don't like someone, swipe up to block them.", """
 You can think of the first message you send as a "request to match". If they message you back, you got yourself a match, and you can continue to message them!
 """, "If you feel like the number of people in your feed are limited, you can check out the heat map, which shows areas closeby that have a high concentration of users!", "Glymps sends you push notifications to notify you of new message requests, matches, messages, and events nearby. To stay in the loop, please enable notifications.", """
 In order to get potential matches in your deck, to get messaged by others, and to be able to use the heat map, Glymps requires location services. To enjoy all of this, please tap the button below.
 """, "Ready when you are! Let's get you signed up!"] // labels for each page
     
     var pageImage = [#imageLiteral(resourceName: "glymps_logo_with_title"), #imageLiteral(resourceName: "swipe"), #imageLiteral(resourceName: "message-icon1"), #imageLiteral(resourceName: "heat-map"), #imageLiteral(resourceName: "notification"), #imageLiteral(resourceName: "location"), #imageLiteral(resourceName: "rocket")] // background images for each page
+    
+    var presenter: LoginVC?
     
     // setup UI
     override func viewDidLoad() {
@@ -59,6 +61,7 @@ In order to get potential matches in your deck, to get messaged by others, and t
             pageContentVC.content = pageContent[index]
             pageContentVC.index = index
             pageContentVC.imageForPage = pageImage[index]
+            pageContentVC.presenter = self.presenter
             
             return pageContentVC
         }

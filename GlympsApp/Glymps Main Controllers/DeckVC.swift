@@ -20,9 +20,6 @@ import Purchases
 import CoreLocation
 import GeoFire
 import PushNotifications
-//import SmaatoSDKCore
-//import SmaatoSDKBanner
-//import SmaatoSDKInterstitial
 
 class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfoDelegate {
     
@@ -37,8 +34,6 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
     let headerView = UIView() // top view (Glymps + heatmap)
     
     @IBOutlet weak var cardsDeckView: UpSwipableCarousel!
-    
-    let menuView = BottomNavigationStackView() // bottom navigation bar
     
     var users: [User] = []
     
@@ -72,7 +67,6 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
         button.setBackgroundImage(#imageLiteral(resourceName: "globe"), for: .normal)
         button.setImage(#imageLiteral(resourceName: "heat-map").withRenderingMode(.alwaysOriginal), for: .normal)
         button.imageView?.contentMode = .scaleAspectFit
-        //button.imageView?.alpha = 0.6
         button.imageView?.image?.withAlignmentRectInsets(UIEdgeInsets(top: -2, left: -4, bottom: 2, right: 0))
         button.clipsToBounds = true
         button.addTarget(self, action: #selector(handleMap), for: .touchUpInside)
@@ -95,68 +89,66 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         setupCurrentUser()
         loadRequests()
         loadMatches()
         loadBlockedUsers()
         loadPermanentlyBlockedUsers()
         loadGhostModeUsers()
-        
+
+        observeDeck()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
         observeDeck()
     }
 
     // setup UI and backend systems (Geolocation – GeoFire, Premium, Firebase)
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupPusher()
-        
-        menuView.glympsImage.tintColor = #colorLiteral(red: 0, green: 0.7123068571, blue: 1, alpha: 1)
-        menuView.settingsButton.tintColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
-        menuView.messagesButton.tintColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
-        
+
         setupCurrentUser()
         loadRequests()
         loadMatches()
         loadBlockedUsers()
         loadPermanentlyBlockedUsers()
         loadGhostModeUsers()
-        
+
         cardsDeckView.type = .rotary
         cardsDeckView.bounceDistance = 0.35
         cardsDeckView.decelerationRate = 0.50
-        
+
         refreshUsersBtn.isEnabled = false
-        
+
         refreshUsersImage.isHidden = true
-        
+
         refreshUsersBtn.isHidden = true
-        
+
         configureLocationManager()
         observeDeck()
-        
+
         mapBtn.layer.zPosition = 30
         headerView.addSubview(mapBtn)
         headerView.bringSubviewToFront(mapBtn)
         mapBtn.anchor(top: nil, leading: headerView.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 0, left: 35, bottom: 0, right: 0), size: .init(width: 50, height: 50))
         mapBtn.centerYToSuperview()
         mapBtn.isUserInteractionEnabled = true
-        
+
         checkIfPremium()
-        
+
         noUsersView.isHidden = true
-        
+
         hud.textLabel.text = "Loading nearby users..."
         hud.layer.zPosition = 50
         hud.show(in: view)
-        
+
         headerView.heightAnchor.constraint(equalToConstant: 70).isActive = true
-        menuView.heightAnchor.constraint(equalToConstant: 70).isActive = true
-        
+
         // setup views
-         
-        let stackView = UIStackView(arrangedSubviews: [headerView, cardsDeckView, menuView])
+        let stackView = UIStackView(arrangedSubviews: [headerView, cardsDeckView])
         stackView.axis = .vertical
         view.addSubview(stackView)
         stackView.frame = .init(x: 0, y: 0, width: 300, height: 200)
@@ -164,9 +156,6 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.layoutMargins = .init(top: 0, left: 12, bottom: 0, right: 12)
         stackView.bringSubviewToFront(cardsDeckView)
-        
-        menuView.settingsButton.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
-        menuView.messagesButton.addTarget(self, action: #selector(handleMessages), for: .touchUpInside)
 
         let deleteGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanGestureRecognizer(_:)))
         (cardsDeckView.value(forKey: "contentView") as! UIView).addGestureRecognizer(deleteGestureRecognizer)
@@ -175,18 +164,18 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
 //        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
 //            self.setupAds()
 //        }
-        
+
         self.view.bringSubviewToFront(refreshUsersBtn)
         self.view.bringSubviewToFront(refreshUsersImage)
-        
+
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             print("Users in Ghost Mode: \(self.ghostModeUsers)")
         }
-        
+
         if currentUserReferredBy != "" {
             rewardReferralUser(refUser: currentUserReferredBy, coinAmount: 3)
         }
-        
+
         viewDidLayoutSubviews()
     }
     
@@ -210,8 +199,7 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
     func setupCurrentUser() {
         API.User.observeCurrentUser { (user) in
             self.currentUser = user
-            self.currentUsername = user.name!
-            print("Current user: \(self.currentUser!)")
+            self.currentUsername = user.name ?? ""
         }
     }
     
@@ -281,27 +269,27 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
                 }
 
 //                // Option 2: Check if user has active subscription (from App Store Connect or Play Store)
-                if purchaserInfo.activeSubscriptions.contains("com.glymps.Glymps.1MonthUSDSubscription") {
+                if purchaserInfo.activeSubscriptions.contains("com.glymps.Glymps.1MonthUSD") {
                     // Grant user "pro" access
                     print("User has Glymps Premium (1 month subscription)")
                     AuthService.subscribe()
-                } else if purchaserInfo.activeSubscriptions.contains("com.glymps.Glymps.6MonthUSDSubscription") {
+                } else if purchaserInfo.activeSubscriptions.contains("com.glymps.Glymps.6MonthUSD") {
                     // Grant user "pro" access
                     print("User has Glymps Premium (6 month subscription)")
                     AuthService.subscribe()
-                } else if purchaserInfo.activeSubscriptions.contains("com.glymps.Glymps.12MonthUSDSubscription") {
+                } else if purchaserInfo.activeSubscriptions.contains("com.glymps.Glymps.12MonthUSD") {
                     // Grant user "pro" access
                     print("User has Glymps Premium (1 year subscription)")
                     AuthService.subscribe()
-                } else if purchaserInfo.activeSubscriptions.contains("com.glymps.Glymps.1MonthCoinSubscription") {
+                } else if purchaserInfo.activeSubscriptions.contains("com.glymps.Glymps.1MonthCoin") {
                     // Grant user "pro" access
                     print("User has Glymps Premium (1 month subscription, coin)")
                     AuthService.subscribe()
-                } else if purchaserInfo.activeSubscriptions.contains("com.glymps.Glymps.6MonthCoinSubscription") {
+                } else if purchaserInfo.activeSubscriptions.contains("com.glymps.Glymps.6MonthCoin") {
                     // Grant user "pro" access
                     print("User has Glymps Premium (6 month subscription, coin)")
                     AuthService.subscribe()
-                } else if purchaserInfo.activeSubscriptions.contains("com.glymps.Glymps.12MonthCoinSubscription") {
+                } else if purchaserInfo.activeSubscriptions.contains("com.glymps.Glymps.12MonthCoin") {
                     // Grant user "pro" access
                     print("User has Glymps Premium (1 year subscription, coin)")
                     AuthService.subscribe()
@@ -386,7 +374,6 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
         if users.isEmpty {
             users = cachedUsers
             cachedUsers = []
-
             setupCards()
             cardsDeckView.reloadData()
         } else if cachedDeckMatchesCurrentDeck() {
@@ -399,7 +386,7 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
 
         noUsersView.isHidden = !users.isEmpty
     }
-
+    
     func cachedDeckMatchesCurrentDeck() -> Bool {
         return Set(users.compactMap { $0.id }) == Set(cachedUsers.compactMap { $0.id })
     }
@@ -410,6 +397,8 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
     }
         
     func loadRequests() {
+        
+        self.requests = []
         
         // load new message requests
         
@@ -426,6 +415,8 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
         
         // load matched users
         
+        self.matches = []
+        
         API.Inbox.loadMatchesDeck { (user) in
             if user.id != API.User.CURRENT_USER?.uid {
                 self.matches.insert(user.id!, at: 0)
@@ -435,6 +426,8 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
     }
     
     func loadBlockedUsers() {
+        
+        self.blockedUsers = []
         
         // load blocked users (only blocked for 24 hours)
         
@@ -449,6 +442,8 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
     
     func loadPermanentlyBlockedUsers() {
         
+        self.permanentlyBlockedUsers = []
+        
         // load permanently blocked users (blocked indefinitely)
         
         API.Inbox.loadPermanentlyBlockedUsersDeck { (user) in
@@ -462,6 +457,8 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
     
     func loadGhostModeUsers() {
         
+        self.ghostModeUsers = []
+        
         // load ghost mode users (users that want to go inactive for 24 hours max)
         
         API.Inbox.loadUsersInGhostMode { (user) in
@@ -472,33 +469,6 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
         }
     }
     
-    // go to main profile screen
-    @objc func handleSettings() {
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = CATransitionType.push
-        transition.subtype = CATransitionSubtype.fromLeft
-        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let profileVC = storyboard.instantiateViewController(withIdentifier: "ProfileVC")
-        self.present(profileVC, animated: true, completion: nil)
-    }
-    
-    // go to inbox
-    @objc func handleMessages() {
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = CATransitionType.push
-        transition.subtype = CATransitionSubtype.fromRight
-        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let messagesVC = storyboard.instantiateViewController(withIdentifier: "MessagesVC") as! MessagesVC
-        self.present(messagesVC, animated: true, completion: nil)
-    }
-    
     // go to user details screen
     @objc func moreInfoTapped(sender: UIButton) {
         let data = cardViews[sender.tag].userId
@@ -506,6 +476,7 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
         let userDetailsController = UserDetailsVC()
         userDetailsController.userId = data
         userDetailsController.cardView = cv
+        userDetailsController.presenter = self
         present(userDetailsController, animated: true, completion: nil)
     }
     
@@ -516,25 +487,20 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
         let userDetailsController = UserDetailsVC()
         userDetailsController.userId = data
         userDetailsController.cardView = cv
+        userDetailsController.presenter = self
         present(userDetailsController, animated: true, completion: nil)
     }
 
     // go to chat to message a user
     @objc func messageUserTapped(sender: UIButton) {
         let data = cardViews[sender.tag].userId
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = CATransitionType.push
-        transition.subtype = CATransitionSubtype.fromRight
-        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let chatVC = storyboard.instantiateViewController(withIdentifier: "ChatVC") as! ChatVC
         chatVC.userId = data
         chatVC.currentUsername = self.currentUsername
         chatVC.currentUser = self.currentUser
-        self.present(chatVC, animated: true, completion: nil)
+        chatVC.deckVC = self
+        self.navigationController?.pushViewController(chatVC, animated: true)
         
         // go to specific user chat after this transition
     }
@@ -543,7 +509,7 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
     
     func setupCards() {
         cardViews = []
-
+        indexForCards = 0
         for user in users {
             var cardView = CardView()
             if UIDevice.modelName == "Simulator iPhone 6" || UIDevice.modelName == "Simulator iPhone 6s" || UIDevice.modelName == "Simulator iPhone 7" || UIDevice.modelName == "Simulator iPhone 8" || UIDevice.modelName == "iPhone 6" || UIDevice.modelName == "iPhone 6s" || UIDevice.modelName == "iPhone 7" || UIDevice.modelName == "iPhone 8" {
@@ -635,6 +601,7 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
             cardView.cycleRightButton?.tag = indexForCards
             cardView.cycleLeftButton?.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
             cardView.cycleRightButton?.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            cardView.tag = indexForCards
             moreInfoButton.anchor(top: nil, leading: nil, bottom: cardView.bottomAnchor, trailing: cardView.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 20, right: 20), size: .init(width: 40, height: 40))
             messageUserButton.anchor(top: cardView.topAnchor, leading: nil, bottom: nil, trailing: cardView.trailingAnchor, padding: .init(top: 25, left: 0, bottom: 0, right: 20), size: .init(width: 40, height: 40))
             cycleLeftButton.anchor(top: nil, leading: cardView.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 0, left: 8, bottom: 0, right: 0), size: .init(width: 50, height: 50))
@@ -670,7 +637,7 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
     
     // setup nearby user cards
     func numberOfItems(in carousel: iCarousel) -> Int {
-        users.count
+        cardViews.count
     }
 
     func carousel(_ carousel: iCarousel, valueFor option: iCarouselOption, withDefault value: CGFloat) -> CGFloat {
@@ -741,6 +708,20 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
         users = users.filter { $0.id != uid }
         cachedUsers = cachedUsers.filter { $0.id != uid }
         API.Inbox.blockUser(uid: uid)
+        cardsDeckView.removeItem(at: index, animated: true)
+
+        updateDeckAndRefreshButtonState()
+    }
+    
+    func blockFromOtherVC() {
+        let index = cardsDeckView.currentItemIndex
+        let card = cardViews[index]
+
+        guard let uid = card.userId else { return }
+
+        cardViews.remove(at: index)
+        users = users.filter { $0.id != uid }
+        cachedUsers = cachedUsers.filter { $0.id != uid }
         cardsDeckView.removeItem(at: index, animated: true)
 
         updateDeckAndRefreshButtonState()

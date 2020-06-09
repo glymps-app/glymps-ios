@@ -61,8 +61,16 @@ class ChatVC: UIViewController {
     
     var messagesVC: MessagesVC?
     
+    var deckVC: UIViewController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        if deckVC == nil {
+//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//            let dv = storyboard.instantiateViewController(withIdentifier: "DeckVC") as! DeckVC
+//            self.deckVC = dv
+//        }
         
         print(currentUser ?? "NO CURRENT USER")
         print(currentUsername ?? "NO CURRENT USERNAME")
@@ -175,7 +183,6 @@ class ChatVC: UIViewController {
             }
             
             cardView.informationLabel.attributedText = attributedText
-            
             cardView.addSubview(gradientView)
             cardView.addSubview(barsStackView)
             cardView.stackView = barsStackView
@@ -242,6 +249,8 @@ class ChatVC: UIViewController {
             self.messages.append(message)
             self.sortMessages()
         }
+        
+        self.tableView.reloadData()
     }
     
     // sort messages by date
@@ -254,15 +263,7 @@ class ChatVC: UIViewController {
 
     // go back to inbox
     @IBAction func backBtnWasPressed(_ sender: Any) {
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = CATransitionType.push
-        transition.subtype = CATransitionSubtype.fromLeft
-        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let messagesVC = storyboard.instantiateViewController(withIdentifier: "MessagesVC")
-        self.present(messagesVC, animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
     
     // go to user detail view to see other user's information
@@ -270,6 +271,11 @@ class ChatVC: UIViewController {
         let userDetailsController = UserDetailsVC()
         userDetailsController.userId = self.userId
         userDetailsController.cardView = self.cardView
+        userDetailsController.presenter = self
+        userDetailsController.messageUserButton.isEnabled = false
+        userDetailsController.messageUserButton.isHidden = true
+        userDetailsController.blockUserButton.isEnabled = false
+        userDetailsController.blockUserButton.isHidden = true
         self.present(userDetailsController, animated: true, completion: nil)
     }
     
@@ -280,6 +286,9 @@ class ChatVC: UIViewController {
         let blockOptionsVC = storyboard.instantiateViewController(withIdentifier: "BlockOptionsVC") as! BlockOptionsVC
         blockOptionsVC.userId = self.userId
         blockOptionsVC.chatVC = self
+        blockOptionsVC.deckVC = self.deckVC
+        blockOptionsVC.messagesVC = self.messagesVC
+        blockOptionsVC.cardView = self.cardView
         self.present(blockOptionsVC, animated: true, completion: nil)
     }
     
@@ -332,6 +341,7 @@ class ChatVC: UIViewController {
         if messages.count == 1 && messages.first?.from == API.User.CURRENT_USER!.uid {
             mediaBtn.isEnabled = false
             sendBtn.isEnabled = false
+            self.tableView.reloadData()
         } else if messages.count == 2 && messages.last?.from == API.User.CURRENT_USER!.uid {
             mediaBtn.isEnabled = true
             sendBtn.isEnabled = true
@@ -339,6 +349,7 @@ class ChatVC: UIViewController {
                 inputTextView.text = ""
                 self.textViewDidChange(inputTextView)
                 sendToFirebase(dict: ["text" : text as Any])
+                self.tableView.reloadData()
             }
         } else if messages.count == 2 && messages.last?.from == self.userId {
             mediaBtn.isEnabled = true
@@ -347,20 +358,22 @@ class ChatVC: UIViewController {
                 inputTextView.text = ""
                 self.textViewDidChange(inputTextView)
                 sendToFirebase(dict: ["text" : text as Any])
+                self.tableView.reloadData()
             }
         } else if messages.count >= 2 {
             // continued messaging enabled (depends on premium status)
             mediaBtn.isEnabled = true
             sendBtn.isEnabled = true
             if messages.filter({ $0.from == API.User.CURRENT_USER!.uid }).count >= 5 && self.currentUser?.isPremium == false {
-                mediaBtn.isEnabled = false
-                sendBtn.isEnabled = false
+//                mediaBtn.isEnabled = false
+//                sendBtn.isEnabled = false
+                self.tableView.reloadData()
             }else if let text = inputTextView.text, text != "" {
                 inputTextView.text = ""
                 self.textViewDidChange(inputTextView)
                 sendToFirebase(dict: ["text" : text as Any])
-                
                 sendMessageNotification(message: "\(self.currentUsername!) messaged you.")
+                self.tableView.reloadData()
             }
         } else {
             mediaBtn.isEnabled = true
@@ -369,6 +382,7 @@ class ChatVC: UIViewController {
                 inputTextView.text = ""
                 self.textViewDidChange(inputTextView)
                 sendToFirebase(dict: ["text" : text as Any])
+                self.tableView.reloadData()
             }
         }
     }
@@ -396,13 +410,15 @@ class ChatVC: UIViewController {
         
         API.Inbox.saveMatch(uid: uid)
         
-        matchView.userId = uid
-        matchView.chatVC = self
-        matchView.username = self.username
-        view.addSubview(matchView)
-        matchView.fillSuperview()
-        
-        sendMatchNotification(message: "\(self.currentUsername!) matched with you!")
+        if messages.last?.from != API.User.CURRENT_USER?.uid {
+            matchView.userId = uid
+            matchView.chatVC = self
+            matchView.username = self.username
+            view.addSubview(matchView)
+            matchView.fillSuperview()
+        } else {
+            sendMatchNotification(message: "\(self.currentUsername!) matched with you!")
+        }
         
         UserDefaults.standard.set(true, forKey: "\(self.userId!)")
     }
@@ -461,7 +477,7 @@ extension ChatVC: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         let spacing = CharacterSet.whitespacesAndNewlines
         if !textView.text.trimmingCharacters(in: spacing).isEmpty {
-            let text = textView.text.trimmingCharacters(in: spacing)
+            _ = textView.text.trimmingCharacters(in: spacing)
             sendBtn.isEnabled = true
             sendBtn.setTitleColor(#colorLiteral(red: 0.08732911403, green: 0.7221731267, blue: 1, alpha: 1), for: .normal)
             placeholderLabel.isHidden = true
@@ -522,6 +538,7 @@ extension ChatVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
         }
         
         self.picker.dismiss(animated: true, completion: nil)
+        self.tableView.reloadData()
     }
     
 }
@@ -533,13 +550,13 @@ extension ChatVC: UITableViewDataSource, UITableViewDelegate {
         
         // motivate user to send a message :)
         if messages.count == 0 {
-            tableView.setEmptyView(title: "No messages yet.", message: "Don't be shy! Type something and press that send button!", image: UIImage())
+            tableView.setEmptyView(title: "No messages yet.", message: "Don't be shy! Type something and press that send button! You've got one shot!", image: UIImage())
             self.sendBtn.isEnabled = true
             self.mediaBtn.isEnabled = true
             tableView.separatorStyle = .none
             // disable sending until other user messages back and matches
         } else if messages.count == 1 && messages.first?.from == API.User.CURRENT_USER!.uid {
-            tableView.setEmptyView(title: "Message request sent.", message: "If they reply, you'll be matched!", image: UIImage())
+            tableView.setEmptyView(title: "Message request sent.", message: "If they reply, you'll be matched, and will be able to send more messages!", image: UIImage())
             if !UserDefaults.standard.bool(forKey: "\(self.userId!):request") {
                 API.Inbox.saveRequest(uid: self.userId!)
                 // send a notification
@@ -549,19 +566,24 @@ extension ChatVC: UITableViewDataSource, UITableViewDelegate {
             self.sendBtn.isEnabled = false
             tableView.separatorStyle = .none
             // present match view!
-        } else if (messages.count == 2) || (messages.count >= 2 && messages.filter({ $0.from == API.User.CURRENT_USER?.uid }).count == 1) {
+        } else if (messages.count >= 2) {
+            
+            tableView.setEmptyView(title: "", message: "", image: UIImage())
+            
            if !UserDefaults.standard.bool(forKey: "\(self.userId!)") {
                 self.view.endEditing(true)
                 self.presentMatchView(uid: self.userId!)
             }
             tableView.separatorStyle = .none
-        } else if messages.filter({ $0.from == API.User.CURRENT_USER!.uid }).count >= 5 && self.currentUser?.isPremium == false {
-            // disable messaging until current user becomes Premium user
-            tableView.setEmptyView(title: "Messaging limit reached.", message: "Activate Glymps Premium to continue.", image: UIImage())
-            self.mediaBtn.isEnabled = false
-            self.sendBtn.isEnabled = false
-            tableView.separatorStyle = .none
-        } else {
+        } //else if messages.filter({ $0.from == API.User.CURRENT_USER!.uid }).count >= 5 && self.currentUser?.isPremium == false {
+//            // disable messaging until current user becomes Premium user
+//            tableView.setEmptyView(title: "Messaging limit reached.", message: "Activate Glymps Premium to continue.", image: UIImage())
+//            self.mediaBtn.isEnabled = false
+//            self.sendBtn.isEnabled = false
+//            tableView.separatorStyle = .none
+//        }
+            else {
+            tableView.setEmptyView(title: "", message: "", image: UIImage())
             tableView.separatorStyle = .none
             tableView.restore()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {

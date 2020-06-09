@@ -17,6 +17,7 @@ import FirebaseAnalytics
 import JGProgressHUD
 import CoreLocation
 import GeoFire
+import CropViewController
 
 // view controller to set up new user profile image during onboarding
 class ProfileImageVC: UIViewController {
@@ -25,11 +26,17 @@ class ProfileImageVC: UIViewController {
     
     @IBOutlet weak var nextBtn: UIButton!
     
+    @IBOutlet weak var backBtn: UIButton!
+    
     var userEmail = ""
     var userPassword = ""
     var userName = ""
+    var userBio = ""
+    var userProfession =  ""
+    var userCompany = ""
     var userAge = Int()
     var userGender = ""
+    var userGenderPreference = ""
     
     // setup GeoFire
     var userLat = ""
@@ -49,8 +56,12 @@ class ProfileImageVC: UIViewController {
         print(userEmail)
         print(userPassword)
         print(userName)
+        print(userBio)
+        print(userProfession)
+        print(userCompany)
         print(userAge)
         print(userGender)
+        print(userGenderPreference)
     
         nextBtn.isEnabled = false
         nextBtn.setTitleColor(#colorLiteral(red: 0.6140708327, green: 0.7837085724, blue: 0.8509241939, alpha: 1), for: .normal)
@@ -94,6 +105,10 @@ class ProfileImageVC: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    @IBAction func backBtnWasPressed(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     // move to next view controller and pass necessary data
     @IBAction func nextBtnWasPressed(_ sender: Any) {
     
@@ -102,14 +117,14 @@ class ProfileImageVC: UIViewController {
         let age = userAge
         let email = userEmail
         let password = userPassword
-        let bio = ""
-        let profession = ""
-        let company = ""
+        let bio = userBio
+        let profession = userProfession
+        let company = userCompany
+        let preferredGender = userGenderPreference
         let coins = 10
         let isPremium = false
         let minAge = 18
         let maxAge = 80
-        var preferedGender: String?
         
         let hud = JGProgressHUD(style: .extraLight)
         hud.textLabel.text = "Signing you up..."
@@ -118,27 +133,15 @@ class ProfileImageVC: UIViewController {
         // set preferred gender
         if let profileImg = self.selectedProfileImage, let imageData = profileImg.jpegData(compressionQuality: 0.1) {
             
-            if gender == "Male" {
-                preferedGender = "Female"
-            } else if gender == "Female" {
-                preferedGender = "Male"
-            }
-            
             // sign up new Glymps user! then go to OnboardDoneVC to celebrate :)
-            AuthService.signUp(name: name, gender: gender, email: email, password: password, age: age, bio: bio, profession: profession, company: company, coins: coins, isPremium: isPremium, minAge: minAge, maxAge: maxAge, preferedGender: preferedGender!, imageData: imageData, onSuccess: {
+            AuthService.signUp(name: name, gender: gender, email: email, password: password, age: age, bio: bio, profession: profession, company: company, coins: coins, isPremium: isPremium, minAge: minAge, maxAge: maxAge, preferedGender: preferredGender, imageData: imageData, onSuccess: {
                 
                 hud.textLabel.text = "Welcome to Glymps! \u{1F389}"
                 hud.dismiss(afterDelay: 4.0)
                 
-                let transition = CATransition()
-                transition.duration = 0.3
-                transition.type = CATransitionType.push
-                transition.subtype = CATransitionSubtype.fromLeft
-                transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
-                self.view.window!.layer.add(transition, forKey: kCATransition)
                 let storyboard = UIStoryboard(name: "Welcome", bundle: nil)
-                let onboardDoneVC = storyboard.instantiateViewController(withIdentifier: "OnboardDoneVC")
-                self.present(onboardDoneVC, animated: true, completion: nil)
+                let onboardDoneVC = storyboard.instantiateViewController(withIdentifier: "OnboardDoneVC") as! OnboardDoneVC
+                self.navigationController?.pushViewController(onboardDoneVC, animated: true)
             }) {
                 hud.textLabel.text = "Whoops, something's not right. \u{1F615}"
                 hud.dismiss(afterDelay: 4.0)
@@ -152,21 +155,32 @@ class ProfileImageVC: UIViewController {
 }
 
 // image picker for user to choose profile image
-extension ProfileImageVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension ProfileImageVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate, CropViewControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         // Local variable inserted by Swift 4.2 migrator.
         let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
         
         if let image = info["UIImagePickerControllerOriginalImage"] as? UIImage {
             selectedProfileImage = image
-            profileImageView.image = image
         }
         dismiss(animated: true, completion: nil)
+        
+        let image: UIImage = selectedProfileImage! //Load an image
+        
+        let cropViewController = CropViewController(image: image)
+        cropViewController.delegate = self
+        present(cropViewController, animated: true, completion: nil)
         
         nextBtn.isEnabled = true
         nextBtn.setTitleColor(#colorLiteral(red: 0.08732911403, green: 0.7221731267, blue: 1, alpha: 1), for: .normal)
         nextBtn.layer.borderColor = #colorLiteral(red: 0.08732911403, green: 0.7221731267, blue: 1, alpha: 1)
         nextBtn.layer.borderWidth = 1
+    }
+    
+    func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
+        // 'image' is the newly cropped version of the original image
+        profileImageView.image = image
+        cropViewController.dismiss(animated: true, completion: nil)
     }
 }
 

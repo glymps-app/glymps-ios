@@ -16,6 +16,8 @@ class UserDetailsVC: UIViewController, UIScrollViewDelegate {
     
     var currentUser: User?
     
+    var presenter: UIViewController?
+    
     lazy var scrollView: UIScrollView = {
        let sv = UIScrollView()
         sv.alwaysBounceVertical = true
@@ -141,8 +143,11 @@ class UserDetailsVC: UIViewController, UIScrollViewDelegate {
         scrollView.addSubview(infoLabel)
         infoLabel.anchor(top: imageView.bottomAnchor, leading: scrollView.leadingAnchor, bottom: nil, trailing: imageView.trailingAnchor, padding: .init(top: 16, left: 16, bottom: 0, right: 16))
         
+        scrollView.addSubview(buttonStack)
+        buttonStack.anchor(top: nil, leading: scrollView.leadingAnchor, bottom: scrollView.bottomAnchor, trailing: scrollView.trailingAnchor, padding: .init(top: 0, left: 80, bottom: 20, right: 80))
+        
         scrollView.addSubview(bioLabel)
-        bioLabel.anchor(top: infoLabel.bottomAnchor, leading: scrollView.leadingAnchor, bottom: nil, trailing: imageView.trailingAnchor, padding: .init(top: 25, left: 16, bottom: 0, right: 16))
+        bioLabel.anchor(top: infoLabel.bottomAnchor, leading: scrollView.leadingAnchor, bottom: buttonStack.topAnchor, trailing: imageView.trailingAnchor, padding: .init(top: 25, left: 16, bottom: 10, right: 16))
         
         scrollView.addSubview(dismissButton)
         dismissButton.anchor(top: imageView.bottomAnchor, leading: nil, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: -25, left: 0, bottom: 0, right: 25), size: .init(width: 50, height: 50))
@@ -155,8 +160,8 @@ class UserDetailsVC: UIViewController, UIScrollViewDelegate {
         blockUserButton.withHeight(50)
         blockUserButton.withWidth(50)
         
-        scrollView.addSubview(buttonStack)
-        buttonStack.anchor(top: nil, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 80, bottom: 20, right: 80))
+        buttonStack.centerXToSuperview()
+        
     }
     
     // prep to setup up profile image layout
@@ -195,19 +200,16 @@ class UserDetailsVC: UIViewController, UIScrollViewDelegate {
     
     // go to chat view controller and send other user a message
     @objc func handleMessage() {
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = CATransitionType.push
-        transition.subtype = CATransitionSubtype.fromRight
-        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
+        
+        dismiss(animated: true, completion: nil)
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let chatVC = storyboard.instantiateViewController(withIdentifier: "ChatVC") as! ChatVC
         chatVC.userId = self.userId
         chatVC.currentUsername = self.currentUsername
         chatVC.currentUser = self.currentUser
-        self.present(chatVC, animated: true, completion: nil)
+        chatVC.deckVC = presenter
+        self.presenter!.navigationController?.pushViewController(chatVC, animated: true)
         
         // go to specific user chat after this transition
     }

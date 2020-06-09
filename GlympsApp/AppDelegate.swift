@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         // initialize RevenueCat iOS SDK
         Purchases.debugLogsEnabled = true
-        Purchases.configure(withAPIKey: "CfiZTEdVKAjzcufUcFsVfYuuEWdHjuYm", appUserID: nil)
+        Purchases.configure(withAPIKey: "EEQPqlAIaJUkdxWjqhkqvprTQmKSbHEZ", appUserID: nil)
 //        
 //        // initialize Smaato iOS SDK
 //        guard let config = SMAConfiguration(publisherId: "0") else {
@@ -52,7 +52,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
         
+        if Auth.auth().currentUser != nil {
+            goToMain()
+        } else {
+            goToLogin()
+        }
+        
         return true
+    }
+    
+    func goToMain() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let initial = storyboard.instantiateInitialViewController()!
+        self.window = UIWindow(frame:UIScreen.main.bounds)
+        window!.rootViewController = initial
+        window!.makeKeyAndVisible()
+    }
+    
+    func goToLogin() {
+        let storyboard = UIStoryboard(name: "Welcome", bundle: nil)
+        let initial = storyboard.instantiateInitialViewController()!
+        self.window = UIWindow(frame:UIScreen.main.bounds)
+        window!.rootViewController = initial
+        window!.makeKeyAndVisible()
     }
     
     func handleIncomingDynamicLink(_ dynamicLink: DynamicLink) {
