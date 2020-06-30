@@ -181,8 +181,9 @@ class ChatVC: UIViewController {
             if user.profession != "" && user.company != "" {
                 attributedText.append(NSAttributedString(string: "\n\(user.profession!) @ \(user.company!)", attributes: [.font: UIFont(descriptor: jobFontDescriptor, size: 20)]))
             }
-            
-            cardView.informationLabel.attributedText = attributedText
+
+            // TODO
+//            cardView.informationLabel.attributedText = attributedText
             cardView.addSubview(gradientView)
             cardView.addSubview(barsStackView)
             cardView.stackView = barsStackView

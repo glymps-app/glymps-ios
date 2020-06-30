@@ -1,0 +1,192 @@
+@font-face {
+    font-family: 'Bw Modelica Cyrillic DEMO';
+    src: url('BwModelicaCyrillicDEMO-Black.eot');
+    src: local('Bw Modelica Cyrillic DEMO Black'), local('BwModelicaCyrillicDEMO-Black'),
+        url('BwModelicaCyrillicDEMO-Black.eot?#iefix') format('embedded-opentype'),
+        url('BwModelicaCyrillicDEMO-Black.woff2') format('woff2'),
+        url('BwModelicaCyrillicDEMO-Black.woff') format('woff'),
+        url('BwModelicaCyrillicDEMO-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Bw Modelica Cyrillic DEMO';
+    src: url('BwModelicaCyrillicDEMO-Regular.eot');
+    src: local('Bw Modelica Cyrillic DEMO Regular'), local('BwModelicaCyrillicDEMO-Regular'),
+        url('BwModelicaCyrillicDEMO-Regular.eot?#iefix') format('embedded-opentype'),
+        url('BwModelicaCyrillicDEMO-Regular.woff2') format('woff2'),
+        url('BwModelicaCyrillicDEMO-Regular.woff') format('woff'),
+        url('BwModelicaCyrillicDEMO-Regular.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Bw Modelica Cyrillic DEMO';
+    src: url('BwModelicaCyrillicDEMO-Bold.eot');
+    src: local('Bw Modelica Cyrillic DEMO Bold'), local('BwModelicaCyrillicDEMO-Bold'),
+        url('BwModelicaCyrillicDEMO-Bold.eot?#iefix') format('embedded-opentype'),
+        url('BwModelicaCyrillicDEMO-Bold.woff2') format('woff2'),
+        url('BwModelicaCyrillicDEMO-Bold.woff') format('woff'),
+        url('BwModelicaCyrillicDEMO-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Bw Modelica Cyrillic DEMO';
+    src: url('BwModelicaCyrillicDEMO-Thin.eot');
+    src: local('Bw Modelica Cyrillic DEMO Thin'), local('BwModelicaCyrillicDEMO-Thin'),
+        url('BwModelicaCyrillicDEMO-Thin.eot?#iefix') format('embedded-opentype'),
+        url('BwModelicaCyrillicDEMO-Thin.woff2') format('woff2'),
+        url('BwModelicaCyrillicDEMO-Thin.woff') format('woff'),
+        url('BwModelicaCyrillicDEMO-Thin.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Bw Modelica Cyrillic DEMO';
+    src: url('BwModelicaCyrillicDEMO-RegularItalic.eot');
+    src: local('Bw Modelica Cyrillic DEMO Regular Italic'), local('BwModelicaCyrillicDEMO-RegularItalic'),
+        url('BwModelicaCyrillicDEMO-RegularItalic.eot?#iefix') format('embedded-opentype'),
+        url('BwModelicaCyrillicDEMO-RegularItalic.woff2') format('woff2'),
+        url('BwModelicaCyrillicDEMO-RegularItalic.woff') format('woff'),
+        url('BwModelicaCyrillicDEMO-RegularItalic.ttf') format('truetype');
+    font-weight: 500;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Bw Modelica Cyrillic DEMO';
+    src: url('BwModelicaCyrillicDEMO-Medium.eot');
+    src: local('Bw Modelica Cyrillic DEMO Medium'), local('BwModelicaCyrillicDEMO-Medium'),
+        url('BwModelicaCyrillicDEMO-Medium.eot?#iefix') format('embedded-opentype'),
+        url('BwModelicaCyrillicDEMO-Medium.woff2') format('woff2'),
+        url('BwModelicaCyrillicDEMO-Medium.woff') format('woff'),
+        url('BwModelicaCyrillicDEMO-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Bw Modelica Cyrillic DEMO ExBd';
+    src: url('BwModelicaCyrillicDEMO-ExtraBoldItalic.eot');
+    src: local('Bw Modelica Cyrillic DEMO ExtraBold Italic'), local('BwModelicaCyrillicDEMO-ExtraBoldItalic'),
+        url('BwModelicaCyrillicDEMO-ExtraBoldItalic.eot?#iefix') format('embedded-opentype'),
+        url('BwModelicaCyrillicDEMO-ExtraBoldItalic.woff2') format('woff2'),
+        url('BwModelicaCyrillicDEMO-ExtraBoldItalic.woff') format('woff'),
+        url('BwModelicaCyrillicDEMO-ExtraBoldItalic.ttf') format('truetype');
+    font-weight: 800;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Bw Modelica Cyrillic DEMO Hairline';
+    src: url('BwModelicaCyrillicDEMO-HairlineItalic.eot');
+    src: local('Bw Modelica Cyrillic DEMO Hairline Italic'), local('BwModelicaCyrillicDEMO-HairlineItalic'),
+        url('BwModelicaCyrillicDEMO-HairlineItalic.eot?#iefix') format('embedded-opentype'),
+        url('BwModelicaCyrillicDEMO-HairlineItalic.woff2') format('woff2'),
+        url('BwModelicaCyrillicDEMO-HairlineItalic.woff') format('woff'),
+        url('BwModelicaCyrillicDEMO-HairlineItalic.ttf') format('truetype');
+    font-weight: 100;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Bw Modelica Cyrillic DEMO';
+    src: url('BwModelicaCyrillicDEMO-ThinItalic.eot');
+    src: local('Bw Modelica Cyrillic DEMO Thin Italic'), local('BwModelicaCyrillicDEMO-ThinItalic'),
+        url('BwModelicaCyrillicDEMO-ThinItalic.eot?#iefix') format('embedded-opentype'),
+        url('BwModelicaCyrillicDEMO-ThinItalic.woff2') format('woff2'),
+        url('BwModelicaCyrillicDEMO-ThinItalic.woff') format('woff'),
+        url('BwModelicaCyrillicDEMO-ThinItalic.ttf') format('truetype');
+    font-weight: 100;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Bw Modelica Cyrillic DEMO';
+    src: url('BwModelicaCyrillicDEMO-BoldItalic.eot');
+    src: local('Bw Modelica Cyrillic DEMO Bold Italic'), local('BwModelicaCyrillicDEMO-BoldItalic'),
+        url('BwModelicaCyrillicDEMO-BoldItalic.eot?#iefix') format('embedded-opentype'),
+        url('BwModelicaCyrillicDEMO-BoldItalic.woff2') format('woff2'),
+        url('BwModelicaCyrillicDEMO-BoldItalic.woff') format('woff'),
+        url('BwModelicaCyrillicDEMO-BoldItalic.ttf') format('truetype');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Bw Modelica Cyrillic DEMO Hairline';
+    src: url('BwModelicaCyrillicDEMO-Hairline.eot');
+    src: local('Bw Modelica Cyrillic DEMO Hairline'), local('BwModelicaCyrillicDEMO-Hairline'),
+        url('BwModelicaCyrillicDEMO-Hairline.eot?#iefix') format('embedded-opentype'),
+        url('BwModelicaCyrillicDEMO-Hairline.woff2') format('woff2'),
+        url('BwModelicaCyrillicDEMO-Hairline.woff') format('woff'),
+        url('BwModelicaCyrillicDEMO-Hairline.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Bw Modelica Cyrillic DEMO';
+    src: url('BwModelicaCyrillicDEMO-BlackItalic.eot');
+    src: local('Bw Modelica Cyrillic DEMO Black Italic'), local('BwModelicaCyrillicDEMO-BlackItalic'),
+        url('BwModelicaCyrillicDEMO-BlackItalic.eot?#iefix') format('embedded-opentype'),
+        url('BwModelicaCyrillicDEMO-BlackItalic.woff2') format('woff2'),
+        url('BwModelicaCyrillicDEMO-BlackItalic.woff') format('woff'),
+        url('BwModelicaCyrillicDEMO-BlackItalic.ttf') format('truetype');
+    font-weight: 900;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Bw Modelica Cyrillic DEMO';
+    src: url('BwModelicaCyrillicDEMO-Light.eot');
+    src: local('Bw Modelica Cyrillic DEMO Light'), local('BwModelicaCyrillicDEMO-Light'),
+        url('BwModelicaCyrillicDEMO-Light.eot?#iefix') format('embedded-opentype'),
+        url('BwModelicaCyrillicDEMO-Light.woff2') format('woff2'),
+        url('BwModelicaCyrillicDEMO-Light.woff') format('woff'),
+        url('BwModelicaCyrillicDEMO-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Bw Modelica Cyrillic DEMO ExBd';
+    src: url('BwModelicaCyrillicDEMO-ExtraBold.eot');
+    src: local('Bw Modelica Cyrillic DEMO ExtraBold'), local('BwModelicaCyrillicDEMO-ExtraBold'),
+        url('BwModelicaCyrillicDEMO-ExtraBold.eot?#iefix') format('embedded-opentype'),
+        url('BwModelicaCyrillicDEMO-ExtraBold.woff2') format('woff2'),
+        url('BwModelicaCyrillicDEMO-ExtraBold.woff') format('woff'),
+        url('BwModelicaCyrillicDEMO-ExtraBold.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Bw Modelica Cyrillic DEMO';
+    src: url('BwModelicaCyrillicDEMO-MediumItalic.eot');
+    src: local('Bw Modelica Cyrillic DEMO Medium Italic'), local('BwModelicaCyrillicDEMO-MediumItalic'),
+        url('BwModelicaCyrillicDEMO-MediumItalic.eot?#iefix') format('embedded-opentype'),
+        url('BwModelicaCyrillicDEMO-MediumItalic.woff2') format('woff2'),
+        url('BwModelicaCyrillicDEMO-MediumItalic.woff') format('woff'),
+        url('BwModelicaCyrillicDEMO-MediumItalic.ttf') format('truetype');
+    font-weight: 500;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Bw Modelica Cyrillic DEMO';
+    src: url('BwModelicaCyrillicDEMO-LightItalic.eot');
+    src: local('Bw Modelica Cyrillic DEMO Light Italic'), local('BwModelicaCyrillicDEMO-LightItalic'),
+        url('BwModelicaCyrillicDEMO-LightItalic.eot?#iefix') format('embedded-opentype'),
+        url('BwModelicaCyrillicDEMO-LightItalic.woff2') format('woff2'),
+        url('BwModelicaCyrillicDEMO-LightItalic.woff') format('woff'),
+        url('BwModelicaCyrillicDEMO-LightItalic.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+}
+

@@ -7,7 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		090E0766249B194F0012BF6D /* UILabel+IBInspectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090E0765249B194F0012BF6D /* UILabel+IBInspectable.swift */; };
+		090E0768249C3D030012BF6D /* PageIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090E0767249C3D030012BF6D /* PageIndicator.swift */; };
+		0933067B24ABC23000AAD22D /* Color.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0933067A24ABC23000AAD22D /* Color.xcassets */; };
+		094A5459249D416F006240DD /* CardInfoContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094A5458249D416F006240DD /* CardInfoContainerView.swift */; };
 		096F07F323F10EB200C44428 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096F07F223F10EB200C44428 /* Constants.swift */; };
+		09F6215A249ACAEB00CF3E5B /* DeckCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 09F62159249ACAEB00CF3E5B /* DeckCardView.xib */; };
 		15DA3E06234E9D7100A0FB8E /* APIType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DA3E05234E9D7100A0FB8E /* APIType.swift */; };
 		15DA3E09234E9D7B00A0FB8E /* DeckService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DA3E07234E9D7B00A0FB8E /* DeckService.swift */; };
 		15DA3E0A234E9D7B00A0FB8E /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DA3E08234E9D7B00A0FB8E /* Connection.swift */; };
@@ -88,7 +93,12 @@
 
 /* Begin PBXFileReference section */
 		0517B0B206403DEF40CF01EB /* Pods-GlympsApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GlympsApp.release.xcconfig"; path = "Target Support Files/Pods-GlympsApp/Pods-GlympsApp.release.xcconfig"; sourceTree = "<group>"; };
+		090E0765249B194F0012BF6D /* UILabel+IBInspectable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+IBInspectable.swift"; sourceTree = "<group>"; };
+		090E0767249C3D030012BF6D /* PageIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageIndicator.swift; sourceTree = "<group>"; };
+		0933067A24ABC23000AAD22D /* Color.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Color.xcassets; sourceTree = "<group>"; };
+		094A5458249D416F006240DD /* CardInfoContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardInfoContainerView.swift; sourceTree = "<group>"; };
 		096F07F223F10EB200C44428 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		09F62159249ACAEB00CF3E5B /* DeckCardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeckCardView.xib; sourceTree = "<group>"; };
 		1276E78CED39F22A25D160AB /* Pods-GlympsApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GlympsApp.debug.xcconfig"; path = "Target Support Files/Pods-GlympsApp/Pods-GlympsApp.debug.xcconfig"; sourceTree = "<group>"; };
 		15DA3E05234E9D7100A0FB8E /* APIType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIType.swift; sourceTree = "<group>"; };
 		15DA3E07234E9D7B00A0FB8E /* DeckService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckService.swift; sourceTree = "<group>"; };
@@ -223,6 +233,9 @@
 				C3D512D82300C23700B25BDC /* GlympsGradientButton.swift */,
 				C3D512DA2301A6E500B25BDC /* GlympsGradientBorderButton.swift */,
 				C32FE61E2293818500E9BA1D /* CardView.swift */,
+				094A5458249D416F006240DD /* CardInfoContainerView.swift */,
+				09F62159249ACAEB00CF3E5B /* DeckCardView.xib */,
+				090E0767249C3D030012BF6D /* PageIndicator.swift */,
 				C3C3416822DE0CF9000B1F02 /* AdvertiserView.swift */,
 				C32FE61F2293818500E9BA1D /* BottomNavigationStackView.swift */,
 				C3D512D62300AA9400B25BDC /* MatchView.swift */,
@@ -314,6 +327,7 @@
 				C385586A22F25027006DB712 /* EmptyUITableViewExt.swift */,
 				C385586C22F2503C006DB712 /* EmptyUICollectionViewExt.swift */,
 				C385587822F736FA006DB712 /* UIViewExt.swift */,
+				090E0765249B194F0012BF6D /* UILabel+IBInspectable.swift */,
 				C3FC571C23E50EC700CE98EA /* DeviceExt.swift */,
 			);
 			path = Extensions;
@@ -363,6 +377,7 @@
 				C32FE66522938A0000E9BA1D /* Welcome.storyboard */,
 				C32FE610229380E700E9BA1D /* Main.storyboard */,
 				C32FE6162293812000E9BA1D /* Assets.xcassets */,
+				0933067A24ABC23000AAD22D /* Color.xcassets */,
 				C3A29E0923A49BF6004CD113 /* GoogleService-Info.plist */,
 				C3A83E6F22937FF4000E8BA4 /* Info.plist */,
 				C358F4F4238B605100F8CF00 /* GlympsApp-Bridging-Header.h */,
@@ -454,7 +469,9 @@
 			files = (
 				C3A29E0A23A49BF6004CD113 /* GoogleService-Info.plist in Resources */,
 				C32FE66622938A0000E9BA1D /* Welcome.storyboard in Resources */,
+				09F6215A249ACAEB00CF3E5B /* DeckCardView.xib in Resources */,
 				C32FE6152293810500E9BA1D /* LaunchScreen.storyboard in Resources */,
+				0933067B24ABC23000AAD22D /* Color.xcassets in Resources */,
 				C32FE611229380E700E9BA1D /* Main.storyboard in Resources */,
 				C32FE6172293812000E9BA1D /* Assets.xcassets in Resources */,
 			);
@@ -529,6 +546,8 @@
 			files = (
 				C3130FE322D2AE35001DE9A8 /* UserDetailsVC.swift in Sources */,
 				C32FE6212293818500E9BA1D /* GlympsGradientView.swift in Sources */,
+				094A5459249D416F006240DD /* CardInfoContainerView.swift in Sources */,
+				090E0766249B194F0012BF6D /* UILabel+IBInspectable.swift in Sources */,
 				C385587722F262F7006DB712 /* MessageCell.swift in Sources */,
 				C3D355C7238265A000B81344 /* ContactsVC.swift in Sources */,
 				C3448AC422B77914000BCB4C /* EditProfileVC.swift in Sources */,
@@ -586,6 +605,7 @@
 				C32FE6202293818500E9BA1D /* WelcomeGlympsGradientView.swift in Sources */,
 				C3D355C923842E6800B81344 /* Contact.swift in Sources */,
 				C3130FE722DB0031001DE9A8 /* ActivatePremiumVC.swift in Sources */,
+				090E0768249C3D030012BF6D /* PageIndicator.swift in Sources */,
 				C32FE6232293818500E9BA1D /* BottomNavigationStackView.swift in Sources */,
 				C3D512DB2301A6E500B25BDC /* GlympsGradientBorderButton.swift in Sources */,
 				C3D512D92300C23700B25BDC /* GlympsGradientButton.swift in Sources */,
