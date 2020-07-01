@@ -703,7 +703,7 @@
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Settings" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pjD-ii-hB1">
                                     <rect key="frame" x="150" y="9" width="75" height="28"/>
                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="20"/>
-                                    <color key="textColor" red="0.087329114030000002" green="0.7221731267" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="textColor" name="GlympsDarkGray"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
@@ -798,7 +798,7 @@
                                         <constraint firstAttribute="width" constant="279" id="yHR-Fm-V5g"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
-                                    <color key="textColor" red="0.0" green="0.71230685709999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="textColor" name="GlympsDarkGray"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qQh-LK-tBg">
@@ -854,7 +854,7 @@
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="19"/>
                                                     <state key="normal" title="MALE">
-                                                        <color key="titleColor" red="0.087329114030000002" green="0.7221731267" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -874,7 +874,7 @@
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="19"/>
                                                     <state key="normal" title="FEMALE">
-                                                        <color key="titleColor" red="0.087329114030000002" green="0.7221731267" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" name="GlympsDarkGray"/>
                                                     </state>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -894,7 +894,7 @@
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="19"/>
                                                     <state key="normal" title="BOTH">
-                                                        <color key="titleColor" red="0.087329114030000002" green="0.7221731267" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -930,7 +930,7 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4OB-Ry-m6N" customClass="RangeSlider" customModule="SwiftRangeSlider">
                                                     <rect key="frame" x="46" y="50" width="283" height="55"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <color key="tintColor" red="0.087329114030000002" green="0.7221731267" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="tintColor" name="GlympsBlue"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="55" id="L5j-8Y-MCa"/>
                                                     </constraints>
@@ -957,13 +957,13 @@
                                                             <real key="value" value="1"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="knobBorderTintColor">
-                                                            <color key="value" red="0.087329114030000002" green="0.7221731267" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="value" name="GlympsBlue"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="stepValue">
                                                             <real key="value" value="1"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="trackHighlightTintColor">
-                                                            <color key="value" red="0.087329114030000002" green="0.7221731267" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="value" name="GlympsBlue"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="lowerValue">
                                                             <real key="value" value="18"/>
@@ -978,7 +978,7 @@
                                                             <real key="value" value="17"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="labelColor">
-                                                            <color key="value" red="0.087329114030000002" green="0.7221731267" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="value" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="boolean" keyPath="hideLabels" value="NO"/>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="selectedKnobDiameterMultiplier">
@@ -1011,7 +1011,7 @@
                                             <subviews>
                                                 <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FFO-tg-yG3">
                                                     <rect key="frame" x="81" y="19.666666666666671" width="213" height="50"/>
-                                                    <color key="backgroundColor" red="0.087329114030000002" green="0.7221731267" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" name="GlympsBlue"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="50" id="2Yl-3G-tfa"/>
                                                         <constraint firstAttribute="width" constant="213" id="Bep-HW-tfS"/>
@@ -1962,13 +1962,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MIb-Ot-ugc">
-                                <rect key="frame" x="-800" y="-247" width="1975" height="400"/>
+                                <rect key="frame" x="-800" y="-237" width="1975" height="400"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="glymps-hbg" translatesAutoresizingMaskIntoConstraints="NO" id="ODd-4z-0nP">
                                         <rect key="frame" x="0.0" y="0.0" width="675" height="400"/>
                                     </imageView>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fgv-w6-rJa">
-                                        <rect key="frame" x="1026" y="307" width="71" height="72"/>
+                                        <rect key="frame" x="1026" y="297" width="71" height="72"/>
                                         <color key="backgroundColor" red="0.89411764705882346" green="0.50196078431372548" blue="0.52156862745098043" alpha="0.64792744824840764" colorSpace="calibratedRGB"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -2076,7 +2076,7 @@
                                 <state key="normal" image="map" catalog="system"/>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6KT-cF-cdE" customClass="UpSwipableCarousel" customModule="GlympsApp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="169" width="375" height="552"/>
+                                <rect key="frame" x="0.0" y="142" width="375" height="579"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <outlet property="dataSource" destination="tax-kI-zzY" id="pdU-Cz-vl8"/>
@@ -2130,7 +2130,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XI5-US-tFs">
-                                <rect key="frame" x="91.666666666666686" y="169" width="192" height="40"/>
+                                <rect key="frame" x="91.666666666666686" y="142" width="192" height="40"/>
                                 <color key="backgroundColor" name="GlympsBlue"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="GUN-MC-cTG"/>
@@ -2150,7 +2150,7 @@
                                 </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow.clockwise" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="MoZ-ul-fIl">
-                                <rect key="frame" x="101.66666666666667" y="173.33333333333334" width="30.000000000000014" height="29.666666666666657"/>
+                                <rect key="frame" x="101.66666666666667" y="146.33333333333334" width="30.000000000000014" height="29.666666666666657"/>
                                 <color key="tintColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="FXK-d2-7bJ"/>
@@ -2164,7 +2164,7 @@
                             <constraint firstItem="UIl-RT-3gT" firstAttribute="centerY" secondItem="j9W-Kk-Kty" secondAttribute="centerY" id="5BS-vJ-IQL"/>
                             <constraint firstItem="MoZ-ul-fIl" firstAttribute="centerY" secondItem="XI5-US-tFs" secondAttribute="centerY" id="7CB-zv-f4Q"/>
                             <constraint firstItem="6KT-cF-cdE" firstAttribute="trailing" secondItem="1JN-zF-ETQ" secondAttribute="trailing" id="9fA-Wx-LO7"/>
-                            <constraint firstItem="XzJ-u8-td8" firstAttribute="top" secondItem="MIb-Ot-ugc" secondAttribute="bottom" constant="-85" id="E2A-8n-haK"/>
+                            <constraint firstItem="XzJ-u8-td8" firstAttribute="top" secondItem="MIb-Ot-ugc" secondAttribute="bottom" constant="-95" id="E2A-8n-haK"/>
                             <constraint firstItem="XI5-US-tFs" firstAttribute="top" secondItem="6KT-cF-cdE" secondAttribute="top" id="IWh-Pu-NuA"/>
                             <constraint firstItem="XI5-US-tFs" firstAttribute="centerX" secondItem="j9W-Kk-Kty" secondAttribute="centerX" id="J0u-g1-Oke"/>
                             <constraint firstItem="tHK-T9-yKc" firstAttribute="leading" secondItem="m83-DB-Sgw" secondAttribute="trailing" constant="12" id="MJo-Oq-lyM"/>
@@ -2177,7 +2177,7 @@
                             <constraint firstItem="MIb-Ot-ugc" firstAttribute="centerX" secondItem="1JN-zF-ETQ" secondAttribute="centerX" id="Xol-5U-uRm"/>
                             <constraint firstItem="1JN-zF-ETQ" firstAttribute="bottom" secondItem="6KT-cF-cdE" secondAttribute="bottom" constant="8" id="YyN-UD-AXm"/>
                             <constraint firstItem="UIl-RT-3gT" firstAttribute="centerX" secondItem="j9W-Kk-Kty" secondAttribute="centerX" id="fHz-cZ-dOc"/>
-                            <constraint firstItem="6KT-cF-cdE" firstAttribute="top" secondItem="MIb-Ot-ugc" secondAttribute="bottom" constant="16" id="jvB-Hy-xF5"/>
+                            <constraint firstItem="6KT-cF-cdE" firstAttribute="top" secondItem="MIb-Ot-ugc" secondAttribute="bottom" constant="-21" id="jvB-Hy-xF5"/>
                             <constraint firstItem="XzJ-u8-td8" firstAttribute="leading" secondItem="1JN-zF-ETQ" secondAttribute="leading" constant="32" id="lMg-V9-M1o"/>
                             <constraint firstItem="Fgv-w6-rJa" firstAttribute="leading" secondItem="m83-DB-Sgw" secondAttribute="leading" constant="-8" id="npT-09-dK9"/>
                             <constraint firstItem="1JN-zF-ETQ" firstAttribute="trailing" secondItem="tHK-T9-yKc" secondAttribute="trailing" constant="32" id="thS-rN-0vY"/>

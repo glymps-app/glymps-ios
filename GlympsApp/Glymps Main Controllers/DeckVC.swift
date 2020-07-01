@@ -172,7 +172,7 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
-        headerView.layer.cornerRadius = (UIScreen.main.bounds.width + 1600.0) / 2
+//        headerView.layer.cornerRadius = (UIScreen.main.bounds.width + 1600.0) / 2
 //        headerView.layer.shadowOffset = CGSize(width: 0, height: 1)
 //        headerView.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.22).cgColor
 //        headerView.layer.shadowOpacity = 1

@@ -58,6 +58,25 @@ class SettingsVC: UITableViewController {
         }
     }
 
+    func selectButton(_ button: UIButton) {
+        for button2 in [maleBtn!, femaleBtn!, bothBtn!] {
+            update(button2, toSelected: button === button2)
+        }
+    }
+    func update(_ button: UIButton, toSelected isSelected: Bool) {
+        if isSelected {
+            button.setTitleColor(#colorLiteral(red: 0.54, green: 0.75, blue: 0.86, alpha: 1), for: .normal)
+            button.backgroundColor = .white
+            button.layer.borderColor = #colorLiteral(red: 0.54, green: 0.75, blue: 0.86, alpha: 1)
+            button.layer.borderWidth = 2.0
+        } else {
+            button.setTitleColor(#colorLiteral(red: 0.6, green: 0.682, blue: 0.733, alpha: 1), for: .normal)
+            button.backgroundColor = .white
+            button.layer.borderColor = #colorLiteral(red: 0.6, green: 0.682, blue: 0.733, alpha: 1)
+            button.layer.borderWidth = 1.0
+        }
+    }
+
     // setup UI
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,42 +93,11 @@ class SettingsVC: UITableViewController {
             }
         }
         
-        API.User.observeCurrentUser { (user) in
-            if user.preferedGender == "Male" {
-                self.maleBtn.setTitleColor(#colorLiteral(red: 0.08732911403, green: 0.7221731267, blue: 1, alpha: 1), for: .normal)
-                self.maleBtn.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-                self.maleBtn.layer.borderColor = #colorLiteral(red: 0.08732911403, green: 0.7221731267, blue: 1, alpha: 1)
-                self.maleBtn.layer.borderWidth = 1
-            } else {
-                self.maleBtn.setTitleColor(#colorLiteral(red: 0.6140708327, green: 0.7837085724, blue: 0.8509241939, alpha: 1), for: .normal)
-                self.maleBtn.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-                self.maleBtn.layer.borderColor = #colorLiteral(red: 0.6140708327, green: 0.7837085724, blue: 0.8509241939, alpha: 1)
-                self.maleBtn.layer.borderWidth = 1
-            }
-            
-            if user.preferedGender == "Female" {
-                self.femaleBtn.setTitleColor(#colorLiteral(red: 0.08732911403, green: 0.7221731267, blue: 1, alpha: 1), for: .normal)
-                self.femaleBtn.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-                self.femaleBtn.layer.borderColor = #colorLiteral(red: 0.08732911403, green: 0.7221731267, blue: 1, alpha: 1)
-                self.femaleBtn.layer.borderWidth = 1
-            } else {
-                self.femaleBtn.setTitleColor(#colorLiteral(red: 0.6140708327, green: 0.7837085724, blue: 0.8509241939, alpha: 1), for: .normal)
-                self.femaleBtn.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-                self.femaleBtn.layer.borderColor = #colorLiteral(red: 0.6140708327, green: 0.7837085724, blue: 0.8509241939, alpha: 1)
-                self.femaleBtn.layer.borderWidth = 1
-            }
-            
-            if user.preferedGender == "Both" {
-                self.bothBtn.setTitleColor(#colorLiteral(red: 0.08732911403, green: 0.7221731267, blue: 1, alpha: 1), for: .normal)
-                self.bothBtn.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-                self.bothBtn.layer.borderColor = #colorLiteral(red: 0.08732911403, green: 0.7221731267, blue: 1, alpha: 1)
-                self.bothBtn.layer.borderWidth = 1
-            } else {
-                self.bothBtn.setTitleColor(#colorLiteral(red: 0.6140708327, green: 0.7837085724, blue: 0.8509241939, alpha: 1), for: .normal)
-                self.bothBtn.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-                self.bothBtn.layer.borderColor = #colorLiteral(red: 0.6140708327, green: 0.7837085724, blue: 0.8509241939, alpha: 1)
-                self.bothBtn.layer.borderWidth = 1
-            }
+        API.User.observeCurrentUser { [weak self] (user) in
+            guard let self = self else { return }
+            self.update(self.maleBtn, toSelected: user.preferedGender == "Male")
+            self.update(self.femaleBtn, toSelected: user.preferedGender == "Female")
+            self.update(self.bothBtn, toSelected: user.preferedGender == "Both")
             
             self.rangeSlider.lowerValue = Double(user.minAge!)
             self.rangeSlider.upperValue = Double(user.maxAge!)
@@ -137,18 +125,7 @@ class SettingsVC: UITableViewController {
     
     // setup UI if male selected
     @IBAction func maleBtnWasPressed(_ sender: Any) {
-        maleBtn.setTitleColor(#colorLiteral(red: 0.08732911403, green: 0.7221731267, blue: 1, alpha: 1), for: .normal)
-        maleBtn.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        maleBtn.layer.borderColor = #colorLiteral(red: 0.08732911403, green: 0.7221731267, blue: 1, alpha: 1)
-        maleBtn.layer.borderWidth = 1
-        femaleBtn.setTitleColor(#colorLiteral(red: 0.6140708327, green: 0.7837085724, blue: 0.8509241939, alpha: 1), for: .normal)
-        femaleBtn.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        femaleBtn.layer.borderColor = #colorLiteral(red: 0.6140708327, green: 0.7837085724, blue: 0.8509241939, alpha: 1)
-        bothBtn.layer.borderWidth = 1
-        bothBtn.setTitleColor(#colorLiteral(red: 0.6140708327, green: 0.7837085724, blue: 0.8509241939, alpha: 1), for: .normal)
-        bothBtn.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        bothBtn.layer.borderColor = #colorLiteral(red: 0.6140708327, green: 0.7837085724, blue: 0.8509241939, alpha: 1)
-        bothBtn.layer.borderWidth = 1
+        selectButton(maleBtn)
         
         if chosenGender.isEmpty == true {
             chosenGender.append((maleBtn.titleLabel?.text!.capitalized)!)
@@ -160,18 +137,7 @@ class SettingsVC: UITableViewController {
     
     // setup UI if female selected
     @IBAction func femaleBtnWasPressed(_ sender: Any) {
-        femaleBtn.setTitleColor(#colorLiteral(red: 0.08732911403, green: 0.7221731267, blue: 1, alpha: 1), for: .normal)
-        femaleBtn.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        femaleBtn.layer.borderColor = #colorLiteral(red: 0.08732911403, green: 0.7221731267, blue: 1, alpha: 1)
-        femaleBtn.layer.borderWidth = 1
-        maleBtn.setTitleColor(#colorLiteral(red: 0.6140708327, green: 0.7837085724, blue: 0.8509241939, alpha: 1), for: .normal)
-        maleBtn.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        maleBtn.layer.borderColor = #colorLiteral(red: 0.6140708327, green: 0.7837085724, blue: 0.8509241939, alpha: 1)
-        maleBtn.layer.borderWidth = 1
-        bothBtn.setTitleColor(#colorLiteral(red: 0.6140708327, green: 0.7837085724, blue: 0.8509241939, alpha: 1), for: .normal)
-        bothBtn.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        bothBtn.layer.borderColor = #colorLiteral(red: 0.6140708327, green: 0.7837085724, blue: 0.8509241939, alpha: 1)
-        bothBtn.layer.borderWidth = 1
+        selectButton(femaleBtn)
         
         if chosenGender.isEmpty == true {
             chosenGender.append((femaleBtn.titleLabel?.text!.capitalized)!)
@@ -183,18 +149,7 @@ class SettingsVC: UITableViewController {
     
     // setup UI if both selected
     @IBAction func bothBtnWasPressed(_ sender: Any) {
-        bothBtn.setTitleColor(#colorLiteral(red: 0.08732911403, green: 0.7221731267, blue: 1, alpha: 1), for: .normal)
-        bothBtn.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        bothBtn.layer.borderColor = #colorLiteral(red: 0.08732911403, green: 0.7221731267, blue: 1, alpha: 1)
-        bothBtn.layer.borderWidth = 1
-        femaleBtn.setTitleColor(#colorLiteral(red: 0.6140708327, green: 0.7837085724, blue: 0.8509241939, alpha: 1), for: .normal)
-        femaleBtn.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        femaleBtn.layer.borderColor = #colorLiteral(red: 0.6140708327, green: 0.7837085724, blue: 0.8509241939, alpha: 1)
-        femaleBtn.layer.borderWidth = 1
-        maleBtn.setTitleColor(#colorLiteral(red: 0.6140708327, green: 0.7837085724, blue: 0.8509241939, alpha: 1), for: .normal)
-        maleBtn.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        maleBtn.layer.borderColor = #colorLiteral(red: 0.6140708327, green: 0.7837085724, blue: 0.8509241939, alpha: 1)
-        maleBtn.layer.borderWidth = 1
+        selectButton(bothBtn)
         
         if chosenGender.isEmpty == true {
             chosenGender.append((bothBtn.titleLabel?.text!.capitalized)!)
