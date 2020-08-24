@@ -86,7 +86,17 @@ class LoginVC: UIViewController {
     
     // authenticate and sign-in user
     @IBAction func signInBtnWasPressed(_ sender: Any) {
-        signIn()
+        Auth.auth().addStateDidChangeListener { auth, user in
+            if let user = user {
+                AuthService.logout(onSuccess: {
+                    self.signIn()
+                }) {
+                    return
+                }
+            } else {
+                self.signIn()
+            }
+        }
     }
     
     // sign- in function

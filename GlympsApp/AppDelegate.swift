@@ -52,10 +52,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
         
-        if Auth.auth().currentUser != nil {
-            goToMain()
-        } else {
-            goToLogin()
+//        if Auth.auth().currentUser != nil {
+//            goToMain()
+//        } else {
+//            goToLogin()
+//        }
+        
+        Auth.auth().addStateDidChangeListener { auth, user in
+            if let user = user {
+                self.goToMain()
+            } else {
+                self.goToLogin()
+            }
         }
         
         return true
