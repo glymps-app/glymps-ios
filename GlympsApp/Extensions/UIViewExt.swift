@@ -52,3 +52,13 @@ extension UIView {
     }
     
 }
+
+protocol NibLoadable {
+    static func loadFromNib() -> Self
+}
+
+extension NibLoadable where Self: UIView {
+    static func loadFromNib() -> Self {
+        return Bundle.main.loadNibNamed("\(self)", owner: nil, options: nil)![0] as! Self
+    }
+}

@@ -42,10 +42,10 @@ class ProfileVC: UIViewController {
         self.coinsView.layer.zPosition = 10
         self.coinsViewLabel.layer.zPosition = 15
 
-        editProfileBtn.layer.borderColor = #colorLiteral(red: 0.08732911403, green: 0.7221731267, blue: 1, alpha: 1)
-        editProfileBtn.layer.borderWidth = 1
-        settingsBtn.layer.borderColor = #colorLiteral(red: 0.08732911403, green: 0.7221731267, blue: 1, alpha: 1)
-        settingsBtn.layer.borderWidth = 1
+        editProfileBtn.layer.borderColor = #colorLiteral(red: 0.212, green: 0.286, blue: 0.329, alpha: 1)
+        editProfileBtn.layer.borderWidth = 2
+        settingsBtn.layer.borderColor = #colorLiteral(red: 0.212, green: 0.286, blue: 0.329, alpha: 1)
+        settingsBtn.layer.borderWidth = 2
         
         greetingLabel.text = ""
         coinsViewLabel.text = ""

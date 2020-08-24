@@ -84,8 +84,9 @@ class UserDetailsVC: UIViewController, UIScrollViewDelegate {
     // setup cardViews of other user
     var cardView: CardView! {
         didSet {
-            
-            infoLabel.attributedText = cardView.informationLabel.attributedText
+
+            // TODO
+//            infoLabel.attributedText = cardView.informationLabel.attributedText
             
             swipingPhotosController.cardView = cardView
             
