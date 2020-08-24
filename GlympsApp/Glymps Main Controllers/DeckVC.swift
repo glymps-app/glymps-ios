@@ -172,11 +172,11 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
-//        headerView.layer.cornerRadius = (UIScreen.main.bounds.width + 1600.0) / 2
-//        headerView.layer.shadowOffset = CGSize(width: 0, height: 1)
-//        headerView.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.22).cgColor
-//        headerView.layer.shadowOpacity = 1
-//        headerView.layer.shadowRadius = 10
+        headerView.layer.cornerRadius = (UIScreen.main.bounds.width + 1600.0) / 2
+        headerView.layer.shadowOffset = CGSize(width: 0, height: 1)
+        headerView.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.22).cgColor
+        headerView.layer.shadowOpacity = 1
+        headerView.layer.shadowRadius = 10
         headerView.clipsToBounds = true
         headerView.layer.masksToBounds = false
     }
@@ -478,14 +478,15 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
     }
 
     // go to chat to message a user
-    @objc func messageUserTapped(sender: UIButton) {
-        let data = cardViews[sender.tag].userId
+    func messageUserTapped(for cardView: DeckCardView) {
+        let data = cardView.userId
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let chatVC = storyboard.instantiateViewController(withIdentifier: "ChatVC") as! ChatVC
         chatVC.userId = data
         chatVC.currentUsername = self.currentUsername
         chatVC.currentUser = self.currentUser
         chatVC.deckVC = self
+        chatVC.activateTextFieldImmediately = true
         self.navigationController?.pushViewController(chatVC, animated: true)
         
         // go to specific user chat after this transition
@@ -501,29 +502,9 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
 
         for user in users {
             let cardView = DeckCardView.loadFromNib()
+            cardView.delegate = self
+            cardView.user = user
 
-//            if UIDevice.modelName == "Simulator iPhone 6" || UIDevice.modelName == "Simulator iPhone 6s" || UIDevice.modelName == "Simulator iPhone 7" || UIDevice.modelName == "Simulator iPhone 8" || UIDevice.modelName == "iPhone 6" || UIDevice.modelName == "iPhone 6s" || UIDevice.modelName == "iPhone 7" || UIDevice.modelName == "iPhone 8" {
-//                cardView = CardView(frame: CGRect(x: 0, y: 0, width: 320, height: 500))
-//            } else if UIDevice.modelName == "Simulator iPhone 6 Plus" || UIDevice.modelName == "Simulator iPhone 7 Plus" || UIDevice.modelName == "Simulator iPhone 8 Plus" || UIDevice.modelName == "iPhone 6 Plus" || UIDevice.modelName == "iPhone 7 Plus" || UIDevice.modelName == "iPhone 8 Plus" {
-//                cardView = CardView(frame: CGRect(x: 0, y: 0, width: 370, height: 570))
-//            } else if UIDevice.modelName == "Simulator iPhone X" || UIDevice.modelName == "Simulator iPhone XS" || UIDevice.modelName == "Simulator iPhone 11 Pro" || UIDevice.modelName == "iPhone X" || UIDevice.modelName == "iPhone XS" || UIDevice.modelName == "iPhone 11 Pro" {
-//                cardView = CardView(frame: CGRect(x: 0, y: 0, width: 320, height: 580))
-//            } else if UIDevice.modelName == "Simulator iPhone XS Max" || UIDevice.modelName == "Simulator iPhone 11 Pro Max" || UIDevice.modelName == "iPhone XS Max" || UIDevice.modelName == "iPhone 11 Pro Max" {
-//                cardView = CardView(frame: CGRect(x: 0, y: 0, width: 370, height: 600))
-//            } else if UIDevice.modelName == "Simulator iPhone XR" || UIDevice.modelName == "Simulator iPhone 11" || UIDevice.modelName == "iPhone XR" || UIDevice.modelName == "iPhone 11" {
-//                cardView = CardView(frame: CGRect(x: 0, y: 0, width: 370, height: 580))
-//            }
-            cardView.moreInfoDelegate = self
-//            let gradientView = GlympsGradientView()
-//            let barsStackView = UIStackView()
-//            let moreInfoButton = UIButton(type: .system)
-//            moreInfoButton.setImage(#imageLiteral(resourceName: "info_icon").withRenderingMode(.alwaysOriginal), for: .normal)
-//            moreInfoButton.isUserInteractionEnabled = true
-//            moreInfoButton.addTarget(self, action: #selector(moreInfoTapped(sender:)), for: .touchUpInside)
-//            let messageUserButton = UIButton(type: .system)
-//            messageUserButton.setImage(#imageLiteral(resourceName: "message-icon2").withRenderingMode(.alwaysOriginal), for: .normal)
-//            messageUserButton.isUserInteractionEnabled = true
-//            messageUserButton.addTarget(self, action: #selector(messageUserTapped(sender:)), for: .touchUpInside)
             let cycleLeftButton = UIButton(type: .system)
             if #available(iOS 13.0, *) {
                 cycleLeftButton.setImage(UIImage(systemName: "chevron.left")?.withRenderingMode(.alwaysTemplate), for: .normal)
@@ -866,5 +847,62 @@ class UpSwipableCarousel: iCarousel, UIGestureRecognizerDelegate {
         } else {
             return super.gestureRecognizerShouldBegin(gestureRecognizer)
         }
+    }
+}
+
+extension DeckVC: DeckCardViewDelegate {
+    func deckCardViewDidTapMoreInfo(_ deckCardView: DeckCardView) {
+        guard let user = deckCardView.user else { return }
+
+        let gradientView = GlympsGradientView()
+        let barsStackView = UIStackView()
+        gradientView.layer.opacity = 0.5
+        let cardView = CardView(frame: .zero)
+        cardView.images = user.profileImages
+        if let photoUrlString = user.profileImages {
+            let photoUrl = URL(string: photoUrlString[0])
+            cardView.imageView.sd_setImage(with: photoUrl)
+        }
+        (0..<user.profileImages!.count).forEach { (_) in
+            let barView = UIView()
+            barView.backgroundColor = UIColor(white: 0, alpha: 0.1)
+            barView.layer.cornerRadius = barView.frame.size.height / 2
+            barsStackView.addArrangedSubview(barView)
+            barsStackView.arrangedSubviews.first?.backgroundColor = .white
+        }
+
+        let nametraits = [UIFontDescriptor.TraitKey.weight: UIFont.Weight.semibold]
+        var nameFontDescriptor = UIFontDescriptor(fontAttributes: [UIFontDescriptor.AttributeName.family: "Avenir Next"])
+        nameFontDescriptor = nameFontDescriptor.addingAttributes([UIFontDescriptor.AttributeName.traits: nametraits])
+
+        let agetraits = [UIFontDescriptor.TraitKey.weight: UIFont.Weight.light]
+        var ageFontDescriptor = UIFontDescriptor(fontAttributes: [UIFontDescriptor.AttributeName.family: "Avenir Next"])
+        ageFontDescriptor = ageFontDescriptor.addingAttributes([UIFontDescriptor.AttributeName.traits: agetraits])
+
+        let jobtraits = [UIFontDescriptor.TraitKey.weight: UIFont.Weight.light]
+        var jobFontDescriptor = UIFontDescriptor(fontAttributes: [UIFontDescriptor.AttributeName.family: "Avenir Next"])
+        jobFontDescriptor = jobFontDescriptor.addingAttributes([UIFontDescriptor.AttributeName.traits: jobtraits])
+
+        let attributedText = NSMutableAttributedString(string: user.name!, attributes: [.font: UIFont(descriptor: nameFontDescriptor, size: 30)])
+        attributedText.append(NSAttributedString(string: " \(user.age!)", attributes: [.font: UIFont(descriptor: ageFontDescriptor, size: 24)]))
+        if user.profession != "" && user.company != "" {
+            attributedText.append(NSAttributedString(string: "\n\(user.profession!) @ \(user.company!)", attributes: [.font: UIFont(descriptor: jobFontDescriptor, size: 20)]))
+        }
+
+        // TODO
+        //            cardView.informationLabel.attributedText = attributedText
+        cardView.addSubview(gradientView)
+        cardView.addSubview(barsStackView)
+        cardView.stackView = barsStackView
+        cardView.userId = self.userId
+        barsStackView.anchor(top: cardView.topAnchor, leading: cardView.leadingAnchor, bottom: nil, trailing: cardView.trailingAnchor, padding: .init(top: 8, left: 8, bottom: 0, right: 8), size: .init(width: 0, height: 4))
+        barsStackView.spacing = 4
+        barsStackView.distribution = .fillEqually
+
+        goToMoreInfo(userId: deckCardView.userId!, cardView: cardView)
+    }
+
+    func deckCardViewDidSelectMessageField(_ deckCardView: DeckCardView) {
+         messageUserTapped(for: deckCardView)
     }
 }

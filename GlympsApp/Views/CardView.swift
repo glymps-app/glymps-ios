@@ -153,6 +153,10 @@ extension UIColor {
     static let glympsDarkGray = UIColor(red: 54/255, green: 73/255, blue: 84/255, alpha: 1.0)
 }
 
+protocol DeckCardViewDelegate: class {
+    func deckCardViewDidTapMoreInfo(_ deckCardView: DeckCardView)
+    func deckCardViewDidSelectMessageField(_ deckCardView: DeckCardView)
+}
 class DeckCardView: UIView, NibLoadable {
 
     @IBOutlet weak var imageContainer: UIView!
@@ -179,15 +183,17 @@ class DeckCardView: UIView, NibLoadable {
 
     var userId: String?
 
+    var user: User?
+
     var stackView: UIStackView?
 
     var cycleLeftButton: UIButton?
 
     var cycleRightButton: UIButton?
 
-    weak var moreInfoDelegate: MoreInfoDelegate?
-
     var imageIndex = 0
+
+    weak var delegate: DeckCardViewDelegate?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -216,8 +222,9 @@ class DeckCardView: UIView, NibLoadable {
         textFieldContainer.layer.shadowOpacity = 1
         textFieldContainer.layer.shadowRadius = 5
 
+        textField.delegate = self
         textField.attributedPlaceholder = NSAttributedString(string: "Type your message",
-                                                              attributes: [.foregroundColor: UIColor.gray])
+                                                            attributes: [.foregroundColor: UIColor.gray])
 
         infoContainer.layer.cornerRadius = 15.0
         infoContainer.layer.shadowOffset = CGSize(width: 0, height: 1)
@@ -227,6 +234,7 @@ class DeckCardView: UIView, NibLoadable {
 
         let infoIcon = UIImage(named: "icon-info")!.withRenderingMode(.alwaysTemplate)
         moreInfoButton.setBackgroundImage(infoIcon, for: .normal)
+        moreInfoButton.addTarget(self, action: #selector(handleMoreInfoTap(_:)), for: .touchUpInside)
     }
 
     let infoButtonColors: [UIColor] = [.glympsBlue, .glympsGreen, .glympsPurple]
@@ -248,6 +256,10 @@ class DeckCardView: UIView, NibLoadable {
         infoContainer.configure(with: user, tintColor: tintColor)
     }
 
+    @objc func handleMoreInfoTap(_ sender: UIButton?) {
+        delegate?.deckCardViewDidTapMoreInfo(self)
+    }
+
     // cycle through profile images, determines whether to cycle forward or backward bassd on touch location, and then setup image accordingly
     @objc func handleTap(gesture: UITapGestureRecognizer) {
 
@@ -259,7 +271,7 @@ class DeckCardView: UIView, NibLoadable {
             let newIndex = imageIndex - 1
             imageIndex = newIndex > 0 ? newIndex : images!.count - 1
         case 1, 2:
-            //moreInfoDelegate?.goToMoreInfo(userId: id, cardView: self)
+            delegate?.deckCardViewDidTapMoreInfo(self)
             return
         case 3:
             fallthrough
@@ -273,5 +285,12 @@ class DeckCardView: UIView, NibLoadable {
         imageView.sd_setImage(with: photoUrl)
 
         pageIndicator.currentPageIndex = imageIndex
+    }
+}
+
+extension DeckCardView: UITextFieldDelegate {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        delegate?.deckCardViewDidSelectMessageField(self)
+        return false
     }
 }

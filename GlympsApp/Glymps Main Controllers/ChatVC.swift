@@ -62,6 +62,8 @@ class ChatVC: UIViewController {
     var messagesVC: MessagesVC?
     
     var deckVC: UIViewController?
+
+    var activateTextFieldImmediately = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -108,6 +110,15 @@ class ChatVC: UIViewController {
                 self.tableView.scrollToRow(at: IndexPath.init(row: self.messages.count - 1, section: 0), at: .none, animated: true)
             }
         })
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        if activateTextFieldImmediately {
+            activateTextFieldImmediately = false
+            inputTextView.becomeFirstResponder()
+        }
     }
     
     // dismiss keyboard
