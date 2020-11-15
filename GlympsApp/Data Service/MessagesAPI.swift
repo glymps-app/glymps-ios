@@ -13,13 +13,14 @@ import FirebaseAuth
 import FirebaseDatabase
 import FirebaseStorage
 import FirebaseAnalytics
+import Amplitude_iOS
 
 // an API for retrieving/setting up messages
 class MessagesAPI {
     
     // send message to receiving User's userID
     func sendMessage(from: String, to: String, value: Dictionary<String, Any>) {
-        
+        self.logAmplitudeMessageEvent()
         let ref = Database.database().reference().child("messages").child(from).child(to)
         ref.childByAutoId().updateChildValues(value)
         
@@ -34,6 +35,7 @@ class MessagesAPI {
     
     // save photo message to Firebase storage
     func savePhotoMessage(image: UIImage?, id: String, onSuccess: @escaping (_ value: Any) -> Void, onError: @escaping (_ errorMessage: String) -> Void) {
+        self.logAmplitudeImageMessageEvent()
         if let photo = image {
             let storageRef = Storage.storage().reference(forURL: Config.STORAGE_ROOT_REF).child("photoMessages").child(id)
             if let data = image?.jpegData(compressionQuality: 0.5) {
@@ -59,6 +61,7 @@ class MessagesAPI {
     
     // save video message to Firebase storage
     func saveVideoMessage(url: URL, id: String, onSuccess: @escaping (_ value: Any) -> Void, onError: @escaping (_ errorMessage: String) -> Void) {
+        self.logAmplitudeVideoMessageEvent()
         let storageRef = Storage.storage().reference(forURL: Config.STORAGE_ROOT_REF).child("videoMessages").child(id)
         
         storageRef.putFile(from: url, metadata: nil) { (metadata, error) in
@@ -111,5 +114,17 @@ class MessagesAPI {
                 }
             }
         }
+    }
+    
+    func logAmplitudeImageMessageEvent() {
+        Amplitude.instance().logEvent("Image Message")
+    }
+    
+    func logAmplitudeVideoMessageEvent() {
+        Amplitude.instance().logEvent("Video Message")
+    }
+    
+    func logAmplitudeMessageEvent() {
+        Amplitude.instance().logEvent("Message")
     }
 }

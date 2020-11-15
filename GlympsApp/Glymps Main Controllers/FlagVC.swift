@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Amplitude_iOS
 
 class FlagVC: UIViewController {
     
@@ -24,6 +25,8 @@ class FlagVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.logAmplitudeReportUserViewEvent()
 
         detailsTextfield.delegate = self
         detailsTextfield.returnKeyType = UIReturnKeyType.done
@@ -76,6 +79,10 @@ class FlagVC: UIViewController {
         DispatchQueue.main.async {
             self.blockOptionsVC?.flagAction(reason: self.detailsTextfield.text!)
         }
+    }
+    
+    func logAmplitudeReportUserViewEvent() {
+        Amplitude.instance().logEvent("Report User View")
     }
     
 

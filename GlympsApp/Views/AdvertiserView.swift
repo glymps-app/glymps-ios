@@ -8,29 +8,44 @@
 
 import UIKit
 import SDWebImage
-//import SmaatoSDKBanner
+import SmaatoSDKCore
+import SmaatoSDKNative
 
 // A card in the "card deck" that displays an ad
-class AdvertiserView: UIView {
+class NativeAdCardView: UIView {
     
-    //var bannerView: SMABannerView?
-    
+    var imageView = UIImageView(image: #imageLiteral(resourceName: "glymps-hbg"))
+
+    var nameLabel = UILabel()
+
+    var stackView: UIStackView?
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        // round image
         layer.cornerRadius = 15
-        layer.borderColor = #colorLiteral(red: 0.6140708327, green: 0.7837085724, blue: 0.8509241939, alpha: 1)
-        layer.borderWidth = 1
         clipsToBounds = true
-        
-        backgroundColor = #colorLiteral(red: 0.6140708327, green: 0.7837085724, blue: 0.8509241939, alpha: 1)
 
-        //bannerView?.fillSuperview()
+        imageView.contentMode = .scaleAspectFill
+        layer.borderColor = #colorLiteral(red: 0, green: 0.7123068571, blue: 1, alpha: 1)
+        layer.borderWidth = 1
+        backgroundColor = .black
+        addSubview(imageView)
+        imageView.fillSuperview()
+
+        // layout label
+        addSubview(nameLabel)
+        nameLabel.numberOfLines = 0
+        nameLabel.anchor(top: nil, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 16, bottom: 16, right: 16))
+        nameLabel.text = ""
+        nameLabel.textColor = #colorLiteral(red: 0.7909700138, green: 0.8583178344, blue: 1, alpha: 1)
+        nameLabel.layer.zPosition = 1
+        
     }
     
     // default view encoder
     required init?(coder aDecoder: NSCoder) {
         fatalError()
     }
-
-} 
+}

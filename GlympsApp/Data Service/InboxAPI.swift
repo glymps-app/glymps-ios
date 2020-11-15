@@ -12,6 +12,7 @@ import FirebaseAuth
 import FirebaseDatabase
 import FirebaseStorage
 import FirebaseAnalytics
+import Amplitude_iOS
 
 // an API for inbox activities
 class InboxAPI {
@@ -19,14 +20,14 @@ class InboxAPI {
     // save message requests to Firebase
     func saveRequest(uid: String) {
         Database.database().reference().child("messageRequests").child(uid).updateChildValues([API.User.CURRENT_USER!.uid:1])
-        
+        self.logAmplitudeRequestEvent(userId: uid)
     }
     
     // save matches to Firebase
     func saveMatch(uid: String) {
         Database.database().reference().child("matches").child(API.User.CURRENT_USER!.uid).updateChildValues([uid:1])
         Database.database().reference().child("matches").child(uid).updateChildValues([API.User.CURRENT_USER!.uid:1])
-
+        self.logAmplitudeMatchEvent(userId: uid)
     }
     
     // block current user from seeing another User's profile for 24 hours
@@ -239,6 +240,44 @@ class InboxAPI {
                     }
                 }
             }
+        }
+    }
+    
+    func logAmplitudeRequestEvent(userId: String) {
+        API.User.observeUsers(withId: userId) { (user) in
+            var requestEventProperties: [AnyHashable : Any] = [:]
+            requestEventProperties.updateValue(user.email as Any, forKey: "Email")
+            requestEventProperties.updateValue(user.age as Any, forKey: "Age")
+            requestEventProperties.updateValue(user.profession as Any, forKey: "Profession")
+            requestEventProperties.updateValue(user.company as Any, forKey: "Company")
+            requestEventProperties.updateValue(user.name as Any, forKey: "Name")
+            requestEventProperties.updateValue(user.gender as Any, forKey: "Gender")
+            requestEventProperties.updateValue(user.id as Any, forKey: "User ID")
+            requestEventProperties.updateValue(user.coins as Any, forKey: "Number of Glymps Coins")
+            requestEventProperties.updateValue(user.isPremium as Any, forKey: "Subscription Status")
+            requestEventProperties.updateValue(user.minAge as Any, forKey: "Minimum Preferred Age")
+            requestEventProperties.updateValue(user.maxAge as Any, forKey: "Maximum Preferred Age")
+            requestEventProperties.updateValue(user.preferedGender as Any, forKey: "Preferred Gender")
+            Amplitude.instance().logEvent("Request", withEventProperties: requestEventProperties)
+        }
+    }
+    
+    func logAmplitudeMatchEvent(userId: String) {
+        API.User.observeUsers(withId: userId) { (user) in
+            var matchEventProperties: [AnyHashable : Any] = [:]
+            matchEventProperties.updateValue(user.email as Any, forKey: "Email")
+            matchEventProperties.updateValue(user.age as Any, forKey: "Age")
+            matchEventProperties.updateValue(user.profession as Any, forKey: "Profession")
+            matchEventProperties.updateValue(user.company as Any, forKey: "Company")
+            matchEventProperties.updateValue(user.name as Any, forKey: "Name")
+            matchEventProperties.updateValue(user.gender as Any, forKey: "Gender")
+            matchEventProperties.updateValue(user.id as Any, forKey: "User ID")
+            matchEventProperties.updateValue(user.coins as Any, forKey: "Number of Glymps Coins")
+            matchEventProperties.updateValue(user.isPremium as Any, forKey: "Subscription Status")
+            matchEventProperties.updateValue(user.minAge as Any, forKey: "Minimum Preferred Age")
+            matchEventProperties.updateValue(user.maxAge as Any, forKey: "Maximum Preferred Age")
+            matchEventProperties.updateValue(user.preferedGender as Any, forKey: "Preferred Gender")
+            Amplitude.instance().logEvent("Match", withEventProperties: matchEventProperties)
         }
     }
     

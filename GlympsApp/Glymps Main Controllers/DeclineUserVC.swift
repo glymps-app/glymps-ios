@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Amplitude_iOS
 
 // popover for current user to block another user and go into "ghost mode", where they disappear out of the other user's view immediately, and for the next 24 hours
 class DeclineUserVC: UIViewController {
@@ -34,6 +35,8 @@ class DeclineUserVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.logAmplitudeBlockUserViewEvent()
+        
         dropView.dropShadow(color: .darkGray, opacity: 1, offSet: CGSize(width: -1, height: 1), radius: 20, scale: true)
 
         usernameLabel.text = ""
@@ -50,7 +53,7 @@ class DeclineUserVC: UIViewController {
     // decline and block other user for 24 hours, and remove them as request, match as accordingly, also remove any existing conversations
     func declineUser() {
         API.Inbox.blockUser(uid: self.userId!)
-        
+        self.logAmplitudeCardBlockEvent(userId: self.userId!)
         dismiss(animated: true, completion: nil)
         if let d = self.deckVC as? DeckVC {
             // TODO: reload and refresh card deck below
@@ -71,6 +74,30 @@ class DeclineUserVC: UIViewController {
                 self.tabBarController?.selectedIndex = 2
             })
         }
+    }
+    
+    func logAmplitudeCardBlockEvent(userId: String) {
+        API.User.observeUsers(withId: userId) { (user) in
+            var userBlockedEventProperties: [AnyHashable : Any] = [:]
+            userBlockedEventProperties.updateValue(user.email as Any, forKey: "Email")
+            userBlockedEventProperties.updateValue(user.age as Any, forKey: "Age")
+            userBlockedEventProperties.updateValue(user.profession as Any, forKey: "Profession")
+            userBlockedEventProperties.updateValue(user.company as Any, forKey: "Company")
+            userBlockedEventProperties.updateValue(user.name as Any, forKey: "Name")
+            userBlockedEventProperties.updateValue(user.gender as Any, forKey: "Gender")
+            userBlockedEventProperties.updateValue(user.id as Any, forKey: "User ID")
+            userBlockedEventProperties.updateValue(user.coins as Any, forKey: "Number of Glymps Coins")
+            userBlockedEventProperties.updateValue(user.isPremium as Any, forKey: "Subscription Status")
+            userBlockedEventProperties.updateValue(user.minAge as Any, forKey: "Minimum Preferred Age")
+            userBlockedEventProperties.updateValue(user.maxAge as Any, forKey: "Maximum Preferred Age")
+            userBlockedEventProperties.updateValue(user.preferedGender as Any, forKey: "Preferred Gender")
+            userBlockedEventProperties.updateValue("DeclineUser VC", forKey: "Origin Screen")
+            Amplitude.instance().logEvent("User Blocked", withEventProperties: userBlockedEventProperties)
+        }
+    }
+    
+    func logAmplitudeBlockUserViewEvent() {
+        Amplitude.instance().logEvent("Block User View")
     }
     
     // decline and block other user for 24 hours, and remove them as request, match as accordingly, also remove any existing conversations

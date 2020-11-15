@@ -16,6 +16,7 @@ import FirebaseStorage
 import FirebaseAnalytics
 import LBTATools
 import PushNotifications
+import Amplitude_iOS
 
 // chat screen for current user to message another user
 class ChatVC: UIViewController {
@@ -110,6 +111,8 @@ class ChatVC: UIViewController {
                 self.tableView.scrollToRow(at: IndexPath.init(row: self.messages.count - 1, section: 0), at: .none, animated: true)
             }
         })
+        
+        self.logAmplitudeChatViewEvent()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -437,7 +440,7 @@ class ChatVC: UIViewController {
     
     // send new request to message push notification
     func sendRequestNotification(message: String) {
-        
+        self.logAmplitudeRequestNotificationEvent()
         UserDefaults.standard.set(true, forKey: "\(self.userId!):request")
         
         // send Pusher Notification for Message Request
@@ -447,7 +450,7 @@ class ChatVC: UIViewController {
     
     // send new match push notification
     func sendMatchNotification(message: String) {
-        
+        self.logAmplitudeMatchNotificationEvent()
         UserDefaults.standard.set(true, forKey: "\(self.userId!):match")
         
         // send Pusher Notification for Match
@@ -457,7 +460,8 @@ class ChatVC: UIViewController {
     
     // send new message push notification
     func sendMessageNotification(message: String) {
-        
+        self.logAmplitudeMessageNotificationEvent()
+        self.logAmplitudeTextMessageEvent()
         // send Pusher Notification for Messages
         messageUser(toUser: self.userId!, message: message)
         
@@ -466,6 +470,7 @@ class ChatVC: UIViewController {
     
     // send a notification
     func messageUser(toUser: String, message: String) {
+        self.logAmplitudeNotificationEvent()
         let notificationsURL = URL(string: "https://glymps-pusher-notifications.herokuapp.com/pusher/send-message")!
         var request = URLRequest(url: notificationsURL)
         request.httpBody = "user_id=\(toUser)&content=\(message)".data(using: String.Encoding.utf8)
@@ -479,6 +484,34 @@ class ChatVC: UIViewController {
                 print("Success!")
             }
             }.resume()
+    }
+    
+    func logAmplitudeTextMessageEvent() {
+        Amplitude.instance().logEvent("Text Message")
+    }
+    
+    func logAmplitudeRequestNotificationEvent() {
+        Amplitude.instance().logEvent("Request Notification")
+    }
+    
+    func logAmplitudeMatchNotificationEvent() {
+        Amplitude.instance().logEvent("Match Notification")
+    }
+    
+    func logAmplitudeMessageNotificationEvent() {
+        Amplitude.instance().logEvent("Message Notification")
+    }
+    
+    func logAmplitudeNotificationEvent() {
+        Amplitude.instance().logEvent("Notification")
+    }
+    
+    func logAmplitudeChatViewEvent() {
+        API.User.observeCurrentUser { (user) in
+            var chatViewEventProperties: [AnyHashable : Any] = [:]
+            chatViewEventProperties.updateValue(self.messages.count as Any, forKey: "Number of Messages")
+            Amplitude.instance().logEvent("Chat Viewed", withEventProperties: chatViewEventProperties)
+        }
     }
     
 }

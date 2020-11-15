@@ -16,6 +16,9 @@ import FirebaseFunctions
 import Mapbox
 import CoreLocation
 import GeoFire
+import SmaatoSDKCore
+import SmaatoSDKBanner
+import Amplitude_iOS
 
 // heat map so current user can find concentrations of nearby users
 class MapVC: UIViewController, MGLMapViewDelegate {
@@ -25,6 +28,8 @@ class MapVC: UIViewController, MGLMapViewDelegate {
     @IBOutlet weak var mapView: MGLMapView!
     
     @IBOutlet weak var dismissBtn: UIButton!
+    
+    @IBOutlet weak var bannerView: SMABannerView!
 
     var heatmapLoaded = false
     var locations: [CLLocationCoordinate2D] = []
@@ -37,14 +42,30 @@ class MapVC: UIViewController, MGLMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.logAmplitudeUserNearbyMapViewEvent()
+        
         configureLocationManager()
 
         navBar.setupShadow(opacity: 0.2, radius: 8, offset: .init(width: 0, height: 10), color: .init(white: 0, alpha: 0.3))
         
+        mapView.userTrackingMode = .follow
         mapView.delegate = self
         mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         mapView.showsUserLocation = true
         mapView.setUserTrackingMode(.follow, animated: true, completionHandler: nil)
+        
+        // set banner view events delegate (Google AdMob)
+        bannerView.delegate = self
+        
+        // load ads
+        loadAds()
+    }
+    
+    // setup banner ad
+    func loadAds() {
+        bannerView.autoreloadInterval = .short
+        bannerView.delegate = self
+        bannerView.load(withAdSpaceId: "130626424", adSize: .xxLarge_320x50)
     }
     
     // setup location manager
@@ -196,6 +217,10 @@ class MapVC: UIViewController, MGLMapViewDelegate {
             }
         }
     }
+    
+    func logAmplitudeUserNearbyMapViewEvent() {
+        Amplitude.instance().logEvent("User Nearby Map View")
+    }
 }
 
 // check on authorization status for location manager
@@ -218,6 +243,28 @@ extension MapVC: CLLocationManagerDelegate {
 
         getHeatmapData(lat: location.coordinate.latitude.magnitude, long: location.coordinate.longitude.magnitude)
     }
+}
+
+extension MapVC: SMABannerViewDelegate {
+   // return presenting view controller to display Ad contents modally, e.g. in internal WebBrowser
+   func presentingViewController(for bannerView: SMABannerView) -> UIViewController {
+        return self
+   }
+   
+   // check if banner loaded successfully
+   func bannerViewDidLoad(_ bannerView: SMABannerView) {
+        print("Banner has loaded successfully!")
+   }
+    
+   // check if banner failed to load
+   func bannerView(_ bannerView: SMABannerView, didFailWithError error: Error) {
+        print("Banner failed to load with error: \(error.localizedDescription)")
+   }
+ 
+   // notification callback: ads TTL has expired
+   func bannerViewDidTTLExpire(_ bannerView: SMABannerView) {
+        print("Banner TTL has expired. You should load new one")
+   }
 }
 
 extension Array {

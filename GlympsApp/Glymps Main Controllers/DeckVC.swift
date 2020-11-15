@@ -20,6 +20,9 @@ import Purchases
 import CoreLocation
 import GeoFire
 import PushNotifications
+import SmaatoSDKCore
+import SmaatoSDKNative
+import Amplitude_iOS
 
 class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfoDelegate {
     
@@ -28,8 +31,6 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
     @IBOutlet weak var refreshUsersImage: UIImageView!
     
     @IBOutlet weak var noUsersView: UIView! // image if no nearby users found
-    
-    // Put Smaato Banner View Here
 
     @IBOutlet weak var cardsDeckView: UpSwipableCarousel!
     
@@ -38,6 +39,10 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
     @IBOutlet weak var nearbyUserCountLabel: UILabel!
     
     @IBOutlet weak var headerView: UIView!
+    
+    private var nativeAd: SMANativeAd?
+    
+    private var nativeView: NativeAdCardView?
 
     var users: [User] = []
     
@@ -53,9 +58,7 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
     
     var ghostModeUsers: [String] = []
     
-    var cardViews: [DeckCardView] = []
-    
-    //var bannerAds: [SMABannerView] = []
+    var cardViews: [UIView] = []
     
     var userId: String?
     
@@ -72,15 +75,16 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
     var geoFireRef: DatabaseReference!
     let manager = CLLocationManager()
     var myQuery: GFQuery!
-    var queryHandle: DatabaseHandle?
     let authAPI = AuthAPI(user: Auth.auth().currentUser!)
     lazy var deckService = DeckService(authAPI: authAPI)
+    var queryHandle: DatabaseHandle?
     let connectionGroup = ConnectionGroup()
     
     var currentUserReferredBy: String = ""
     
     override func awakeFromNib() {
         super.awakeFromNib()
+
         setupCurrentUser()
         loadRequests()
         loadMatches()
@@ -151,9 +155,6 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
         (cardsDeckView.value(forKey: "contentView") as! UIView).addGestureRecognizer(deleteGestureRecognizer)
         deleteGestureRecognizer.accessibilityLabel = "foo"
         deleteGestureRecognizer.delegate = cardsDeckView
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-//            self.setupAds()
-//        }
 
         self.view.bringSubviewToFront(refreshUsersBtn)
         self.view.bringSubviewToFront(refreshUsersImage)
@@ -167,6 +168,7 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
         }
 
         viewDidLayoutSubviews()
+        self.logAmplitudeDeckViewEvent()
     }
     
     override func viewDidLayoutSubviews() {
@@ -186,6 +188,14 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
         API.User.observeCurrentUser { (user) in
             self.currentUser = user
             self.currentUsername = user.name ?? ""
+            SmaatoSDK.userAge = user.age as NSNumber?
+            if user.gender == "Male" {
+                SmaatoSDK.userGender = .male
+            } else if user.gender == "Female" {
+                SmaatoSDK.userGender = .female
+            } else {
+                SmaatoSDK.userGender = .unknown
+            }
         }
     }
     
@@ -235,13 +245,6 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
         
     }
     
-    
-//    // add Smaato ad to Advertiser View
-//    func addBannerViewToView(_ bannerView: SMABannerView) {
-//        bannerView.translatesAutoresizingMaskIntoConstraints = false
-//        bannerAds.append(bannerView)
-//    }
-    
     // check if current user is a Glymps Premium user
     func checkIfPremium() {
 
@@ -289,21 +292,21 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
 
     }
     
-//    // setup mobile ads from Smaato
-//    func setupAds() {
-//        let bV = SMABannerView()
-//        bV.autoreloadInterval = .veryShort
-//        bV.delegate = self
-//        bV.load(withAdSpaceId: "0", adSize: .mediumRectangle_300x250)
-//        self.bannerView = bV
-//        self.bannerView?.fillSuperview()
-//        if let bV = bannerView {
-//            bannerAds.append(bV)
-//        } else {
-//            print("Banner view is nil.")
-//        }
-//        //setupBannerAdCards()
-//    }
+    // setup native ads
+    func setupAds() {
+        if self.users.count >= 3 {
+            for _ in 0...self.users.count {
+                guard let adRequest = SMANativeAdRequest(adSpaceId:"130783664") else {
+                    return
+                }
+                nativeAd = SMANativeAd()
+                adRequest.allowMultipleImages = false
+                adRequest.returnUrlsForImageAssets = false
+                nativeAd?.delegate = self
+                nativeAd?.load(with: adRequest)
+            }
+        }
+    }
 
     func observeDeck() {
         deckService.observeDeck { [weak self] deck in
@@ -351,12 +354,14 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
                 }
                 
                 strongSelf.hud.dismiss()
+                strongSelf.setupAds()
                 strongSelf.updateDeckAndRefreshButtonState()
             }
         }.add(to: connectionGroup)
     }
 
     func updateDeckAndRefreshButtonState() {
+        
         if users.isEmpty {
             users = cachedUsers
             cachedUsers = []
@@ -371,6 +376,7 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
         refreshUsersBtn.isEnabled = !cachedUsers.isEmpty
 
         noUsersView.isHidden = !users.isEmpty
+        
     }
     
     func cachedDeckMatchesCurrentDeck() -> Bool {
@@ -457,8 +463,8 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
     
     // go to user details screen
     @objc func moreInfoTapped(sender: UIButton) {
-        let data = cardViews[sender.tag].userId
-        let cv = cardViews[sender.tag]
+        let cardView = cardViews[sender.tag] as? DeckCardView
+        let data = cardView?.userId
         let userDetailsController = UserDetailsVC()
         userDetailsController.userId = data
 //        userDetailsController.cardView = cv
@@ -498,7 +504,9 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
         cardViews = []
         indexForCards = 0
 
-        nearbyUserCountLabel.text = "\(users.count)"
+        if !users.isEmpty {
+            nearbyUserCountLabel.text = "\(users.count)"
+        }
 
         for user in users {
             let cardView = DeckCardView.loadFromNib()
@@ -641,6 +649,9 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
     func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: UIView?) -> UIView {
         let card = cardViews[index]
         card.frame = cardsDeckView.bounds.insetBy(dx: 32, dy: 0)
+        if (index != 0) && (index % 3 == 0) {
+            return card as! NativeAdCardView
+        }
         return card
     }
 
@@ -679,9 +690,9 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
 
     func blockCurrentCard() {
         let index = cardsDeckView.currentItemIndex
-        let card = cardViews[index]
-
-        guard let uid = card.userId else { return }
+        let card = cardViews[index] as? DeckCardView
+        self.logAmplitudeCardBlockEvent(userId: (card?.user?.id)!)
+        guard let uid = card?.userId else { return }
 
         cardViews.remove(at: index)
         users = users.filter { $0.id != uid }
@@ -694,49 +705,56 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
     
     func blockFromOtherVC() {
         let index = cardsDeckView.currentItemIndex
-        let card = cardViews[index]
-
-        guard let uid = card.userId else { return }
+        let card = cardViews[index] as? DeckCardView
+        self.logAmplitudeCardBlockEvent(userId: (card?.user?.id)!)
+        guard let uid = card?.userId else { return }
 
         cardViews.remove(at: index)
         users = users.filter { $0.id != uid }
         cachedUsers = cachedUsers.filter { $0.id != uid }
         cardsDeckView.removeItem(at: index, animated: true)
-
+        
         updateDeckAndRefreshButtonState()
     }
-
-    // setup mobile ad cards
-//    func setupBannerAdCards() {
-//
-//        API.User.observeCurrentUser { (user) in
-//            if user.isPremium == false {
-//                //self.callWhenYouNeedInterstitial()
-//                for banner in self.bannerAds {
-//                    let advertiserView = AdvertiserView(frame: .zero)
-//                    print("BANNER: \(banner)")
-//                    advertiserView.addSubview(banner)
-//                    advertiserView.bannerView = banner
-//                    banner.anchor(top: advertiserView.topAnchor, leading: advertiserView.leadingAnchor, bottom: advertiserView.bottomAnchor, trailing: advertiserView.trailingAnchor)
-//                    advertiserView.fillSuperview()
-//
-//                    //self.cardsDeckView?.appendContent(view: advertiserView)
-//                }
-//                print("Banners: \(self.bannerAds.count)")
-//            }
-//        }
-//        self.noUsersView.isHidden = true
-//    }
-    
-//    func callWhenYouNeedInterstitial() {
-//        SmaatoSDK.loadInterstitial(forAdSpaceId: "0",                                                     delegate: self)
-//    }
     
     // go to heat map to find concentrations of nearby users
     @objc func handleMap() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let mapVC = storyboard.instantiateViewController(withIdentifier: "MapVC") as! MapVC
         self.present(mapVC, animated: true, completion: nil)
+    }
+    
+    func logAmplitudeDeckViewEvent() {
+        API.User.observeCurrentUser { (user) in
+            var deckViewEventProperties: [AnyHashable : Any] = [:]
+            deckViewEventProperties.updateValue(self.cardViews.count as Any, forKey: "Number of Users")
+            deckViewEventProperties.updateValue(self.requests.count, forKey: "Number of Requests")
+            deckViewEventProperties.updateValue(self.matches.count, forKey: "Number of Matches")
+            deckViewEventProperties.updateValue(self.blockedUsers.count, forKey: "Number of Blocked Users")
+            deckViewEventProperties.updateValue(self.cachedUsers.count, forKey: "Number of Cached Users")
+            deckViewEventProperties.updateValue(self.ghostModeUsers.count, forKey: "Number of Users in Ghost Mode")
+            Amplitude.instance().logEvent("Deck Viewed", withEventProperties: deckViewEventProperties)
+        }
+    }
+    
+    func logAmplitudeCardBlockEvent(userId: String) {
+        API.User.observeUsers(withId: userId) { (user) in
+            var userBlockedEventProperties: [AnyHashable : Any] = [:]
+            userBlockedEventProperties.updateValue(user.email as Any, forKey: "Email")
+            userBlockedEventProperties.updateValue(user.age as Any, forKey: "Age")
+            userBlockedEventProperties.updateValue(user.profession as Any, forKey: "Profession")
+            userBlockedEventProperties.updateValue(user.company as Any, forKey: "Company")
+            userBlockedEventProperties.updateValue(user.name as Any, forKey: "Name")
+            userBlockedEventProperties.updateValue(user.gender as Any, forKey: "Gender")
+            userBlockedEventProperties.updateValue(user.id as Any, forKey: "User ID")
+            userBlockedEventProperties.updateValue(user.coins as Any, forKey: "Number of Glymps Coins")
+            userBlockedEventProperties.updateValue(user.isPremium as Any, forKey: "Subscription Status")
+            userBlockedEventProperties.updateValue(user.minAge as Any, forKey: "Minimum Preferred Age")
+            userBlockedEventProperties.updateValue(user.maxAge as Any, forKey: "Maximum Preferred Age")
+            userBlockedEventProperties.updateValue(user.preferedGender as Any, forKey: "Preferred Gender")
+            userBlockedEventProperties.updateValue("Deck VC", forKey: "Origin Screen")
+            Amplitude.instance().logEvent("User Blocked", withEventProperties: userBlockedEventProperties)
+        }
     }
     
     
@@ -781,35 +799,53 @@ extension DeckVC: CLLocationManagerDelegate {
     
 }
 
-//extension DeckVC: SMABannerViewDelegate {
-//
-//    func presentingViewController(for bannerView: SMABannerView) -> UIViewController {
-//        return self
-//    }
-//
-//    func bannerViewDidTTLExpire(_ bannerView: SMABannerView) {
-//        print("TTL Expired.")
-//    }
-//
-//}
+// Extension for Smaato Native Ads
+extension DeckVC: SMANativeAdDelegate {
 
-//extension DeckVC: SMAInterstitialDelegate {
-//    // Interstitial did successfully loaded
-//    func interstitialDidLoad(_ interstitialResponse: SMAInterstitial) {
-//        self.interstitial = interstitialResponse
-//        interstitialResponse.show(from: self)
-//    }
-//
-//    // Interstitial did fail loading
-//    func interstitial(_ interstitial: SMAInterstitial?, didFailWithError error: Error) {
-//        print("Interstitial did fail loading with error: \(error.localizedDescription)")
-//    }
-//
-//    // Interstitial ads TTL has expired
-//    func interstitialDidTTLExpire(_ interstitial: SMAInterstitial) {
-//        print("Interstitial TTL has expired")
-//    }
-//}
+    // Sent when the native ad loads a creative successfully
+    func nativeAd(_ nativeAd: SMANativeAd, didLoadWith renderer: SMANativeAdRenderer) {
+        
+        nativeView = NativeAdCardView()
+        renderer.registerView(forImpression: nativeView!)
+        renderer.registerViews(forClickAction: [nativeView!.nameLabel, nativeView!.imageView])
+        let assets = renderer.nativeAssets
+        nativeView!.imageView.image = assets.images?.first?.image
+            
+        let titleTraits = [UIFontDescriptor.TraitKey.weight: UIFont.Weight.semibold]
+        var titleFontDescriptor = UIFontDescriptor(fontAttributes: [UIFontDescriptor.AttributeName.family: "Avenir Next"])
+        titleFontDescriptor = titleFontDescriptor.addingAttributes([UIFontDescriptor.AttributeName.traits: titleTraits])
+            
+        let descriptionTraits = [UIFontDescriptor.TraitKey.weight: UIFont.Weight.light]
+        var descriptionFontDescriptor = UIFontDescriptor(fontAttributes: [UIFontDescriptor.AttributeName.family: "Avenir Next"])
+        descriptionFontDescriptor = descriptionFontDescriptor.addingAttributes([UIFontDescriptor.AttributeName.traits: descriptionTraits])
+            
+        let attributedText = NSMutableAttributedString(string: assets.title!, attributes: [.font: UIFont(descriptor: titleFontDescriptor, size: 30)])
+        attributedText.append(NSAttributedString(string: "\n\(assets.mainText ?? "")", attributes: [.font: UIFont(descriptor: descriptionFontDescriptor, size: 20)]))
+        nativeView!.nameLabel.attributedText = attributedText
+        
+        print("\(nativeAd) loaded successfully")
+        self.cardViews.append(nativeView!)
+        print("Card Views: \(self.cardViews.count)")
+        self.noUsersView.isHidden = true
+        self.cardsDeckView.reloadData()
+        
+    }
+ 
+    // Sent when the native ad fails to load an ad successfully
+    func nativeAd(_ nativeAd: SMANativeAd, didFailWithError error: Error) {
+        print("\(nativeAd) failed with error: \(error)")
+    }
+    
+    // A view controller that will be used to present modal view controllers
+    func presentingViewController(for nativeAd: SMANativeAd) -> UIViewController {
+        return self
+    }
+ 
+    // Sent when TTL has expired, based on the timestamp from the ad header
+    func nativeAdDidTTLExpire(_ nativeAd: SMANativeAd) {
+        print("\(nativeAd) TTL has expired. Please load a new one. Tip: show Native before expiration for the best fill rate (you have about 5 minutes after loading completion).")
+    }
+}
 
 // default encoder
 extension NSCoder {

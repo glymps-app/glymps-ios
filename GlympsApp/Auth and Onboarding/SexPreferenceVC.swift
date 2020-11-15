@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Amplitude_iOS
 
 class SexPreferenceVC: UIViewController {
     
@@ -161,6 +162,7 @@ class SexPreferenceVC: UIViewController {
     
     @IBAction func nextBtnWasPressed(_ sender: Any) {
         if !chosenGenderPreference.isEmpty {
+            self.logAmplitudeOnboardingStepEightOfNineCompleteSexualPreferenceEvent()
             let storyboard = UIStoryboard(name: "Welcome", bundle: nil)
             let profileImageVC = storyboard.instantiateViewController(withIdentifier: "ProfileImageVC") as! ProfileImageVC
             profileImageVC.userEmail = userEmail
@@ -176,5 +178,8 @@ class SexPreferenceVC: UIViewController {
         }
     }
     
+    func logAmplitudeOnboardingStepEightOfNineCompleteSexualPreferenceEvent() {
+        Amplitude.instance().logEvent("Onboarding Step 8/9 Complete (Sexual Preference)")
+    }
 
 }

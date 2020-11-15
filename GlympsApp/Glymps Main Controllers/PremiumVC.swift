@@ -8,6 +8,7 @@
 
 import UIKit
 import Purchases
+import Amplitude_iOS
 
 // upsell screen for current user to subscribe and become a Glymps Premium user :)
 class PremiumVC: UIViewController {
@@ -403,25 +404,37 @@ class PremiumVC: UIViewController {
         // dismiss payment view and payment option view
         
         if chosenPayment[0] == "1 Month USD" {
+            self.logAmplitudeGlympsPremiumOneMonthUSDPurchasedEvent()
+            self.logAmplitudeGlympsPremiumPurchasedEvent()
             buyGlympsMonthly()
         } else if chosenPayment[0] == "6 Month USD" {
+            self.logAmplitudeGlympsPremiumSixMonthUSDPurchasedEvent()
+            self.logAmplitudeGlympsPremiumPurchasedEvent()
             buyGlympsSemiAnnual()
         } else if chosenPayment[0] == "12 Month USD" {
+            self.logAmplitudeGlympsPremiumOneYearUSDPurchasedEvent()
+            self.logAmplitudeGlympsPremiumPurchasedEvent()
             buyGlympsYearly()
         } else if chosenPayment[0] == "1 Month COIN" {
             if self.currentUserCoins! >= 13 {
+                self.logAmplitudeGlympsPremiumOneMonthCoinPurchasedEvent()
+                self.logAmplitudeGlympsPremiumPurchasedEvent()
                 buyGlympsMonthlyCoin()
             } else {
                 showInsufficientCoinsToast(controller: self, requiredCoins: 13)
             }
         } else if chosenPayment[0] == "6 Month COIN" {
             if self.currentUserCoins! >= 37 {
+                self.logAmplitudeGlympsPremiumSixMonthCoinPurchasedEvent()
+                self.logAmplitudeGlympsPremiumPurchasedEvent()
                 buyGlympsSemiAnnualCoin()
             } else {
                 showInsufficientCoinsToast(controller: self, requiredCoins: 37)
             }
         } else if chosenPayment[0] == "12 Month COIN" {
             if self.currentUserCoins! >= 83 {
+                self.logAmplitudeGlympsPremiumOneYearCoinPurchasedEvent()
+                self.logAmplitudeGlympsPremiumPurchasedEvent()
                 buyGlympsYearlyCoin()
             } else {
                 showInsufficientCoinsToast(controller: self, requiredCoins: 83)
@@ -463,6 +476,34 @@ class PremiumVC: UIViewController {
                 self.dismiss(animated: true, completion: nil)
             }
         }
+    }
+    
+    func logAmplitudeGlympsPremiumOneMonthUSDPurchasedEvent() {
+        Amplitude.instance().logEvent("Glymps Premium 1 Month USD Purchased")
+    }
+    
+    func logAmplitudeGlympsPremiumSixMonthUSDPurchasedEvent() {
+        Amplitude.instance().logEvent("Glymps Premium 6 Month USD Purchased")
+    }
+    
+    func logAmplitudeGlympsPremiumOneYearUSDPurchasedEvent() {
+        Amplitude.instance().logEvent("Glymps Premium 1 Year USD Purchased")
+    }
+    
+    func logAmplitudeGlympsPremiumOneMonthCoinPurchasedEvent() {
+        Amplitude.instance().logEvent("Glymps Premium 1 Month Coin Purchased")
+    }
+    
+    func logAmplitudeGlympsPremiumSixMonthCoinPurchasedEvent() {
+        Amplitude.instance().logEvent("Glymps Premium 6 Month Coin Purchased")
+    }
+    
+    func logAmplitudeGlympsPremiumOneYearCoinPurchasedEvent() {
+        Amplitude.instance().logEvent("Glymps Premium 1 Year Coin Purchased")
+    }
+    
+    func logAmplitudeGlympsPremiumPurchasedEvent() {
+        Amplitude.instance().logEvent("Glymps Premium Purchased")
     }
     
     

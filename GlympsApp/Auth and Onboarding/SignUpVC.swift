@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Amplitude_iOS
 
 // view controller to initiate sign-up of new Glymps user!
 class SignUpVC: UIViewController {
@@ -48,6 +49,9 @@ class SignUpVC: UIViewController {
         self.present(termsOfServiceVC, animated: true, completion: nil)
     }
     
+    func logAmplitudeOnboardingCanceledEvent() {
+        Amplitude.instance().logEvent("Onboarding Canceled")
+    }
     
 
 

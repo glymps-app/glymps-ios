@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Amplitude_iOS
 
 class JobVC: UIViewController {
     
@@ -74,6 +75,7 @@ class JobVC: UIViewController {
     
     @IBAction func nextBtnWasPressed(_ sender: Any) {
         if professionTextfield.text != "" && companyTextfield.text != "" {
+            self.logAmplitudeOnboardingStepFiveOfNineCompleteJobEvent()
             let storyboard = UIStoryboard(name: "Welcome", bundle: nil)
             let birthdayVC = storyboard.instantiateViewController(withIdentifier: "BirthdayVC") as! BirthdayVC
             birthdayVC.userEmail = userEmail
@@ -84,6 +86,10 @@ class JobVC: UIViewController {
             birthdayVC.userCompany = companyTextfield.text!
             self.navigationController?.pushViewController(birthdayVC, animated: true)
         }
+    }
+    
+    func logAmplitudeOnboardingStepFiveOfNineCompleteJobEvent() {
+        Amplitude.instance().logEvent("Onboarding Step 5/9 Complete (Job)")
     }
 }
 

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Amplitude_iOS
 
 // view controller to set up new user password during onboarding
 class PasswordVC: UIViewController {
@@ -69,12 +70,17 @@ class PasswordVC: UIViewController {
     // move to next view controller
     @IBAction func nextBtnWasPressed(_ sender: Any) {
         if passwordTextfield.text != "" {
+            self.logAmplitudeOnboardingStepTwoOfNineCompletePasswordEvent()
             let storyboard = UIStoryboard(name: "Welcome", bundle: nil)
             let nameVC = storyboard.instantiateViewController(withIdentifier: "NameVC") as! NameVC
             nameVC.userEmail = userEmail
             nameVC.userPassword = passwordTextfield.text!
             self.navigationController?.pushViewController(nameVC, animated: true)
         }
+    }
+    
+    func logAmplitudeOnboardingStepTwoOfNineCompletePasswordEvent() {
+        Amplitude.instance().logEvent("Onboarding Step 2/9 Complete (Password)")
     }
     
 }

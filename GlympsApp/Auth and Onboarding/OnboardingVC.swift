@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Amplitude_iOS
 
 // walkthrough for new Glymps users :)
 class OnboardingVC: UIPageViewController, UIPageViewControllerDataSource {
@@ -26,6 +27,8 @@ In order to get potential matches in your deck, to get messaged by others, and t
     // setup UI
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.logAmplitudeIntroStartEvent()
 
         //dataSource = self
         
@@ -74,4 +77,7 @@ In order to get potential matches in your deck, to get messaged by others, and t
         }
     } // function that scrolls to next page
 
+    func logAmplitudeIntroStartEvent() {
+        Amplitude.instance().logEvent("Intro Start")
+    }
 }

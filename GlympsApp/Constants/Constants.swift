@@ -14,5 +14,4 @@ import PushNotifications
 // Constants
 
 public var referringUser: String = ""
-
 public let beamsClient = PushNotifications.shared

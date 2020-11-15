@@ -32,7 +32,7 @@ class UserAPI {
 
     func observeCurrentUser(completion: @escaping (User) -> Void) { // observe and identify who app's current User is, and get userId + User object (model)
         guard let currentUser = Auth.auth().currentUser else {
-            assert(false, "current user is nil")
+            //assert(false, "current user is nil")
             return
         }
         REF_USERS.child(currentUser.uid).observeSingleEvent(of: .value, with: { snapshot in
@@ -41,11 +41,13 @@ class UserAPI {
                 if user.id! == API.User.CURRENT_USER?.uid {
                     completion(user)
                 }else{
-                    assert(false, "user id is nil")
+                    //assert(false, "user id is nil")
+                    return
                 }
             }else{
-                assert(false, "snapshot is not a dictionary")
+                //assert(false, "snapshot is not a dictionary")
                 //completion(nil)
+                return
             }
         })
     }

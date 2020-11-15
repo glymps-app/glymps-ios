@@ -8,6 +8,7 @@
 
 import UIKit
 import SDWebImage
+import Amplitude_iOS
 
 // screen for a user to view another user's info and learn more about them
 class UserDetailsVC: UIViewController, UIScrollViewDelegate {
@@ -104,6 +105,8 @@ class UserDetailsVC: UIViewController, UIScrollViewDelegate {
     // setup UI
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.logAmplitudeUserCardDetailsViewEvent()
         
         setupCurrentUser()
         
@@ -224,6 +227,8 @@ class UserDetailsVC: UIViewController, UIScrollViewDelegate {
         self.present(blockOptionsVC, animated: true, completion: nil)
     }
     
-
+    func logAmplitudeUserCardDetailsViewEvent() {
+        Amplitude.instance().logEvent("User Card Details View")
+    }
 
 }

@@ -9,6 +9,7 @@
 import UIKit
 import UserNotifications
 import CoreLocation
+import Amplitude_iOS
 
 // page for walkthrough controller for new Glymps users :)
 class OnboardingContentVC: UIViewController, UNUserNotificationCenterDelegate, UIApplicationDelegate {
@@ -93,6 +94,7 @@ class OnboardingContentVC: UIViewController, UNUserNotificationCenterDelegate, U
             let pageVC = parent as! OnboardingVC
             pageVC.forward(index: index)
         case 6:
+            self.logAmplitudeIntroEndEvent()
             let defaults = UserDefaults.standard
             defaults.set(true, forKey: "hasViewedWalkthrough")
             dismiss(animated: true, completion: nil)
@@ -131,6 +133,7 @@ class OnboardingContentVC: UIViewController, UNUserNotificationCenterDelegate, U
             }
         }
         
+        self.logAmplitudeNotificationsEnabledEvent()
     }
     
     // setup location manager and request authorization
@@ -156,11 +159,23 @@ class OnboardingContentVC: UIViewController, UNUserNotificationCenterDelegate, U
         
     }
     
+    func logAmplitudeLocationEnabledEvent() {
+        Amplitude.instance().logEvent("Location Enabled")
+    }
+    
+    func logAmplitudeNotificationsEnabledEvent() {
+        Amplitude.instance().logEvent("Notifications Enabled")
+    }
+    
+    func logAmplitudeIntroEndEvent() {
+        Amplitude.instance().logEvent("Intro End")
+    }
+    
     // authorize and enable location services (pretty necessary) for Glymps iOS
     @IBAction func enableLocationServicesBtnWasPressed(_ sender: Any) {
         
         configureLocationManager()
-        
+        self.logAmplitudeLocationEnabledEvent()
     }
 
 }
