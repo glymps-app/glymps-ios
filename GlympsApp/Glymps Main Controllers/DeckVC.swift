@@ -296,7 +296,7 @@ class DeckVC: UIViewController, iCarouselDataSource, iCarouselDelegate, MoreInfo
     func setupAds() {
         if self.users.count >= 3 {
             for _ in 0...self.users.count {
-                guard let adRequest = SMANativeAdRequest(adSpaceId:"130783664") else {
+                guard let adRequest = SMANativeAdRequest(adSpaceId:"131522463") else {
                     return
                 }
                 nativeAd = SMANativeAd()

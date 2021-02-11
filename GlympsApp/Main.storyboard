@@ -787,8 +787,8 @@
                                         <constraint firstAttribute="width" constant="70" id="Avj-4T-DGM"/>
                                     </constraints>
                                 </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version 1.9" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LKK-cN-DqM">
-                                    <rect key="frame" x="156.66666666666666" y="509.33333333333331" width="61.666666666666657" height="16.666666666666686"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version 1.10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LKK-cN-DqM">
+                                    <rect key="frame" x="153" y="509.33333333333331" width="69" height="16.666666666666686"/>
                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="12"/>
                                     <nil key="highlightedColor"/>
                                 </label>

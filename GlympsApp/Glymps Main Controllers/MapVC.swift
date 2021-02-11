@@ -65,7 +65,7 @@ class MapVC: UIViewController, MGLMapViewDelegate {
     func loadAds() {
         bannerView.autoreloadInterval = .short
         bannerView.delegate = self
-        bannerView.load(withAdSpaceId: "130626424", adSize: .xxLarge_320x50)
+        bannerView.load(withAdSpaceId: "131522462", adSize: .xxLarge_320x50)
     }
     
     // setup location manager

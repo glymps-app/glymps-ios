@@ -58,6 +58,8 @@
 	<string>Glymps allows you to take videos and share them with others.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Glymps allows you to choose photos and videos from your library and share them with others.</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>Glymps collects limited user and device data to show relevant advertisements and report product analytics to enhance your user experience.</string>
 	<key>SKAdNetworkItems</key>
 	<array>
 		<dict>
@@ -66,7 +68,7 @@
 		</dict>
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
-			<string>7UG5ZH24HU.skadnetwork</string>
+			<string>7ug5zh24hu.skadnetwork</string>
 		</dict>
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
@@ -74,7 +76,11 @@
 		</dict>
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
-			<string>KLF5C3L5U5.skadnetwork</string>
+			<string>3sh42y64q3.skadnetwork</string>
+		</dict>
+		<dict>
+			<key>SKAdNetworkIdentifier</key>
+			<string>klf5c3l5u5.skadnetwork</string>
 		</dict>
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
@@ -82,11 +88,7 @@
 		</dict>
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
-			<string>TL55SBB4FM.skadnetwork</string>
-		</dict>
-		<dict>
-			<key>SKAdNetworkIdentifier</key>
-			<string>YCLNXRL5PM.skadnetwork</string>
+			<string>yclnxrl5pm.skadnetwork</string>
 		</dict>
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
@@ -94,11 +96,11 @@
 		</dict>
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
-			<string>9RD848Q2BZ.skadnetwork</string>
+			<string>9rd848q2bz.skadnetwork</string>
 		</dict>
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
-			<string>KBD757YWX3.skadnetwork</string>
+			<string>kbd757ywx3.skadnetwork</string>
 		</dict>
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
@@ -106,11 +108,11 @@
 		</dict>
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
-			<string>4PFYVQ9L8R.skadnetwork</string>
+			<string>4pfyvq9l8r.skadnetwork</string>
 		</dict>
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
-			<string>2U9PT9HC89.skadnetwork</string>
+			<string>2u9pt9hc89.skadnetwork</string>
 		</dict>
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
@@ -122,7 +124,7 @@
 		</dict>
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
-			<string>CJ5566H2GA.skadnetwork</string>
+			<string>cj5566h2ga.skadnetwork</string>
 		</dict>
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
@@ -150,7 +152,7 @@
 		</dict>
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
-			<string>V72QYCH5UU.skadnetwork</string>
+			<string>v72qych5uu.skadnetwork</string>
 		</dict>
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
@@ -162,7 +164,7 @@
 		</dict>
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
-			<string>3RD42EKR43.skadnetwork</string>
+			<string>3rd42ekr43.skadnetwork</string>
 		</dict>
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
@@ -178,11 +180,11 @@
 		</dict>
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
-			<string>TL55SBB4FM.skadnetwork</string>
+			<string>tl55sbb4fm.skadnetwork</string>
 		</dict>
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
-			<string>F38H382JLK.skadnetwork</string>
+			<string>f38h382jlk.skadnetwork</string>
 		</dict>
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
@@ -206,7 +208,7 @@
 		</dict>
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
-			<string>M8DBW4SV7C.skadnetwork</string>
+			<string>m8dbw4sv7c.skadnetwork</string>
 		</dict>
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
@@ -215,6 +217,10 @@
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
 			<string>cg4yq2srnc.skadnetwork</string>
+		</dict>
+		<dict>
+			<key>SKAdNetworkIdentifier</key>
+			<string>g28c52eehv.skadnetwork</string>
 		</dict>
 	</array>
 	<key>UIBackgroundModes</key>

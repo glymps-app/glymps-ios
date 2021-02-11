@@ -43,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         Purchases.configure(withAPIKey: "EEQPqlAIaJUkdxWjqhkqvprTQmKSbHEZ", appUserID: nil)
         
         // Initialize the Smaato NextGen SDK
-        guard let config = SMAConfiguration(publisherId: "1100042525") else {
+        guard let config = SMAConfiguration(publisherId: "1100047851") else {
               fatalError("SDK config is nil!")
         }
         // allow HTTPS traffic only
@@ -57,7 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // allow the Smaato SDK to automatically get the user's location and put it inside the ad request
         SmaatoSDK.gpsEnabled = true
         
-        UserDefaults.standard.set("0", forKey: "IABTCF_gdprApplies")
+        UserDefaults.standard.set(0, forKey: "IABTCF_gdprApplies")
         saveCCPA(usPrivacy: "1YNN")
         
         // Override point for customization after application launch, initialize Firebase iOS SDK
@@ -82,12 +82,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         return true
     }
     
-    // save the user's consent
-    func saveCCPA(usPrivacy string: String?) {
+    // handle content based on user IP
+    private func configureRegs() {
+        
+        UserDefaults.standard.set(-1, forKey: "IABTCF_gdprApplies")
+        
+        let regHelper = RegulatoryHelper()
+        regHelper.isSubjectToGDPR()
+        regHelper.isSubjectToCCPA()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            let subjectToGDPR = isInEurope
+            let subjectToCCPA = isInCalifornia
+            if subjectToGDPR {
+                print("Current user is located in Europe and is subject to GDPR.")
+                UserDefaults.standard.set(1, forKey: "IABTCF_gdprApplies")
+            } else {
+                print("Current user is not located in Europe and is not subject to GDPR.")
+                UserDefaults.standard.set(0, forKey: "IABTCF_gdprApplies")
+            }
+            if subjectToCCPA {
+                print("Current user is located in California and is subject to CCPA.")
+                self.saveCCPA(usPrivacy: "1YNN")
+            } else {
+                print("Current user is not located in California and is not subject to CCPA.")
+                self.saveCCPA(usPrivacy: "1---")
+            }
+        }
+    }
+    
+    // save the user's CCPA consent
+    private func saveCCPA(usPrivacy string: String?) {
         guard let usString = string else {
             return
         }
-        UserDefaults.standard.set(usString, forKey: "IABUSPrivacy_String")
+        if UserDefaults.standard.value(forKey: "IABUSPrivacy_String") == nil {
+            UserDefaults.standard.set(usString, forKey: "IABUSPrivacy_String")
+        }
     }
     
     func goToMain() {

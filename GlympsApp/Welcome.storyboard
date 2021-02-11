@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="KIG-1N-5mJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="KIG-1N-5mJ">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -46,7 +47,7 @@
                                 <color key="textColor" red="0.087329114030000002" green="0.7221731267" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lfi-nF-WNa">
+                            <button hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lfi-nF-WNa">
                                 <rect key="frame" x="77" y="448" width="260" height="40"/>
                                 <color key="backgroundColor" red="0.087329114030000002" green="0.7221731267" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -66,7 +67,7 @@
                                     <action selector="enableNotificationsBtnWasPressed:" destination="scc-yq-uzf" eventType="touchUpInside" id="7fC-gY-0j7"/>
                                 </connections>
                             </button>
-                            <button hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zqp-9N-kga">
+                            <button hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zqp-9N-kga">
                                 <rect key="frame" x="77" y="448" width="260" height="40"/>
                                 <color key="backgroundColor" red="0.087329114030000002" green="0.7221731267" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -86,7 +87,7 @@
                                     <action selector="enableLocationServicesBtnWasPressed:" destination="scc-yq-uzf" eventType="touchUpInside" id="fSd-Ja-NmR"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PXA-67-HYz">
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PXA-67-HYz">
                                 <rect key="frame" x="107" y="797" width="200" height="40"/>
                                 <color key="backgroundColor" red="0.087329114030000002" green="0.7221731267" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -113,13 +114,38 @@
                                     <constraint firstAttribute="width" constant="40" id="pqj-Fl-r4u"/>
                                 </constraints>
                             </pageControl>
+                            <button hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b2K-tP-SpE">
+                                <rect key="frame" x="77" y="448" width="260" height="40"/>
+                                <color key="backgroundColor" red="0.087329114030000002" green="0.7221731267" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="87g-hO-IQV"/>
+                                    <constraint firstAttribute="width" constant="260" id="JuZ-vY-3YH"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="17"/>
+                                <state key="normal" title="IMPROVE MY EXPERIENCE">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="20"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="enableLocationServicesBtnWasPressed:" destination="scc-yq-uzf" eventType="touchUpInside" id="UQc-MQ-l9y"/>
+                                    <action selector="improveMyExperienceBtnWasPressed:" destination="scc-yq-uzf" eventType="touchUpInside" id="0oV-YR-hX7"/>
+                                </connections>
+                            </button>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="C7J-2g-MDT"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="b2K-tP-SpE" firstAttribute="bottom" secondItem="zqp-9N-kga" secondAttribute="bottom" id="G4A-bL-Q0k"/>
+                            <constraint firstItem="b2K-tP-SpE" firstAttribute="top" secondItem="zqp-9N-kga" secondAttribute="top" id="I3g-dm-2vc"/>
                             <constraint firstItem="Lfi-nF-WNa" firstAttribute="top" secondItem="ChO-lW-UeL" secondAttribute="bottom" id="JBl-MY-A0k"/>
                             <constraint firstItem="7hh-Gf-Pfr" firstAttribute="top" secondItem="p4s-YM-RkF" secondAttribute="bottom" constant="23" id="LDG-4T-U5U"/>
                             <constraint firstItem="2NA-Y4-Mwo" firstAttribute="top" secondItem="p4s-YM-RkF" secondAttribute="bottom" constant="90" id="PZ6-Np-95s"/>
                             <constraint firstItem="ChO-lW-UeL" firstAttribute="centerX" secondItem="HC7-SG-rQt" secondAttribute="centerX" id="RVg-CX-azH"/>
+                            <constraint firstItem="b2K-tP-SpE" firstAttribute="trailing" secondItem="zqp-9N-kga" secondAttribute="trailing" id="Vpw-n0-cii"/>
                             <constraint firstItem="zqp-9N-kga" firstAttribute="bottom" secondItem="Lfi-nF-WNa" secondAttribute="bottom" id="W2K-KR-X3i"/>
                             <constraint firstItem="PXA-67-HYz" firstAttribute="centerX" secondItem="HC7-SG-rQt" secondAttribute="centerX" id="YJG-6b-OC0"/>
                             <constraint firstItem="zqp-9N-kga" firstAttribute="top" secondItem="ChO-lW-UeL" secondAttribute="bottom" id="aTj-3y-0vS"/>
@@ -127,6 +153,7 @@
                             <constraint firstItem="zqp-9N-kga" firstAttribute="trailing" secondItem="Lfi-nF-WNa" secondAttribute="trailing" id="f70-YQ-Hft"/>
                             <constraint firstItem="p4s-YM-RkF" firstAttribute="centerX" secondItem="HC7-SG-rQt" secondAttribute="centerX" id="few-6G-nhg"/>
                             <constraint firstItem="2NA-Y4-Mwo" firstAttribute="centerX" secondItem="HC7-SG-rQt" secondAttribute="centerX" id="gAh-KK-5tC"/>
+                            <constraint firstItem="b2K-tP-SpE" firstAttribute="leading" secondItem="zqp-9N-kga" secondAttribute="leading" id="inH-rp-vPn"/>
                             <constraint firstItem="zqp-9N-kga" firstAttribute="top" secondItem="Lfi-nF-WNa" secondAttribute="top" id="j0E-xY-8eg"/>
                             <constraint firstItem="7hh-Gf-Pfr" firstAttribute="centerX" secondItem="HC7-SG-rQt" secondAttribute="centerX" id="q5S-mf-cV3"/>
                             <constraint firstItem="zqp-9N-kga" firstAttribute="leading" secondItem="Lfi-nF-WNa" secondAttribute="leading" id="q7t-Ke-t7r"/>
@@ -134,13 +161,13 @@
                             <constraint firstItem="Lfi-nF-WNa" firstAttribute="centerX" secondItem="HC7-SG-rQt" secondAttribute="centerX" id="vt8-vA-pkw"/>
                             <constraint firstItem="ChO-lW-UeL" firstAttribute="top" secondItem="2NA-Y4-Mwo" secondAttribute="bottom" constant="40" id="yWw-70-ZcI"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="C7J-2g-MDT"/>
                     </view>
                     <connections>
                         <outlet property="backgroundImg" destination="2NA-Y4-Mwo" id="b5O-KW-a7Q"/>
                         <outlet property="contentLabel" destination="ChO-lW-UeL" id="R1O-dO-ES6"/>
                         <outlet property="enableLocationServicesBtn" destination="zqp-9N-kga" id="dtA-0f-FEb"/>
                         <outlet property="enableNotificationsBtn" destination="Lfi-nF-WNa" id="r2C-gi-QPd"/>
+                        <outlet property="improveMyExperienceBtn" destination="b2K-tP-SpE" id="Kbx-CI-4i2"/>
                         <outlet property="nextBtn" destination="PXA-67-HYz" id="EzT-Dy-aVO"/>
                         <outlet property="pageControl" destination="7hh-Gf-Pfr" id="WpE-tt-PLE"/>
                         <outlet property="titleLabel" destination="p4s-YM-RkF" id="C6o-9E-Mwj"/>
@@ -225,7 +252,7 @@
                                             <action selector="signInBtnWasPressed:" destination="nTD-fR-J8K" eventType="editingDidEndOnExit" id="oKf-F5-NhN"/>
                                         </connections>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="klh-mO-gHo">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="klh-mO-gHo">
                                         <rect key="frame" x="99" y="535" width="216" height="50"/>
                                         <color key="backgroundColor" red="0.61407083269999996" green="0.78370857240000003" blue="0.85092419389999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -254,7 +281,7 @@
                                                 <color key="textColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8FH-H2-vL7">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8FH-H2-vL7">
                                                 <rect key="frame" x="165.33333333333337" y="0.0" width="62" height="33"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="33" id="POc-WG-Xkt"/>
@@ -286,6 +313,7 @@
                                 </constraints>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="nbe-uI-hu1"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="qjX-Ut-n6h" firstAttribute="bottom" secondItem="nbe-uI-hu1" secondAttribute="bottom" id="9Nf-nv-zlg"/>
@@ -293,7 +321,6 @@
                             <constraint firstItem="qjX-Ut-n6h" firstAttribute="leading" secondItem="nbe-uI-hu1" secondAttribute="leading" id="tRA-4v-TNH"/>
                             <constraint firstItem="qjX-Ut-n6h" firstAttribute="top" secondItem="Xkg-sI-a4k" secondAttribute="top" id="tSl-gd-TQq"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="nbe-uI-hu1"/>
                     </view>
                     <navigationItem key="navigationItem" id="lSw-Rq-eZc"/>
                     <nil key="simulatedTopBarMetrics"/>
@@ -330,7 +357,7 @@
                                 <color key="textColor" red="0.087329114030000002" green="0.7221731267" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pXO-Qj-lyU">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pXO-Qj-lyU">
                                 <rect key="frame" x="77" y="484.33333333333326" width="260" height="59"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="260" id="Lmv-EC-5e3"/>
@@ -349,7 +376,7 @@
                                     <action selector="startOnboardBtnWasPressed:" destination="fzF-qL-c1i" eventType="touchUpInside" id="bd3-bZ-2Zt"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Ll-UT-dos">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Ll-UT-dos">
                                 <rect key="frame" x="77" y="563.33333333333337" width="260" height="59"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="59" id="QLt-Md-5aQ"/>
@@ -377,7 +404,7 @@
                                         <color key="textColor" red="0.61407083269999996" green="0.78370857240000003" blue="0.85092419389999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TfT-y8-Dag">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TfT-y8-Dag">
                                         <rect key="frame" x="210.33333333333337" y="0.0" width="130" height="33"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="130" id="eg9-9q-Qe4"/>
@@ -395,6 +422,7 @@
                                 </subviews>
                             </stackView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="P3c-q0-ype"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="pXO-Qj-lyU" firstAttribute="top" secondItem="ulF-v6-5P3" secondAttribute="bottom" constant="100" id="IbC-4G-p4D"/>
@@ -408,7 +436,6 @@
                             <constraint firstItem="con-Zz-e0g" firstAttribute="centerX" secondItem="4sV-gM-4ON" secondAttribute="centerX" id="tpE-4i-7tR"/>
                             <constraint firstItem="pXO-Qj-lyU" firstAttribute="centerX" secondItem="4sV-gM-4ON" secondAttribute="centerX" id="yMj-wg-oX7"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="P3c-q0-ype"/>
                     </view>
                     <navigationItem key="navigationItem" id="D8B-FL-wa9"/>
                     <nil key="simulatedTopBarMetrics"/>
@@ -587,6 +614,7 @@ Effective as of April 7, 2020</string>
                                 </connections>
                             </button>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="HYj-1T-mra"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="bku-Hu-rR4" firstAttribute="bottom" secondItem="HYj-1T-mra" secondAttribute="bottom" id="7PA-jD-yCt"/>
@@ -598,7 +626,6 @@ Effective as of April 7, 2020</string>
                             <constraint firstItem="bku-Hu-rR4" firstAttribute="leading" secondItem="HYj-1T-mra" secondAttribute="leading" constant="20" id="pVm-Od-eld"/>
                             <constraint firstItem="jjm-Pu-yFd" firstAttribute="leading" secondItem="HYj-1T-mra" secondAttribute="leading" constant="20" id="zIH-Ey-9XX"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="HYj-1T-mra"/>
                     </view>
                     <navigationItem key="navigationItem" id="Q93-ab-bFz"/>
                     <connections>
@@ -645,7 +672,7 @@ Effective as of April 7, 2020</string>
                                     <constraint firstAttribute="height" constant="1" id="My8-wn-ZW4"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ue2-qU-17k">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ue2-qU-17k">
                                 <rect key="frame" x="45" y="758" width="324" height="59"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="59" id="k0w-MY-kzP"/>
@@ -682,10 +709,11 @@ Effective as of April 7, 2020</string>
                                     <constraint firstAttribute="width" constant="283" id="txf-EZ-Uy1"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
-                                <color key="textColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" systemColor="systemRedColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="WUg-Wz-LTX"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="R51-cs-Dpw" firstAttribute="centerX" secondItem="DTt-t7-SFz" secondAttribute="centerX" id="0n4-qO-ncF"/>
@@ -702,7 +730,6 @@ Effective as of April 7, 2020</string>
                             <constraint firstItem="ZiS-Lw-ckB" firstAttribute="centerX" secondItem="DTt-t7-SFz" secondAttribute="centerX" id="weG-76-38y"/>
                             <constraint firstItem="jXx-89-9h7" firstAttribute="top" secondItem="WUg-Wz-LTX" secondAttribute="top" constant="20" id="z5f-6G-opW"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="WUg-Wz-LTX"/>
                     </view>
                     <navigationItem key="navigationItem" id="f2s-AD-qhR"/>
                     <nil key="simulatedTopBarMetrics"/>
@@ -767,7 +794,7 @@ Effective as of April 7, 2020</string>
                                 <color key="textColor" red="0.61407083269999996" green="0.78370857240000003" blue="0.85092419389999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vuV-ti-SRH">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vuV-ti-SRH">
                                 <rect key="frame" x="45" y="758" width="324" height="59"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="324" id="Scx-kf-HMK"/>
@@ -798,6 +825,7 @@ Effective as of April 7, 2020</string>
                                 </connections>
                             </button>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="mtS-BC-5UO"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="vuV-ti-SRH" firstAttribute="centerX" secondItem="2rq-DN-dNf" secondAttribute="centerX" id="2hb-lc-iif"/>
@@ -814,7 +842,6 @@ Effective as of April 7, 2020</string>
                             <constraint firstItem="VuT-dC-fOd" firstAttribute="top" secondItem="A6H-oy-pnu" secondAttribute="bottom" constant="18" id="pqj-z4-6Dp"/>
                             <constraint firstItem="PH9-WH-ITi" firstAttribute="top" secondItem="mtS-BC-5UO" secondAttribute="top" constant="20" id="vBh-Av-pNt"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="mtS-BC-5UO"/>
                     </view>
                     <navigationItem key="navigationItem" id="LQa-09-bEt"/>
                     <nil key="simulatedTopBarMetrics"/>
@@ -875,7 +902,7 @@ Effective as of April 7, 2020</string>
                                 <color key="textColor" red="0.61407083269999996" green="0.78370857240000003" blue="0.85092419389999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C1S-J5-Zek">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C1S-J5-Zek">
                                 <rect key="frame" x="45" y="758" width="324" height="59"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="324" id="4ak-nT-l64"/>
@@ -906,6 +933,7 @@ Effective as of April 7, 2020</string>
                                 </connections>
                             </button>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="hVB-As-olv"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="fxV-wJ-tqw" firstAttribute="centerX" secondItem="wLw-WI-ydK" secondAttribute="centerX" id="4hV-kX-uqy"/>
@@ -922,7 +950,6 @@ Effective as of April 7, 2020</string>
                             <constraint firstItem="Yd9-QT-Bie" firstAttribute="trailing" secondItem="3A4-sl-cmD" secondAttribute="trailing" id="elx-Zi-GSk"/>
                             <constraint firstItem="Yd9-QT-Bie" firstAttribute="top" secondItem="3A4-sl-cmD" secondAttribute="bottom" id="leN-xD-CJW"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="hVB-As-olv"/>
                     </view>
                     <navigationItem key="navigationItem" id="73C-h6-sXB"/>
                     <nil key="simulatedTopBarMetrics"/>
@@ -1013,7 +1040,7 @@ Effective as of April 7, 2020</string>
                                 <color key="textColor" red="0.8980392157" green="0.088846307720000003" blue="0.086284645049999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a6H-WV-bRv">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a6H-WV-bRv">
                                 <rect key="frame" x="45" y="758" width="324" height="59"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="59" id="RkI-2D-hXV"/>
@@ -1054,6 +1081,7 @@ Effective as of April 7, 2020</string>
                                 </connections>
                             </button>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="i4u-Ct-Qur"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="BPE-3p-pvs" firstAttribute="top" secondItem="i4u-Ct-Qur" secondAttribute="top" constant="20" id="90Z-VX-Sk5"/>
@@ -1069,7 +1097,6 @@ Effective as of April 7, 2020</string>
                             <constraint firstItem="ocP-7c-fFA" firstAttribute="top" secondItem="i4u-Ct-Qur" secondAttribute="top" constant="80" id="va4-86-EOZ"/>
                             <constraint firstItem="S60-DW-9gc" firstAttribute="top" secondItem="2b3-Vz-YLw" secondAttribute="bottom" constant="5" id="xSu-fW-LTY"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="i4u-Ct-Qur"/>
                     </view>
                     <navigationItem key="navigationItem" id="fct-IT-HHy"/>
                     <nil key="simulatedTopBarMetrics"/>
@@ -1101,7 +1128,7 @@ Effective as of April 7, 2020</string>
                                 <color key="textColor" red="0.087329114030000002" green="0.7221731267" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RGy-aV-Ua7">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RGy-aV-Ua7">
                                 <rect key="frame" x="45" y="254.66666666666663" width="324" height="59"/>
                                 <color key="backgroundColor" red="0.087329114030000002" green="0.7221731267" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -1121,7 +1148,7 @@ Effective as of April 7, 2020</string>
                                     <action selector="maleBtnWasPressed:" destination="Wyk-s9-xx1" eventType="touchUpInside" id="OR2-aN-F3S"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qyR-53-LHq">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qyR-53-LHq">
                                 <rect key="frame" x="45" y="343.66666666666669" width="324" height="59"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="59" id="bpT-yZ-Bxp"/>
@@ -1140,7 +1167,7 @@ Effective as of April 7, 2020</string>
                                     <action selector="femaleBtnWasPressed:" destination="Wyk-s9-xx1" eventType="touchUpInside" id="Zf8-1O-FdZ"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bas-4a-Sj8">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bas-4a-Sj8">
                                 <rect key="frame" x="45" y="758" width="324" height="59"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="324" id="Ozu-Gg-Jts"/>
@@ -1171,6 +1198,7 @@ Effective as of April 7, 2020</string>
                                 </connections>
                             </button>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="Ezg-J7-JsR"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="RGy-aV-Ua7" firstAttribute="top" secondItem="A0M-Yl-xOy" secondAttribute="bottom" constant="100" id="0XI-NK-Aql"/>
@@ -1184,7 +1212,6 @@ Effective as of April 7, 2020</string>
                             <constraint firstItem="Bas-4a-Sj8" firstAttribute="centerX" secondItem="sfS-w4-TGS" secondAttribute="centerX" id="bc9-dJ-2uJ"/>
                             <constraint firstItem="Ghz-hq-9LJ" firstAttribute="leading" secondItem="Ezg-J7-JsR" secondAttribute="leading" constant="20" id="cNj-Yr-0kq"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="Ezg-J7-JsR"/>
                     </view>
                     <navigationItem key="navigationItem" id="r1O-ZV-cWx"/>
                     <nil key="simulatedTopBarMetrics"/>
@@ -1226,7 +1253,7 @@ Effective as of April 7, 2020</string>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dsw-n1-Axh">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dsw-n1-Axh">
                                 <rect key="frame" x="45" y="758" width="324" height="59"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="324" id="Ine-T7-65S"/>
@@ -1257,6 +1284,7 @@ Effective as of April 7, 2020</string>
                                 </connections>
                             </button>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="m4U-L9-Hb9"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="dsw-n1-Axh" firstAttribute="centerX" secondItem="tod-Hw-xTX" secondAttribute="centerX" id="18x-sV-lL5"/>
@@ -1268,7 +1296,6 @@ Effective as of April 7, 2020</string>
                             <constraint firstItem="tTo-lz-dYd" firstAttribute="centerX" secondItem="tod-Hw-xTX" secondAttribute="centerX" id="qVM-pF-N0W"/>
                             <constraint firstItem="l3H-OI-ypV" firstAttribute="top" secondItem="tTo-lz-dYd" secondAttribute="bottom" constant="70" id="z63-Sa-7uu"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="m4U-L9-Hb9"/>
                     </view>
                     <navigationItem key="navigationItem" id="ykZ-ng-TAa"/>
                     <nil key="simulatedTopBarMetrics"/>
@@ -1311,7 +1338,7 @@ Effective as of April 7, 2020</string>
                                     <constraint firstAttribute="width" constant="80" id="iZl-Z3-RPL"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="518-Fx-fCk">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="518-Fx-fCk">
                                 <rect key="frame" x="45" y="758" width="324" height="59"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="59" id="1Bc-Ig-7g3"/>
@@ -1331,6 +1358,7 @@ Effective as of April 7, 2020</string>
                                 </connections>
                             </button>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="EG1-rQ-Lar"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="JCz-XV-yhA" firstAttribute="leading" secondItem="EG1-rQ-Lar" secondAttribute="leading" id="0h0-eY-Xwc"/>
@@ -1344,7 +1372,6 @@ Effective as of April 7, 2020</string>
                             <constraint firstItem="JCz-XV-yhA" firstAttribute="top" secondItem="T5Y-sn-9c4" secondAttribute="top" id="rqW-pB-tc4"/>
                             <constraint firstItem="dr6-RW-OXz" firstAttribute="top" secondItem="EG1-rQ-Lar" secondAttribute="top" constant="100" id="w3x-lr-rcE"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="EG1-rQ-Lar"/>
                     </view>
                     <navigationItem key="navigationItem" id="Kbr-c6-QsA"/>
                     <nil key="simulatedTopBarMetrics"/>
@@ -1370,7 +1397,7 @@ Effective as of April 7, 2020</string>
                                 <color key="textColor" red="0.087329114030000002" green="0.7221731267" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KgZ-OX-l4I">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KgZ-OX-l4I">
                                 <rect key="frame" x="45" y="254.66666666666663" width="324" height="59"/>
                                 <color key="backgroundColor" red="0.087329114030000002" green="0.7221731267" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -1390,7 +1417,7 @@ Effective as of April 7, 2020</string>
                                     <action selector="menBtnWasPressed:" destination="BrD-dE-hHy" eventType="touchUpInside" id="fxZ-c8-Jxv"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XwN-t8-gLD">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XwN-t8-gLD">
                                 <rect key="frame" x="45" y="343.66666666666669" width="324" height="59"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="59" id="Hrg-ko-W8d"/>
@@ -1409,7 +1436,7 @@ Effective as of April 7, 2020</string>
                                     <action selector="womenBtnWasPressed:" destination="BrD-dE-hHy" eventType="touchUpInside" id="A8k-4V-exd"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IaL-nJ-jK8">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IaL-nJ-jK8">
                                 <rect key="frame" x="45" y="758" width="324" height="59"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="59" id="6ln-PT-WRf"/>
@@ -1439,7 +1466,7 @@ Effective as of April 7, 2020</string>
                                     <action selector="backBtnWasPressed:" destination="BrD-dE-hHy" eventType="touchUpInside" id="LFT-5y-qND"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bac-qE-2Xd">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bac-qE-2Xd">
                                 <rect key="frame" x="45" y="432.66666666666669" width="324" height="59"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="59" id="6vV-5v-yW2"/>
@@ -1459,6 +1486,7 @@ Effective as of April 7, 2020</string>
                                 </connections>
                             </button>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="yIn-CY-SfH"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="XwN-t8-gLD" firstAttribute="centerX" secondItem="Vma-D2-FV0" secondAttribute="centerX" id="7Fh-So-7Qo"/>
@@ -1474,7 +1502,6 @@ Effective as of April 7, 2020</string>
                             <constraint firstItem="gav-FK-816" firstAttribute="top" secondItem="yIn-CY-SfH" secondAttribute="top" constant="80" id="sK4-2S-cBR"/>
                             <constraint firstItem="yIn-CY-SfH" firstAttribute="bottom" secondItem="IaL-nJ-jK8" secondAttribute="bottom" constant="45" id="wAs-N8-nHH"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="yIn-CY-SfH"/>
                     </view>
                     <navigationItem key="navigationItem" id="Os8-iz-JR5"/>
                     <nil key="simulatedTopBarMetrics"/>
@@ -1505,7 +1532,7 @@ Effective as of April 7, 2020</string>
                                 <color key="textColor" red="0.087329114030000002" green="0.7221731267" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9tp-WL-KeD">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9tp-WL-KeD">
                                 <rect key="frame" x="45" y="758" width="324" height="59"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="59" id="Etf-mp-H1V"/>
@@ -1546,6 +1573,7 @@ Effective as of April 7, 2020</string>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textField>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="JnT-pX-J1y"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="9tp-WL-KeD" firstAttribute="centerX" secondItem="H3z-Ja-uaz" secondAttribute="centerX" id="M7A-jt-eoZ"/>
@@ -1557,7 +1585,6 @@ Effective as of April 7, 2020</string>
                             <constraint firstItem="Y5h-ec-Esk" firstAttribute="top" secondItem="JnT-pX-J1y" secondAttribute="top" constant="20" id="qaP-gT-vf4"/>
                             <constraint firstItem="1fn-mW-x85" firstAttribute="centerX" secondItem="H3z-Ja-uaz" secondAttribute="centerX" id="rja-i7-qTw"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="JnT-pX-J1y"/>
                     </view>
                     <navigationItem key="navigationItem" id="Zop-dQ-A9U"/>
                     <nil key="simulatedTopBarMetrics"/>
@@ -1608,7 +1635,7 @@ Effective as of April 7, 2020</string>
                                     <constraint firstAttribute="height" constant="1" id="ssH-uL-11P"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9R1-dO-4Yq">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9R1-dO-4Yq">
                                 <rect key="frame" x="45" y="758" width="324" height="59"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="324" id="aMq-Sv-dDu"/>
@@ -1661,6 +1688,7 @@ Effective as of April 7, 2020</string>
                                 </constraints>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="mca-xB-xdu"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Jao-pN-C2D" firstAttribute="top" secondItem="LUq-dt-GUj" secondAttribute="bottom" constant="150" id="8M4-XA-lqu"/>
@@ -1680,7 +1708,6 @@ Effective as of April 7, 2020</string>
                             <constraint firstItem="oci-Ko-hPg" firstAttribute="top" secondItem="Jao-pN-C2D" secondAttribute="bottom" id="r92-o5-AVq"/>
                             <constraint firstItem="mca-xB-xdu" firstAttribute="bottom" secondItem="9R1-dO-4Yq" secondAttribute="bottom" constant="45" id="rAV-aH-r5C"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="mca-xB-xdu"/>
                     </view>
                     <navigationItem key="navigationItem" id="mpX-FC-b0g"/>
                     <nil key="simulatedTopBarMetrics"/>
@@ -1704,5 +1731,8 @@ Effective as of April 7, 2020</string>
         <image name="glymps_logo_with_title" width="60" height="44.666667938232422"/>
         <image name="profileImage" width="100" height="100"/>
         <image name="verify icon" width="20" height="20"/>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>
