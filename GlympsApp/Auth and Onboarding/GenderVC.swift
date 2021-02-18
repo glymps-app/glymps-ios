@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Amplitude_iOS
 
 // view controller to set up new user gender during onboarding
 class GenderVC: UIViewController {
@@ -119,6 +120,7 @@ class GenderVC: UIViewController {
     // move to next view controller
     @IBAction func nextBtnWasPressed(_ sender: Any) {
         if !chosenGender.isEmpty {
+            self.logAmplitudeOnboardingStepSevenOfNineCompleteGenderEvent()
             let storyboard = UIStoryboard(name: "Welcome", bundle: nil)
             let sexPreferenceVC = storyboard.instantiateViewController(withIdentifier: "SexPreferenceVC") as! SexPreferenceVC
             sexPreferenceVC.userEmail = userEmail
@@ -133,5 +135,8 @@ class GenderVC: UIViewController {
         }
     }
     
+    func logAmplitudeOnboardingStepSevenOfNineCompleteGenderEvent() {
+        Amplitude.instance().logEvent("Onboarding Step 7/9 Complete (Gender)")
+    }
     
 }

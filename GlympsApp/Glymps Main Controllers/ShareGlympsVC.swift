@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseDynamicLinks
+import Amplitude_iOS
 
 class ShareGlympsVC: UIViewController {
     
@@ -25,6 +26,8 @@ class ShareGlympsVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.logAmplitudeReferralsViewedEvent()
         
         shareWithCodeBtn.layer.cornerRadius = 8
         shareWithCodeBtn.layer.borderWidth = 1
@@ -85,12 +88,14 @@ class ShareGlympsVC: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     @IBAction func shareWithCodeBtnWasPressed(_ sender: Any) {
+        self.logAmplitudeReferViaReferralCodeEvent()
         let promoText = "Date naturally! Come join Glymps Dating, this dating app I found that is changing the game."
         let activityController = UIActivityViewController(activityItems: [promoText, shareURL ?? ""], applicationActivities: nil)
         present(activityController, animated: true, completion: nil)
     }
     
     @IBAction func inviteContactBtnWasPressed(_ sender: Any) {
+        self.logAmplitudeReferViaContactEvent()
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let contactsVC = storyboard.instantiateViewController(withIdentifier: "ContactsVC") as! ContactsVC
         contactsVC.shareableLink = shareWithCodeBtn.titleLabel!.text!
@@ -101,4 +106,45 @@ class ShareGlympsVC: UIViewController {
         // go to campus ambassador onboarding
     }
     
+    func logAmplitudeReferralsViewedEvent() {
+        Amplitude.instance().logEvent("Referrals Viewed")
+    }
+    
+    func logAmplitudeReferViaReferralCodeEvent() {
+        API.User.observeCurrentUser { (user) in
+            var referViaReferralCodeEventProperties: [AnyHashable : Any] = [:]
+            referViaReferralCodeEventProperties.updateValue(user.email as Any, forKey: "Email")
+            referViaReferralCodeEventProperties.updateValue(user.age as Any, forKey: "Age")
+            referViaReferralCodeEventProperties.updateValue(user.profession as Any, forKey: "Profession")
+            referViaReferralCodeEventProperties.updateValue(user.company as Any, forKey: "Company")
+            referViaReferralCodeEventProperties.updateValue(user.name as Any, forKey: "Name")
+            referViaReferralCodeEventProperties.updateValue(user.gender as Any, forKey: "Gender")
+            referViaReferralCodeEventProperties.updateValue(user.id as Any, forKey: "User ID")
+            referViaReferralCodeEventProperties.updateValue(user.coins as Any, forKey: "Number of Glymps Coins")
+            referViaReferralCodeEventProperties.updateValue(user.isPremium as Any, forKey: "Subscription Status")
+            referViaReferralCodeEventProperties.updateValue(user.minAge as Any, forKey: "Minimum Preferred Age")
+            referViaReferralCodeEventProperties.updateValue(user.maxAge as Any, forKey: "Maximum Preferred Age")
+            referViaReferralCodeEventProperties.updateValue(user.preferedGender as Any, forKey: "Preferred Gender")
+            Amplitude.instance().logEvent("Refer Via Referral Code Initiated", withEventProperties: referViaReferralCodeEventProperties)
+        }
+    }
+    
+    func logAmplitudeReferViaContactEvent() {
+        API.User.observeCurrentUser { (user) in
+            var referViaContactEventProperties: [AnyHashable : Any] = [:]
+            referViaContactEventProperties.updateValue(user.email as Any, forKey: "Email")
+            referViaContactEventProperties.updateValue(user.age as Any, forKey: "Age")
+            referViaContactEventProperties.updateValue(user.profession as Any, forKey: "Profession")
+            referViaContactEventProperties.updateValue(user.company as Any, forKey: "Company")
+            referViaContactEventProperties.updateValue(user.name as Any, forKey: "Name")
+            referViaContactEventProperties.updateValue(user.gender as Any, forKey: "Gender")
+            referViaContactEventProperties.updateValue(user.id as Any, forKey: "User ID")
+            referViaContactEventProperties.updateValue(user.coins as Any, forKey: "Number of Glymps Coins")
+            referViaContactEventProperties.updateValue(user.isPremium as Any, forKey: "Subscription Status")
+            referViaContactEventProperties.updateValue(user.minAge as Any, forKey: "Minimum Preferred Age")
+            referViaContactEventProperties.updateValue(user.maxAge as Any, forKey: "Maximum Preferred Age")
+            referViaContactEventProperties.updateValue(user.preferedGender as Any, forKey: "Preferred Gender")
+            Amplitude.instance().logEvent("Refer Via Contact Initiated", withEventProperties: referViaContactEventProperties)
+        }
+    }
 }

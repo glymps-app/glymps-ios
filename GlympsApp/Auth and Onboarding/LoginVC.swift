@@ -13,6 +13,7 @@ import FirebaseDatabase
 import FirebaseStorage
 import FirebaseAnalytics
 import JGProgressHUD
+import Amplitude_iOS
 
 // main screen upon app entry for user to enter credentials and sign-in
 class LoginVC: UIViewController {
@@ -24,10 +25,11 @@ class LoginVC: UIViewController {
     @IBOutlet weak var signInBtn: UIButton!
 
     @IBOutlet weak var toSignUpBtn: UIButton!
+    
+    var identify: AMPIdentify?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         emailTextfield.delegate = self
         passwordTextfield.delegate = self
         
@@ -55,6 +57,7 @@ class LoginVC: UIViewController {
         let defaults = UserDefaults.standard
         let hasViewedWalkthrough = defaults.bool(forKey: "hasViewedWalkthrough")
         if !hasViewedWalkthrough {
+            Amplitude.instance().logEvent("First App Lauch")
             if let onboardingVC = storyboard?.instantiateViewController(withIdentifier: "OnboardingVC") as? OnboardingVC {
                 onboardingVC.presenter = self
                 present(onboardingVC, animated: true, completion: nil)
@@ -86,16 +89,10 @@ class LoginVC: UIViewController {
     
     // authenticate and sign-in user
     @IBAction func signInBtnWasPressed(_ sender: Any) {
-        Auth.auth().addStateDidChangeListener { auth, user in
-            if let user = user {
-                AuthService.logout(onSuccess: {
-                    self.signIn()
-                }) {
-                    return
-                }
-            } else {
-                self.signIn()
-            }
+        if Auth.auth().currentUser != nil {
+            self.signIn()
+        } else {
+            self.signIn()
         }
     }
     
@@ -115,7 +112,11 @@ class LoginVC: UIViewController {
             AuthService.signIn(email: email!, password: password!, onSuccess: {
                 hud.textLabel.text = "Hi, there! \u{1F60A}"
                  hud.dismiss(afterDelay: 4.0)
-                self.goToMain()
+                if Auth.auth().currentUser != nil {
+                    self.setupAmplitudeUserIdentity()
+                    self.logAmplitudeSigninEvent()
+                    self.goToMain()
+                }
             }) {
                 hud.textLabel.text = "Whoops, something's not right. \u{1F615}"
                 hud.dismiss(afterDelay: 4.0)
@@ -136,6 +137,43 @@ class LoginVC: UIViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let initial = storyboard.instantiateInitialViewController()!
         self.navigationController?.pushViewController(initial, animated: true)
+    }
+    
+    func setupAmplitudeUserIdentity() {
+        API.User.observeCurrentUser(completion: { (glympsUser) in
+            self.identify?.setValue(glympsUser.email, forKeyPath: "Email")
+            self.identify?.setValue(glympsUser.age, forKeyPath: "Age")
+            self.identify?.setValue(glympsUser.profession, forKeyPath: "Profession")
+            self.identify?.setValue(glympsUser.company, forKeyPath: "Company")
+            self.identify?.setValue(glympsUser.name, forKeyPath: "Name")
+            self.identify?.setValue(glympsUser.gender, forKeyPath: "Gender")
+            self.identify?.setValue(glympsUser.id, forKeyPath: "User ID")
+            self.identify?.setValue(glympsUser.coins, forKeyPath: "Number of Glymps Coins")
+            self.identify?.setValue(glympsUser.isPremium, forKeyPath: "Subscription Status")
+            self.identify?.setValue(glympsUser.minAge, forKeyPath: "Minimum Preferred Age")
+            self.identify?.setValue(glympsUser.maxAge, forKeyPath: "Maximum Preferred Age")
+            self.identify?.setValue(glympsUser.preferedGender, forKeyPath: "Preferred Gender")
+            Amplitude.instance()?.identify(self.identify)
+        })
+    }
+    
+    func logAmplitudeSigninEvent() {
+        API.User.observeCurrentUser { (user) in
+            var signInEventProperties: [AnyHashable : Any] = [:]
+            signInEventProperties.updateValue(user.email as Any, forKey: "Email")
+            signInEventProperties.updateValue(user.age as Any, forKey: "Age")
+            signInEventProperties.updateValue(user.profession as Any, forKey: "Profession")
+            signInEventProperties.updateValue(user.company as Any, forKey: "Company")
+            signInEventProperties.updateValue(user.name as Any, forKey: "Name")
+            signInEventProperties.updateValue(user.gender as Any, forKey: "Gender")
+            signInEventProperties.updateValue(user.id as Any, forKey: "User ID")
+            signInEventProperties.updateValue(user.coins as Any, forKey: "Number of Glymps Coins")
+            signInEventProperties.updateValue(user.isPremium as Any, forKey: "Subscription Status")
+            signInEventProperties.updateValue(user.minAge as Any, forKey: "Minimum Preferred Age")
+            signInEventProperties.updateValue(user.maxAge as Any, forKey: "Maximum Preferred Age")
+            signInEventProperties.updateValue(user.preferedGender as Any, forKey: "Preferred Gender")
+            Amplitude.instance().logEvent("Sign In", withEventProperties: signInEventProperties)
+        }
     }
 }
 

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Amplitude_iOS
 
 class BlockOptionsVC: UIViewController {
     
@@ -39,6 +40,8 @@ class BlockOptionsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.logAmplitudeBlockUserOptionsViewEvent()
+        
         dropView.dropShadow(color: .darkGray, opacity: 1, offSet: CGSize(width: -1, height: 1), radius: 20, scale: true)
 
         usernameLabel.text = ""
@@ -54,7 +57,7 @@ class BlockOptionsVC: UIViewController {
     
     func blockAction() {
         API.Inbox.permanentlyBlockUser(uid: self.userId!)
-        
+        self.logAmplitudeCardBlockEvent(userId: self.userId!)
         if self.userDetailsVC != nil {
             dismiss(animated: true, completion: nil)
             if let p = self.userDetailsVC!.presenter as? DeckVC {
@@ -128,7 +131,8 @@ class BlockOptionsVC: UIViewController {
         
        API.Inbox.permanentlyBlockUser(uid: self.userId!)
         API.Inbox.flagUser(uid: self.userId!, reason: reason)
-        
+        self.logAmplitudeCardBlockEvent(userId: self.userId!)
+        self.logAmplitudeUserReportedEvent(userId: self.userId!)
         if self.userDetailsVC != nil {
             self.dismiss(animated: true, completion: nil)
             if let p = self.userDetailsVC!.presenter as? DeckVC {
@@ -183,6 +187,50 @@ class BlockOptionsVC: UIViewController {
         } else if self.chatVC != nil {
             self.present(flagVC, animated: true, completion: nil)
         }
+    }
+    
+    func logAmplitudeCardBlockEvent(userId: String) {
+        API.User.observeUsers(withId: userId) { (user) in
+            var userBlockedEventProperties: [AnyHashable : Any] = [:]
+            userBlockedEventProperties.updateValue(user.email as Any, forKey: "Email")
+            userBlockedEventProperties.updateValue(user.age as Any, forKey: "Age")
+            userBlockedEventProperties.updateValue(user.profession as Any, forKey: "Profession")
+            userBlockedEventProperties.updateValue(user.company as Any, forKey: "Company")
+            userBlockedEventProperties.updateValue(user.name as Any, forKey: "Name")
+            userBlockedEventProperties.updateValue(user.gender as Any, forKey: "Gender")
+            userBlockedEventProperties.updateValue(user.id as Any, forKey: "User ID")
+            userBlockedEventProperties.updateValue(user.coins as Any, forKey: "Number of Glymps Coins")
+            userBlockedEventProperties.updateValue(user.isPremium as Any, forKey: "Subscription Status")
+            userBlockedEventProperties.updateValue(user.minAge as Any, forKey: "Minimum Preferred Age")
+            userBlockedEventProperties.updateValue(user.maxAge as Any, forKey: "Maximum Preferred Age")
+            userBlockedEventProperties.updateValue(user.preferedGender as Any, forKey: "Preferred Gender")
+            userBlockedEventProperties.updateValue("BlockOptions VC", forKey: "Origin Screen")
+            Amplitude.instance().logEvent("User Blocked", withEventProperties: userBlockedEventProperties)
+        }
+    }
+    
+    func logAmplitudeUserReportedEvent(userId: String) {
+        API.User.observeUsers(withId: userId) { (user) in
+            var userReportedEventProperties: [AnyHashable : Any] = [:]
+            userReportedEventProperties.updateValue(user.email as Any, forKey: "Email")
+            userReportedEventProperties.updateValue(user.age as Any, forKey: "Age")
+            userReportedEventProperties.updateValue(user.profession as Any, forKey: "Profession")
+            userReportedEventProperties.updateValue(user.company as Any, forKey: "Company")
+            userReportedEventProperties.updateValue(user.name as Any, forKey: "Name")
+            userReportedEventProperties.updateValue(user.gender as Any, forKey: "Gender")
+            userReportedEventProperties.updateValue(user.id as Any, forKey: "User ID")
+            userReportedEventProperties.updateValue(user.coins as Any, forKey: "Number of Glymps Coins")
+            userReportedEventProperties.updateValue(user.isPremium as Any, forKey: "Subscription Status")
+            userReportedEventProperties.updateValue(user.minAge as Any, forKey: "Minimum Preferred Age")
+            userReportedEventProperties.updateValue(user.maxAge as Any, forKey: "Maximum Preferred Age")
+            userReportedEventProperties.updateValue(user.preferedGender as Any, forKey: "Preferred Gender")
+            userReportedEventProperties.updateValue("BlockOptions VC", forKey: "Origin Screen")
+            Amplitude.instance().logEvent("User Blocked", withEventProperties: userReportedEventProperties)
+        }
+    }
+    
+    func logAmplitudeBlockUserOptionsViewEvent() {
+        Amplitude.instance().logEvent("Block User Options View")
     }
     
     

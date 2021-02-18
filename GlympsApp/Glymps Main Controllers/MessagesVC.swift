@@ -8,6 +8,7 @@
 
 import UIKit
 import LBTATools
+import Amplitude_iOS
 
 // inbox screen for new message requests, and recent conversations of matched users
 class MessagesVC: UIViewController {
@@ -58,6 +59,7 @@ class MessagesVC: UIViewController {
         
         navBar.setupShadow(opacity: 0.2, radius: 8, offset: .init(width: 0, height: 10), color: .init(white: 0, alpha: 0.3))
         
+        self.logAmplitudeMessagesViewEvent()
     }
     
     // setup UI beforehand, go to chat if coming to this view after tapping message button in "card deck"
@@ -136,6 +138,14 @@ class MessagesVC: UIViewController {
         self.navigationController?.pushViewController(chatVC, animated: true)
     }
     
+    func logAmplitudeMessagesViewEvent() {
+        API.User.observeCurrentUser { (user) in
+            var messagesViewEventProperties: [AnyHashable : Any] = [:]
+            messagesViewEventProperties.updateValue(self.newMessages.count as Any, forKey: "Number of New Messages (Requests)")
+            messagesViewEventProperties.updateValue(self.matches.count as Any, forKey: "Number of Matched Conversations (Matches)")
+            Amplitude.instance().logEvent("Messages Viewed", withEventProperties: messagesViewEventProperties)
+        }
+    }
 
 }
 

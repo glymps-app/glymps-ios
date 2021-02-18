@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Amplitude_iOS
 
 // screen to celebrate the onboarding of a new Glymps user!
 class OnboardDoneVC: UIViewController {
@@ -17,6 +18,8 @@ class OnboardDoneVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.logAmplitudeOnboardingCompletedEvent()
         
         refUID = referringUser
         
@@ -33,6 +36,10 @@ class OnboardDoneVC: UIViewController {
         let deckVC = initial.children[1].children[0] as! DeckVC
         deckVC.currentUserReferredBy = refUID ?? ""
         self.navigationController?.pushViewController(initial, animated: true)
+    }
+    
+    func logAmplitudeOnboardingCompletedEvent() {
+        Amplitude.instance().logEvent("Onboarding Completed")
     }
     
 

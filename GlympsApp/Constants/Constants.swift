@@ -14,5 +14,6 @@ import PushNotifications
 // Constants
 
 public var referringUser: String = ""
-
 public let beamsClient = PushNotifications.shared
+public var isInEurope: Bool = false
+public var isInCalifornia: Bool = false

@@ -207,7 +207,11 @@ class AuthService {
         
         do {
             try Auth.auth().signOut()
-            onSuccess()
+            Auth.auth().addStateDidChangeListener { (auth, user) in
+                if auth.currentUser == nil {
+                    onSuccess()
+                }
+            }
             
         } catch let logoutError {
             print(logoutError.localizedDescription)

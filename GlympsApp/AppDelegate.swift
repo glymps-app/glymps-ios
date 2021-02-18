@@ -16,19 +16,21 @@ import FirebaseMessaging
 import FirebaseInstanceID
 import UserNotifications
 import PushNotifications
-//import SmaatoSDKCore
-//import SmaatoSDKBanner
-//import SmaatoSDKInterstitial
 import Purchases
 import FirebaseDynamicLinks
+import SmaatoSDKCore
+import Amplitude_iOS
 
 // entire application config for Glymps iOS
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {
 
     var window: UIWindow?
+    var identify: AMPIdentify?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        Amplitude.instance().initializeApiKey("3f4efa9e190e65fd430be71f219ea24b")
         
         beamsClient.start(instanceId: "bfb3dfa2-8c01-4647-a156-71e369bbae73")
         beamsClient.registerForRemoteNotifications()
@@ -39,14 +41,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // initialize RevenueCat iOS SDK
         Purchases.debugLogsEnabled = true
         Purchases.configure(withAPIKey: "EEQPqlAIaJUkdxWjqhkqvprTQmKSbHEZ", appUserID: nil)
-//        
-//        // initialize Smaato iOS SDK
-//        guard let config = SMAConfiguration(publisherId: "0") else {
-//                fatalError("SDK config is nil!")
-//        }
-//        config.httpsOnly = true // allow HTTPS traffic only
-//        config.logLevel = .error // log errors only
-//        SmaatoSDK.initSDK(withConfig: config)
+        
+        // Initialize the Smaato NextGen SDK
+        guard let config = SMAConfiguration(publisherId: "1100047851") else {
+              fatalError("SDK config is nil!")
+        }
+        // allow HTTPS traffic only
+        config.httpsOnly = true
+        // log errors only
+        config.logLevel = .error
+        // ads content restriction based on age
+        config.maxAdContentRating = .undefined
+         
+        SmaatoSDK.initSDK(withConfig:config)
+        // allow the Smaato SDK to automatically get the user's location and put it inside the ad request
+        SmaatoSDK.gpsEnabled = true
+        
+        UserDefaults.standard.set(0, forKey: "IABTCF_gdprApplies")
+        saveCCPA(usPrivacy: "1YNN")
         
         // Override point for customization after application launch, initialize Firebase iOS SDK
         FirebaseApp.configure()
@@ -58,8 +70,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 //            goToLogin()
 //        }
         
-        Auth.auth().addStateDidChangeListener { auth, user in
-            if let user = user {
+        Auth.auth().addStateDidChangeListener { [self] auth, user in
+            if let _ = auth.currentUser {
+                self.setupAmplitudeUserIdentity()
                 self.goToMain()
             } else {
                 self.goToLogin()
@@ -67,6 +80,45 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
         
         return true
+    }
+    
+    // handle content based on user IP
+    private func configureRegs() {
+        
+        UserDefaults.standard.set(-1, forKey: "IABTCF_gdprApplies")
+        
+        let regHelper = RegulatoryHelper()
+        regHelper.isSubjectToGDPR()
+        regHelper.isSubjectToCCPA()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            let subjectToGDPR = isInEurope
+            let subjectToCCPA = isInCalifornia
+            if subjectToGDPR {
+                print("Current user is located in Europe and is subject to GDPR.")
+                UserDefaults.standard.set(1, forKey: "IABTCF_gdprApplies")
+            } else {
+                print("Current user is not located in Europe and is not subject to GDPR.")
+                UserDefaults.standard.set(0, forKey: "IABTCF_gdprApplies")
+            }
+            if subjectToCCPA {
+                print("Current user is located in California and is subject to CCPA.")
+                self.saveCCPA(usPrivacy: "1YNN")
+            } else {
+                print("Current user is not located in California and is not subject to CCPA.")
+                self.saveCCPA(usPrivacy: "1---")
+            }
+        }
+    }
+    
+    // save the user's CCPA consent
+    private func saveCCPA(usPrivacy string: String?) {
+        guard let usString = string else {
+            return
+        }
+        if UserDefaults.standard.value(forKey: "IABUSPrivacy_String") == nil {
+            UserDefaults.standard.set(usString, forKey: "IABUSPrivacy_String")
+        }
     }
     
     func goToMain() {
@@ -83,6 +135,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         self.window = UIWindow(frame:UIScreen.main.bounds)
         window!.rootViewController = initial
         window!.makeKeyAndVisible()
+    }
+    
+    func setupAmplitudeUserIdentity() {
+        API.User.observeCurrentUser(completion: { (glympsUser) in
+            self.identify?.setValue(glympsUser.email, forKeyPath: "Email")
+            self.identify?.setValue(glympsUser.age, forKeyPath: "Age")
+            self.identify?.setValue(glympsUser.profession, forKeyPath: "Profession")
+            self.identify?.setValue(glympsUser.company, forKeyPath: "Company")
+            self.identify?.setValue(glympsUser.name, forKeyPath: "Name")
+            self.identify?.setValue(glympsUser.gender, forKeyPath: "Gender")
+            self.identify?.setValue(glympsUser.id, forKeyPath: "User ID")
+            self.identify?.setValue(glympsUser.coins, forKeyPath: "Number of Glymps Coins")
+            self.identify?.setValue(glympsUser.isPremium, forKeyPath: "Subscription Status")
+            self.identify?.setValue(glympsUser.minAge, forKeyPath: "Minimum Preferred Age")
+            self.identify?.setValue(glympsUser.maxAge, forKeyPath: "Maximum Preferred Age")
+            self.identify?.setValue(glympsUser.preferedGender, forKeyPath: "Preferred Gender")
+            Amplitude.instance()?.identify(self.identify)
+        })
     }
     
     func handleIncomingDynamicLink(_ dynamicLink: DynamicLink) {

@@ -16,6 +16,7 @@ import FirebaseStorage
 import FirebaseAnalytics
 import JGProgressHUD
 import CropViewController
+import Amplitude_iOS
 
 // screen for user to edit their Glymps profile
 class EditProfileVC: UITableViewController {
@@ -61,6 +62,8 @@ class EditProfileVC: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.logAmplitudeEditProfileViewedEvent()
         
         picker.delegate = self
         
@@ -337,6 +340,7 @@ class EditProfileVC: UITableViewController {
     
     // save profile attributes (if edited)
     @IBAction func saveBtnWasPressed(_ sender: Any) {
+        self.logAmplitudeProfileEditedEvent()
         let hud = JGProgressHUD(style: .extraLight)
         hud.textLabel.text = "Saving your info..."
         hud.show(in: view)
@@ -374,6 +378,29 @@ class EditProfileVC: UITableViewController {
                 self.saveBtn.setTitle("TRY AGAIN", for: .normal)
             }
         }
+    }
+    
+    func logAmplitudeProfileEditedEvent() {
+        API.User.observeCurrentUser { (user) in
+            var profileEditEventProperties: [AnyHashable : Any] = [:]
+            profileEditEventProperties.updateValue(user.email as Any, forKey: "Email")
+            profileEditEventProperties.updateValue(user.age as Any, forKey: "Age")
+            profileEditEventProperties.updateValue(user.profession as Any, forKey: "Profession")
+            profileEditEventProperties.updateValue(user.company as Any, forKey: "Company")
+            profileEditEventProperties.updateValue(user.name as Any, forKey: "Name")
+            profileEditEventProperties.updateValue(user.gender as Any, forKey: "Gender")
+            profileEditEventProperties.updateValue(user.id as Any, forKey: "User ID")
+            profileEditEventProperties.updateValue(user.coins as Any, forKey: "Number of Glymps Coins")
+            profileEditEventProperties.updateValue(user.isPremium as Any, forKey: "Subscription Status")
+            profileEditEventProperties.updateValue(user.minAge as Any, forKey: "Minimum Preferred Age")
+            profileEditEventProperties.updateValue(user.maxAge as Any, forKey: "Maximum Preferred Age")
+            profileEditEventProperties.updateValue(user.preferedGender as Any, forKey: "Preferred Gender")
+            Amplitude.instance().logEvent("Profile Edited", withEventProperties: profileEditEventProperties)
+        }
+    }
+    
+    func logAmplitudeEditProfileViewedEvent() {
+        Amplitude.instance().logEvent("Edit Profile Viewed")
     }
     
     

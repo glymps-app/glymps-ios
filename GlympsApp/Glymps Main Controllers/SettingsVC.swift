@@ -14,6 +14,7 @@ import FirebaseStorage
 import FirebaseAnalytics
 import JGProgressHUD
 import SwiftRangeSlider
+import Amplitude_iOS
 
 // screen for user to update their settings
 class SettingsVC: UITableViewController {
@@ -80,6 +81,8 @@ class SettingsVC: UITableViewController {
     // setup UI
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.logAmplitudeSettingsViewedEvent()
         
         self.tabBarController?.tabBar.isHidden = true
         
@@ -161,6 +164,7 @@ class SettingsVC: UITableViewController {
     
     // save user settings
     @IBAction func saveBtnWasPressed(_ sender: Any) {
+        self.logAmplitudeSettingsChangedEvent()
         // save settings to Firebase
         let hud = JGProgressHUD(style: .extraLight)
         hud.textLabel.text = "Saving your settings..."
@@ -188,6 +192,7 @@ class SettingsVC: UITableViewController {
         let hud = JGProgressHUD(style: .extraLight)
         
         if ghostModeBtn.titleLabel?.text == "ENTER GHOST MODE" {
+            self.logAmplitudeGhostModeEnabledEvent()
             hud.textLabel.text = "Entering Ghost Mode..."
             hud.show(in: view)
             API.Inbox.goIntoGhostMode {
@@ -196,6 +201,7 @@ class SettingsVC: UITableViewController {
             hud.textLabel.text = "You're in Ghost Mode. \u{1F47B}"
             hud.dismiss(afterDelay: 2.0)
         } else if ghostModeBtn.titleLabel?.text == "EXIT GHOST MODE" {
+            self.logAmplitudeGhostModeDisabledEvent()
             hud.textLabel.text = "Exiting Ghost Mode..."
             hud.show(in: view)
             API.Inbox.goOutOfGhostMode {
@@ -218,6 +224,8 @@ class SettingsVC: UITableViewController {
           print("Successfully cleared all state")
         }
         
+        self.logAmplitudeSignoutEvent()
+        
         AuthService.logout(onSuccess: {
             
             let storyboard = UIStoryboard(name: "Welcome", bundle: nil)
@@ -234,6 +242,8 @@ class SettingsVC: UITableViewController {
     
     @IBAction func deleteAccountBtnWasPressed(_ sender: Any) {
         // delete user account :(
+        
+        self.logAmplitudeAccountDeletionEvent()
         
         let hud = JGProgressHUD(style: .extraLight)
         hud.textLabel.text = "Saying goodbye :( ..."
@@ -267,6 +277,105 @@ class SettingsVC: UITableViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let termsOfServiceVC = storyboard.instantiateViewController(withIdentifier: "TermsOfServiceVC")
         self.present(termsOfServiceVC, animated: true, completion: nil)
+    }
+    
+    func logAmplitudeSignoutEvent() {
+        API.User.observeCurrentUser { (user) in
+            var signOutEventProperties: [AnyHashable : Any] = [:]
+            signOutEventProperties.updateValue(user.email as Any, forKey: "Email")
+            signOutEventProperties.updateValue(user.age as Any, forKey: "Age")
+            signOutEventProperties.updateValue(user.profession as Any, forKey: "Profession")
+            signOutEventProperties.updateValue(user.company as Any, forKey: "Company")
+            signOutEventProperties.updateValue(user.name as Any, forKey: "Name")
+            signOutEventProperties.updateValue(user.gender as Any, forKey: "Gender")
+            signOutEventProperties.updateValue(user.id as Any, forKey: "User ID")
+            signOutEventProperties.updateValue(user.coins as Any, forKey: "Number of Glymps Coins")
+            signOutEventProperties.updateValue(user.isPremium as Any, forKey: "Subscription Status")
+            signOutEventProperties.updateValue(user.minAge as Any, forKey: "Minimum Preferred Age")
+            signOutEventProperties.updateValue(user.maxAge as Any, forKey: "Maximum Preferred Age")
+            signOutEventProperties.updateValue(user.preferedGender as Any, forKey: "Preferred Gender")
+            Amplitude.instance().logEvent("Sign Out", withEventProperties: signOutEventProperties)
+        }
+    }
+    
+    func logAmplitudeAccountDeletionEvent() {
+        API.User.observeCurrentUser { (user) in
+            var accountDeletionEventProperties: [AnyHashable : Any] = [:]
+            accountDeletionEventProperties.updateValue(user.email as Any, forKey: "Email")
+            accountDeletionEventProperties.updateValue(user.age as Any, forKey: "Age")
+            accountDeletionEventProperties.updateValue(user.profession as Any, forKey: "Profession")
+            accountDeletionEventProperties.updateValue(user.company as Any, forKey: "Company")
+            accountDeletionEventProperties.updateValue(user.name as Any, forKey: "Name")
+            accountDeletionEventProperties.updateValue(user.gender as Any, forKey: "Gender")
+            accountDeletionEventProperties.updateValue(user.id as Any, forKey: "User ID")
+            accountDeletionEventProperties.updateValue(user.coins as Any, forKey: "Number of Glymps Coins")
+            accountDeletionEventProperties.updateValue(user.isPremium as Any, forKey: "Subscription Status")
+            accountDeletionEventProperties.updateValue(user.minAge as Any, forKey: "Minimum Preferred Age")
+            accountDeletionEventProperties.updateValue(user.maxAge as Any, forKey: "Maximum Preferred Age")
+            accountDeletionEventProperties.updateValue(user.preferedGender as Any, forKey: "Preferred Gender")
+            Amplitude.instance().logEvent("Account Deletion", withEventProperties: accountDeletionEventProperties)
+        }
+    }
+    
+    func logAmplitudeSettingsChangedEvent() {
+        API.User.observeCurrentUser { (user) in
+            var settingsChangedEventProperties: [AnyHashable : Any] = [:]
+            settingsChangedEventProperties.updateValue(user.email as Any, forKey: "Email")
+            settingsChangedEventProperties.updateValue(user.age as Any, forKey: "Age")
+            settingsChangedEventProperties.updateValue(user.profession as Any, forKey: "Profession")
+            settingsChangedEventProperties.updateValue(user.company as Any, forKey: "Company")
+            settingsChangedEventProperties.updateValue(user.name as Any, forKey: "Name")
+            settingsChangedEventProperties.updateValue(user.gender as Any, forKey: "Gender")
+            settingsChangedEventProperties.updateValue(user.id as Any, forKey: "User ID")
+            settingsChangedEventProperties.updateValue(user.coins as Any, forKey: "Number of Glymps Coins")
+            settingsChangedEventProperties.updateValue(user.isPremium as Any, forKey: "Subscription Status")
+            settingsChangedEventProperties.updateValue(user.minAge as Any, forKey: "Minimum Preferred Age")
+            settingsChangedEventProperties.updateValue(user.maxAge as Any, forKey: "Maximum Preferred Age")
+            settingsChangedEventProperties.updateValue(user.preferedGender as Any, forKey: "Preferred Gender")
+            Amplitude.instance().logEvent("Settings Changed", withEventProperties: settingsChangedEventProperties)
+        }
+    }
+    
+    func logAmplitudeGhostModeEnabledEvent() {
+        API.User.observeCurrentUser { (user) in
+            var ghostModeEnabledEventProperties: [AnyHashable : Any] = [:]
+            ghostModeEnabledEventProperties.updateValue(user.email as Any, forKey: "Email")
+            ghostModeEnabledEventProperties.updateValue(user.age as Any, forKey: "Age")
+            ghostModeEnabledEventProperties.updateValue(user.profession as Any, forKey: "Profession")
+            ghostModeEnabledEventProperties.updateValue(user.company as Any, forKey: "Company")
+            ghostModeEnabledEventProperties.updateValue(user.name as Any, forKey: "Name")
+            ghostModeEnabledEventProperties.updateValue(user.gender as Any, forKey: "Gender")
+            ghostModeEnabledEventProperties.updateValue(user.id as Any, forKey: "User ID")
+            ghostModeEnabledEventProperties.updateValue(user.coins as Any, forKey: "Number of Glymps Coins")
+            ghostModeEnabledEventProperties.updateValue(user.isPremium as Any, forKey: "Subscription Status")
+            ghostModeEnabledEventProperties.updateValue(user.minAge as Any, forKey: "Minimum Preferred Age")
+            ghostModeEnabledEventProperties.updateValue(user.maxAge as Any, forKey: "Maximum Preferred Age")
+            ghostModeEnabledEventProperties.updateValue(user.preferedGender as Any, forKey: "Preferred Gender")
+            Amplitude.instance().logEvent("Ghost Mode Enabled", withEventProperties: ghostModeEnabledEventProperties)
+        }
+    }
+    
+    func logAmplitudeGhostModeDisabledEvent() {
+        API.User.observeCurrentUser { (user) in
+            var ghostModeDisabledEventProperties: [AnyHashable : Any] = [:]
+            ghostModeDisabledEventProperties.updateValue(user.email as Any, forKey: "Email")
+            ghostModeDisabledEventProperties.updateValue(user.age as Any, forKey: "Age")
+            ghostModeDisabledEventProperties.updateValue(user.profession as Any, forKey: "Profession")
+            ghostModeDisabledEventProperties.updateValue(user.company as Any, forKey: "Company")
+            ghostModeDisabledEventProperties.updateValue(user.name as Any, forKey: "Name")
+            ghostModeDisabledEventProperties.updateValue(user.gender as Any, forKey: "Gender")
+            ghostModeDisabledEventProperties.updateValue(user.id as Any, forKey: "User ID")
+            ghostModeDisabledEventProperties.updateValue(user.coins as Any, forKey: "Number of Glymps Coins")
+            ghostModeDisabledEventProperties.updateValue(user.isPremium as Any, forKey: "Subscription Status")
+            ghostModeDisabledEventProperties.updateValue(user.minAge as Any, forKey: "Minimum Preferred Age")
+            ghostModeDisabledEventProperties.updateValue(user.maxAge as Any, forKey: "Maximum Preferred Age")
+            ghostModeDisabledEventProperties.updateValue(user.preferedGender as Any, forKey: "Preferred Gender")
+            Amplitude.instance().logEvent("Ghost Mode Disabled", withEventProperties: ghostModeDisabledEventProperties)
+        }
+    }
+    
+    func logAmplitudeSettingsViewedEvent() {
+        Amplitude.instance().logEvent("Settings Viewed")
     }
     
     

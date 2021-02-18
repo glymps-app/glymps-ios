@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Amplitude_iOS
 
 // profile screen for user to go to edit profile, edit settings, buy coins, or become a Glymps Premium User
 class ProfileVC: UIViewController {
@@ -38,6 +39,8 @@ class ProfileVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.logAmplitudeProfileViewedEvent()
         
         self.coinsView.layer.zPosition = 10
         self.coinsViewLabel.layer.zPosition = 15
@@ -127,6 +130,10 @@ class ProfileVC: UIViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let activatePremiumVC = storyboard.instantiateViewController(withIdentifier: "ActivatePremiumVC") as! ActivatePremiumVC
         self.present(activatePremiumVC, animated: true, completion: nil)
+    }
+    
+    func logAmplitudeProfileViewedEvent() {
+        Amplitude.instance().logEvent("Profile Viewed")
     }
 
 }
