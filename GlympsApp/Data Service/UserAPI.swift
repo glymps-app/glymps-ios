@@ -41,12 +41,9 @@ class UserAPI {
                 if user.id! == API.User.CURRENT_USER?.uid {
                     completion(user)
                 }else{
-                    //assert(false, "user id is nil")
                     return
                 }
             }else{
-                //assert(false, "snapshot is not a dictionary")
-                //completion(nil)
                 return
             }
         })

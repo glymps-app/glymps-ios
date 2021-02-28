@@ -106,7 +106,7 @@ class EmailVC: UIViewController {
     }
     
     func logAmplitudeOnboardingStepOneOfNineCompleteEmailEvent() {
-        Amplitude.instance().logEvent("Onboarding Step 1/9 Complete (Email)")
+        Amplitude.instance().logEvent("Onboarding Step 1")
     }
     
 }

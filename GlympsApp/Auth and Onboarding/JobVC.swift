@@ -89,7 +89,7 @@ class JobVC: UIViewController {
     }
     
     func logAmplitudeOnboardingStepFiveOfNineCompleteJobEvent() {
-        Amplitude.instance().logEvent("Onboarding Step 5/9 Complete (Job)")
+        Amplitude.instance().logEvent("Onboarding Step Complete 5")
     }
 }
 

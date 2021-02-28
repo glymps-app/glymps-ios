@@ -159,19 +159,20 @@ class LoginVC: UIViewController {
     
     func logAmplitudeSigninEvent() {
         API.User.observeCurrentUser { (user) in
-            var signInEventProperties: [AnyHashable : Any] = [:]
-            signInEventProperties.updateValue(user.email as Any, forKey: "Email")
-            signInEventProperties.updateValue(user.age as Any, forKey: "Age")
-            signInEventProperties.updateValue(user.profession as Any, forKey: "Profession")
-            signInEventProperties.updateValue(user.company as Any, forKey: "Company")
-            signInEventProperties.updateValue(user.name as Any, forKey: "Name")
-            signInEventProperties.updateValue(user.gender as Any, forKey: "Gender")
-            signInEventProperties.updateValue(user.id as Any, forKey: "User ID")
-            signInEventProperties.updateValue(user.coins as Any, forKey: "Number of Glymps Coins")
-            signInEventProperties.updateValue(user.isPremium as Any, forKey: "Subscription Status")
-            signInEventProperties.updateValue(user.minAge as Any, forKey: "Minimum Preferred Age")
-            signInEventProperties.updateValue(user.maxAge as Any, forKey: "Maximum Preferred Age")
-            signInEventProperties.updateValue(user.preferedGender as Any, forKey: "Preferred Gender")
+            let signInEventProperties: [AnyHashable : Any] = [
+                "Email" : user.email ?? "",
+                "Age" : user.age ?? "",
+                "Profession" : user.profession ?? "",
+                "Company" : user.company ?? "",
+                "Name" : user.name ?? "",
+                "Gender" : user.gender ?? "",
+                "User ID" : user.id ?? "",
+                "Coins" : user.coins ?? "",
+                "Subscription Status" : user.isPremium ?? "",
+                "Min Preferred Age" : user.minAge ?? "",
+                "Max Preferred Age" : user.maxAge ?? "",
+                "Preferred Gender" : user.preferedGender ?? ""
+            ]
             Amplitude.instance().logEvent("Sign In", withEventProperties: signInEventProperties)
         }
     }

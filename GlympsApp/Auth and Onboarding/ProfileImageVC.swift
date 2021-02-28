@@ -158,7 +158,7 @@ class ProfileImageVC: UIViewController {
     }
     
     func logAmplitudeOnboardingStepNineOfNineCompleteProfileImageEvent() {
-        Amplitude.instance().logEvent("Onboarding Step 9/9 Complete (Profile Image)")
+        Amplitude.instance().logEvent("Onboarding Step Complete 9")
     }
     
     func logAmplitudeNewUserSignupEvent(email: String, age: Int, profession: String, company: String, name: String, gender: String, coins: Int, isPremium: Bool, minAge: Int, maxAge: Int, preferredGender: String) {

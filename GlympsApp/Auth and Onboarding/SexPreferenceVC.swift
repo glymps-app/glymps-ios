@@ -179,7 +179,7 @@ class SexPreferenceVC: UIViewController {
     }
     
     func logAmplitudeOnboardingStepEightOfNineCompleteSexualPreferenceEvent() {
-        Amplitude.instance().logEvent("Onboarding Step 8/9 Complete (Sexual Preference)")
+        Amplitude.instance().logEvent("Onboarding Step Complete 8")
     }
 
 }

@@ -84,7 +84,7 @@ class BioVC: UIViewController {
     }
     
     func logAmplitudeOnboardingStepFourOfNineCompleteBioEvent() {
-        Amplitude.instance().logEvent("Onboarding Step 4/9 Complete (Bio)")
+        Amplitude.instance().logEvent("Onboarding Step Complete 4")
     }
 
 }

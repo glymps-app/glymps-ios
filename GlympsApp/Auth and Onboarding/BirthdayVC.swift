@@ -181,7 +181,7 @@ class BirthdayVC: UIViewController {
     }
     
     func logAmplitudeOnboardingStepSixOfNineCompleteBirthdayEvent() {
-        Amplitude.instance().logEvent("Onboarding Step 6/9 Complete (Birthday)")
+        Amplitude.instance().logEvent("Onboarding Step Complete 6")
     }
 
 }

@@ -80,7 +80,7 @@ class PasswordVC: UIViewController {
     }
     
     func logAmplitudeOnboardingStepTwoOfNineCompletePasswordEvent() {
-        Amplitude.instance().logEvent("Onboarding Step 2/9 Complete (Password)")
+        Amplitude.instance().logEvent("Onboarding Step Complete 2")
     }
     
 }

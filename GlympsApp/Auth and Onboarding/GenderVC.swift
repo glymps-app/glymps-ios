@@ -136,7 +136,7 @@ class GenderVC: UIViewController {
     }
     
     func logAmplitudeOnboardingStepSevenOfNineCompleteGenderEvent() {
-        Amplitude.instance().logEvent("Onboarding Step 7/9 Complete (Gender)")
+        Amplitude.instance().logEvent("Onboarding Step Complete 7")
     }
     
 }

@@ -81,7 +81,7 @@ class NameVC: UIViewController {
     }
     
     func logAmplitudeOnboardingStepThreeOfNineCompleteNameEvent() {
-        Amplitude.instance().logEvent("Onboarding Step 3/9 Complete (Name)")
+        Amplitude.instance().logEvent("Onboarding Step Complete 3")
     }
 
 }
