@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Amplitude_iOS
 
 // view controller to set up new user birth date during onboarding
 class BirthdayVC: UIViewController {
@@ -165,6 +166,7 @@ class BirthdayVC: UIViewController {
     // move to next view controller
     @IBAction func nextBtnWasPressed(_ sender: Any) {
         if userAge != nil {
+            self.logAmplitudeOnboardingStepSixOfNineCompleteBirthdayEvent()
             let storyboard = UIStoryboard(name: "Welcome", bundle: nil)
             let genderVC = storyboard.instantiateViewController(withIdentifier: "GenderVC") as! GenderVC
             genderVC.userEmail = userEmail
@@ -178,6 +180,9 @@ class BirthdayVC: UIViewController {
         }
     }
     
+    func logAmplitudeOnboardingStepSixOfNineCompleteBirthdayEvent() {
+        Amplitude.instance().logEvent("Onboarding Step Complete 6")
+    }
 
 }
 

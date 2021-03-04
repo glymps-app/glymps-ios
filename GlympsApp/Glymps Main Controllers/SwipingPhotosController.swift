@@ -8,6 +8,7 @@
 
 import UIKit
 import SDWebImage
+import Amplitude_iOS
 
 // profile image display for user detail screen
 class SwipingPhotosController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {

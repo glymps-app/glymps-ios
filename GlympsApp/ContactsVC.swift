@@ -9,6 +9,7 @@
 import UIKit
 import Contacts
 import MessageUI
+import Amplitude_iOS
 
 class ContactsVC: UIViewController {
     
@@ -30,6 +31,8 @@ class ContactsVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.logAmplitudeContactsViewEvent()
         
         searchView.delegate = self
         
@@ -128,6 +131,10 @@ class ContactsVC: UIViewController {
     
     @IBAction func closeBtnWasPressed(_ sender: Any) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    func logAmplitudeContactsViewEvent() {
+        Amplitude.instance().logEvent("Contacts View")
     }
     
 }

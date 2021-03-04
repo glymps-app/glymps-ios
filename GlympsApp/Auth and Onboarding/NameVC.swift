@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Amplitude_iOS
 
 // view controller to set up new user name during onboarding
 class NameVC: UIViewController {
@@ -69,6 +70,7 @@ class NameVC: UIViewController {
     // move to next view controller
     @IBAction func nextBtnWasPressed(_ sender: Any) {
         if nameTextfield.text != "" {
+            self.logAmplitudeOnboardingStepThreeOfNineCompleteNameEvent()
             let storyboard = UIStoryboard(name: "Welcome", bundle: nil)
             let bioVC = storyboard.instantiateViewController(withIdentifier: "BioVC") as! BioVC
             bioVC.userEmail = userEmail
@@ -76,6 +78,10 @@ class NameVC: UIViewController {
             bioVC.userName = nameTextfield.text!
             self.navigationController?.pushViewController(bioVC, animated: true)
         }
+    }
+    
+    func logAmplitudeOnboardingStepThreeOfNineCompleteNameEvent() {
+        Amplitude.instance().logEvent("Onboarding Step Complete 3")
     }
 
 }

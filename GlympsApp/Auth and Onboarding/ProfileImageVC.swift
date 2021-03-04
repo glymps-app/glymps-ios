@@ -18,6 +18,7 @@ import JGProgressHUD
 import CoreLocation
 import GeoFire
 import CropViewController
+import Amplitude_iOS
 
 // view controller to set up new user profile image during onboarding
 class ProfileImageVC: UIViewController {
@@ -136,6 +137,12 @@ class ProfileImageVC: UIViewController {
             // sign up new Glymps user! then go to OnboardDoneVC to celebrate :)
             AuthService.signUp(name: name, gender: gender, email: email, password: password, age: age, bio: bio, profession: profession, company: company, coins: coins, isPremium: isPremium, minAge: minAge, maxAge: maxAge, preferedGender: preferredGender, imageData: imageData, onSuccess: {
                 
+                if referringUser != "" {
+                    self.logAmplitudeReferredUserSignupEvent(email: email, age: age, profession: profession, company: company, name: name, gender: gender, coins: coins, isPremium: isPremium, minAge: minAge, maxAge: maxAge, preferredGender: preferredGender)
+                } else {
+                    self.logAmplitudeNewUserSignupEvent(email: email, age: age, profession: profession, company: company, name: name, gender: gender, coins: coins, isPremium: isPremium, minAge: minAge, maxAge: maxAge, preferredGender: preferredGender)
+                }
+                
                 hud.textLabel.text = "Welcome to Glymps! \u{1F389}"
                 hud.dismiss(afterDelay: 4.0)
                 
@@ -150,6 +157,41 @@ class ProfileImageVC: UIViewController {
         }
     }
     
+    func logAmplitudeOnboardingStepNineOfNineCompleteProfileImageEvent() {
+        Amplitude.instance().logEvent("Onboarding Step Complete 9")
+    }
+    
+    func logAmplitudeNewUserSignupEvent(email: String, age: Int, profession: String, company: String, name: String, gender: String, coins: Int, isPremium: Bool, minAge: Int, maxAge: Int, preferredGender: String) {
+        var newUserSignupEventProperties: [AnyHashable : Any] = [:]
+        newUserSignupEventProperties.updateValue(email as Any, forKey: "Email")
+        newUserSignupEventProperties.updateValue(age as Any, forKey: "Age")
+        newUserSignupEventProperties.updateValue(profession as Any, forKey: "Profession")
+        newUserSignupEventProperties.updateValue(company as Any, forKey: "Company")
+        newUserSignupEventProperties.updateValue(name as Any, forKey: "Name")
+        newUserSignupEventProperties.updateValue(gender as Any, forKey: "Gender")
+        newUserSignupEventProperties.updateValue(coins as Any, forKey: "Number of Glymps Coins")
+        newUserSignupEventProperties.updateValue(isPremium as Any, forKey: "Subscription Status")
+        newUserSignupEventProperties.updateValue(minAge as Any, forKey: "Minimum Preferred Age")
+        newUserSignupEventProperties.updateValue(maxAge as Any, forKey: "Maximum Preferred Age")
+        newUserSignupEventProperties.updateValue(preferredGender as Any, forKey: "Preferred Gender")
+        Amplitude.instance().logEvent("New User (Sign Up)", withEventProperties: newUserSignupEventProperties)
+    }
+    
+    func logAmplitudeReferredUserSignupEvent(email: String, age: Int, profession: String, company: String, name: String, gender: String, coins: Int, isPremium: Bool, minAge: Int, maxAge: Int, preferredGender: String) {
+        var referredUserSignupEventProperties: [AnyHashable : Any] = [:]
+        referredUserSignupEventProperties.updateValue(email as Any, forKey: "Email")
+        referredUserSignupEventProperties.updateValue(age as Any, forKey: "Age")
+        referredUserSignupEventProperties.updateValue(profession as Any, forKey: "Profession")
+        referredUserSignupEventProperties.updateValue(company as Any, forKey: "Company")
+        referredUserSignupEventProperties.updateValue(name as Any, forKey: "Name")
+        referredUserSignupEventProperties.updateValue(gender as Any, forKey: "Gender")
+        referredUserSignupEventProperties.updateValue(coins as Any, forKey: "Number of Glymps Coins")
+        referredUserSignupEventProperties.updateValue(isPremium as Any, forKey: "Subscription Status")
+        referredUserSignupEventProperties.updateValue(minAge as Any, forKey: "Minimum Preferred Age")
+        referredUserSignupEventProperties.updateValue(maxAge as Any, forKey: "Maximum Preferred Age")
+        referredUserSignupEventProperties.updateValue(preferredGender as Any, forKey: "Preferred Gender")
+        Amplitude.instance().logEvent("Referred User Signup", withEventProperties: referredUserSignupEventProperties)
+    }
 
 
 }

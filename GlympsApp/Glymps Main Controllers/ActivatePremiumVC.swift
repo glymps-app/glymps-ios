@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Amplitude_iOS
 
 // screen that displays advantages of upgrading to Glymps Premium
 class ActivatePremiumVC: UIViewController {
@@ -18,7 +19,7 @@ class ActivatePremiumVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
+        self.logAmplitudeActivatePremiumViewEvent()
     }
     
     // display popover that shows subscription options
@@ -36,8 +37,16 @@ class ActivatePremiumVC: UIViewController {
     
     // display popover that shows subscription options
     @IBAction func activatePremiumBtnWasPressed(_ sender: Any) {
-        
+        self.logAmplitudePremiumPaywallDisplayedEvent()
         displayUpsellScreen()
+    }
+    
+    func logAmplitudePremiumPaywallDisplayedEvent() {
+        Amplitude.instance().logEvent("Premium Paywall Displayed")
+    }
+    
+    func logAmplitudeActivatePremiumViewEvent() {
+        Amplitude.instance().logEvent("Premium View")
     }
     
 }

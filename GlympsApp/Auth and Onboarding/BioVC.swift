@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Amplitude_iOS
 
 class BioVC: UIViewController {
     
@@ -71,6 +72,7 @@ class BioVC: UIViewController {
     
     @IBAction func nextBtnWasPressed(_ sender: Any) {
         if bioTextfield.text != "" {
+            self.logAmplitudeOnboardingStepFourOfNineCompleteBioEvent()
             let storyboard = UIStoryboard(name: "Welcome", bundle: nil)
             let jobVC = storyboard.instantiateViewController(withIdentifier: "JobVC") as! JobVC
             jobVC.userEmail = userEmail
@@ -79,6 +81,10 @@ class BioVC: UIViewController {
             jobVC.userBio = bioTextfield.text!
             self.navigationController?.pushViewController(jobVC, animated: true)
         }
+    }
+    
+    func logAmplitudeOnboardingStepFourOfNineCompleteBioEvent() {
+        Amplitude.instance().logEvent("Onboarding Step Complete 4")
     }
 
 }

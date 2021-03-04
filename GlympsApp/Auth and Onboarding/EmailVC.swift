@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseAuth
+import Amplitude_iOS
 
 // view controller to set up new user email during onboarding
 class EmailVC: UIViewController {
@@ -22,6 +23,8 @@ class EmailVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.logAmplitudeOnboardingStartedEvent()
         
         invalidEmailLabel.isHidden = true
         
@@ -90,11 +93,20 @@ class EmailVC: UIViewController {
     // move to next view controller
     @IBAction func nextBtnWasPressed(_ sender: Any) {
         if emailTextfield.text != "" {
+            self.logAmplitudeOnboardingStepOneOfNineCompleteEmailEvent()
             let storyboard = UIStoryboard(name: "Welcome", bundle: nil)
             let passwordVC = storyboard.instantiateViewController(withIdentifier: "PasswordVC") as! PasswordVC
             passwordVC.userEmail = emailTextfield.text!
             self.navigationController?.pushViewController(passwordVC, animated: true)
         }
+    }
+    
+    func logAmplitudeOnboardingStartedEvent() {
+        Amplitude.instance().logEvent("Onboarding Started")
+    }
+    
+    func logAmplitudeOnboardingStepOneOfNineCompleteEmailEvent() {
+        Amplitude.instance().logEvent("Onboarding Step 1")
     }
     
 }
